@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Zhen Xie">
+
+
+
+
+
+<title>Hyperledger Fabric | Hexo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+<script>
+    !
+    function() {
+    function n(n, e, t) {
+    return n.getAttribute(e) || t
+    }
+    function e(n) {
+    return document.getElementsByTagName(n)
+    }
+    function t() {
+    var t = e("script"),
+    o = t.length,
+    i = t[o - 1];
+    return {
+    l: o,
+    z: n(i, "zIndex", -1), //置于主页面背后
+    o: n(i, "opacity", .5), //线条透明度
+    c: n(i, "color", "0,0,0"), //线条颜色
+    n: n(i, "count", 100) //线条数量
+    }
+    }
+    function o() {
+    a = m.width = window.innerWidth ||
+    document.documentElement.clientWidth || document.body.clientWidth,
+    c = m.height = window.innerHeight ||
+    document.documentElement.clientHeight || document.body.clientHeight
+    }
+    function i() {
+    r.clearRect(0, 0, a, c);
+    var n, e, t, o, m, l;
+    s.forEach(function(i, x) {
+    for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 :
+    1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1,
+    1), e = x + 1; e < u.length; e++) n = u[e],
+    null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l
+    = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o,
+    i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t /
+    2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y),
+    r.lineTo(n.x, n.y), r.stroke()))
+    }),
+    x(i)
+    }
+    var a, c, u, m = document.createElement("canvas"),
+    d = t(),
+    l = "c_n" + d.l,
+    r = m.getContext("2d"),
+    x = window.requestAnimationFrame || window.webkitRequestAnimationFrame
+    || window.mozRequestAnimationFrame || window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function(n) {
+    window.setTimeout(n, 1e3 / 45)
+    },
+    w = Math.random,
+    y = {
+    x: null,
+    y: null,
+    max: 2e4
+    };
+    m.id = l,
+    m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z +
+    ";opacity:" + d.o,
+    e("body")[0].appendChild(m),
+    o(),
+    window.onresize = o,
+    window.onmousemove = function(n) {
+    n = n || window.event,
+    y.x = n.clientX,
+    y.y = n.clientY
+    },
+    window.onmouseout = function() {
+    y.x = null,
+    y.y = null
+    };
+    for (var s = [], f = 0; d.n > f; f++) {
+    var h = w() * a,
+    g = w() * c,
+    v = 2 * w() - 1,
+    p = 2 * w() - 1;
+    s.push({
+    x: h,
+    y: g,
+    xa: v,
+    ya: p,
+    max: 6e3
+    })
+    }
+    u = s.concat([y]),
+    setTimeout(function() {
+    i()
+    },
+    100)
+    } ();
+    </script>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">TheXie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">TheXie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Hyperledger Fabric</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Zhen Xie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">November 13, 2023&nbsp;&nbsp;11:30:31</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="Hyperledger-Fabric"><a href="#Hyperledger-Fabric" class="headerlink" title="Hyperledger Fabric"></a>Hyperledger Fabric</h2><h4 id="特点："><a href="#特点：" class="headerlink" title="特点："></a>特点：</h4><p>（1）Fabric具有高度模块化和可配置的架构</p>
+<p>（2）Fabric1是第一个支持通用编程语言编写智能合约的分布式账本平台，不受限于特定领域语言</p>
+<p>（3）Fabric平台也是许可的，参与者彼此了解而不是匿名的或者完全不信任的</p>
+<p>（4）Fabric支持可插拔的共识协议，使平台能偶更有效地进行定制，以适应特点的业务场景和信任模型</p>
+<p>（5）Fabric可以利用不需要原生加密货币的共识协议来激励昂贵的挖矿或推动智能合约执行。</p>
+<p>（6）Fabric引入的新架构：执行-排序-验证：</p>
+<p>1.执行一个交易并检查其正确性，从而给它背书</p>
+<p>2.通过（可插拔的）共识协议将交易排序</p>
+<p>3.提交交易到账本前先根据特点应用程序的背书策略验证交易&#x2F;&#x2F;背书指票据转让时原持有人再票据背后加盖自己的证明，类似签名</p>
+<p>这与顺序执行模式不同，Fabr再交易顺序达成最终一致前执行交易</p>
+<p>（7）Fabric通过其通道架构和私有数据特性实现保密。在通道方面，Fabric网络中的成员组建了一个子网络，在子网络的成员可以看到其所参与到的交易。只有参与到通道的节点才有权访问智能合约和交易数据</p>
+<h4 id="什么是Hyperledger-Fabric？"><a href="#什么是Hyperledger-Fabric？" class="headerlink" title="什么是Hyperledger Fabric？"></a>什么是Hyperledger Fabric？</h4><p>Linux 基金会于2015年创建了 Hyperledger（超级账本）项目，以推进跨行业的区块链技术。它不是用来宣布一个区块链标准，而是鼓励通过社区流程开发区块链技术的协作方法，其中包括鼓励开放式开发、和随着时间的推移采用关键标准的知识产权。</p>
+<p>Hyperledger Fabric 是 Hyperledger 中的区块链项目之一。与其他区块链技术一样，它有一个账本，使用智能合约，是一个参与者管理交易的系统。</p>
+<p>Hyperledger Fabric 与其他区块链系统不同的地方是 <strong>私有</strong> 和 <strong>许可</strong> 。与允许未知身份参与网络的开放式非许可系统（需要诸如“工作量证明”之类的协议来验证交易并保护网络）不同，Hyperledger Fabric 网络的成员需要从可信赖的 <strong>成员服务提供者（MSP）</strong> 注册。</p>
+<p>Hyperledger Fabric 还提供多种可插拔选项。账本数据可以以多种格式存储，共识机制可以交换替换，并且支持不同的MSP。</p>
+<p>Hyperledger Fabric 还提供创建 <strong>通道</strong> 的功能，允许一组参与者创建各自的交易账本。对于某些网络而言，这是一个特别重要的选择。这些网络中，一些参与者可能是竞争对手，并且不希望他们做出的每笔交易都被每个参与者知晓，例如，他们只向某些参与者提供的特殊价格，而其他人不是。如果两个参与者组成一个通道，那么只有这两个参与者拥有该通道的账本副本，而其他参与者没有。</p>
+<p><strong>共享账本</strong></p>
+<p>Hyperledger Fabric 有一个账本子系统，包括两个组件： <strong>世界状态</strong> 和 <strong>交易日志</strong> 。每个参与者都拥有他们所属的每个 Hyperledger Fabric 网络的账本副本。</p>
+<p>世界状态组件描述了在给定时间点的账本的状态。它是账本的数据库。交易日志组件记录产生世界状态中当前值的所有交易；这是世界状态的更新历史。然后，账本包括世界状态数据库和交易日志历史记录。</p>
+<p>账本中世界状态的数据存储是可替换的。默认情况下，这是 LevelDB 键值存储数据库。交易日志不需要是可插拔的。它只记录区块链网络使用账本数据库前后的值。</p>
+<p><strong>智能合约</strong></p>
+<p>Hyperledger Fabric 智能合约用 <strong>链码</strong> 编写，当该应用程序需要与账本交互时，由区块链外部的应用程序调用。在大多数情况下，链码只与账本的数据库、世界状态（例如，查询）交互，而不与交易日志交互。</p>
+<p>链码可以用几种编程语言实现。目前支持 Go、Node.js 和 Java 链码。</p>
+<p><strong>隐私</strong></p>
+<p>根据网络的需求，企业对企业（B2B）网络中的参与者可能对他们共享的信息量非常敏感。对于其他网络，隐私不是最受关注的问题。</p>
+<p>Hyperledger Fabric 支持私有网络（使用通道）是很重要的，因为网络是相对开放的。</p>
+<p><strong>共识</strong></p>
+<p>交易必须按照发生的顺序写入账本，即使它们可能位于网络中不同的参与者集合之中。为此，必须建立交易的顺序，且必须采用一种方法来拒绝错误（或恶意）插入到账本中的非法交易。</p>
+<p>这是一个彻底的计算机科学研究领域，且有很多方法可以实现它，每个方法都有不同的权衡。例如，PBFT（实用拜占庭容错算法）可以为文件副本提供一种机制，使其能够保持各个副本的一致性，即使在发生损坏的情况下也是如此。或者，在比特币中，通过称为挖矿的过程进行排序，其中竞争计算机竞相解决加密难题，该难题定义所有过程随后构建的顺序。</p>
+<p>Hyperledger Fabric 被设计为允许网络启动者选择最能代表参与者间存在的关系的共识机制。与隐私一样，有一系列需求；从他们的关系高度结构化的网络，到更加点对点的网络。</p>
+<h5 id="资产"><a href="#资产" class="headerlink" title="资产"></a>资产</h5><p>资产在Hyperledger Fabric中表示为键值对的集合，状态更改记录为Channel账本上的交易。资产可以用二进制或json格式表示。</p>
+<h5 id="链码"><a href="#链码" class="headerlink" title="链码"></a>链码</h5><p>链码使定义单项或多项资产的软件，和能修改资产的交易指令，即业务逻辑。链码的执行会产生一组用于写入的键值对（写集），可以被提交到网络并应用与所有节点的账本</p>
+<h5 id="账本特性"><a href="#账本特性" class="headerlink" title="账本特性"></a>账本特性</h5><p>账本是Fabric中所有状态转换的有序的放篡改的记录。状态转换时参与方提交的链码调用（“交易”）的结果。每个交易都会产生一组资产键值对，这些键值对以创建，更新或删除的形式提交到账本。账本由区块链组成，用于以区块的形式存储不可变的顺序记录。每个通道有一个账本，每个节点为其所属的每个通道维护一个账本的副本</p>
+<p>Fabric 账本的一些特点：</p>
+<ul>
+<li>使用基于键的查找、范围查询和组合键查询来查询和更新账本</li>
+<li>使用富查询语言进行只读查询（如果使用 CouchDB 作为状态数据库）</li>
+<li>只读历史记录查询（查询一个键的账本历史记录）用于支持数据溯源场景</li>
+<li>交易包括链码读取键&#x2F;值（读集）的版本以及链码写入键&#x2F;值（写集）的版本</li>
+<li>交易包含每个背书节点的签名，并被提交给排序服务</li>
+<li>交易按顺序打包到区块，并被排序服务“分发”到通道上的节点</li>
+<li>节点根据背书策略验证交易并执行策略</li>
+<li>在附加一个区块之前，会执行一次版本检查，以确保被读取的资产的状态自链码执行以来未发生更改</li>
+<li>一旦交易被验证并提交，就具有不变性</li>
+<li>一个通道的账本包含一个配置区块，用于定义策略、访问控制列表和其他相关信息</li>
+<li>通道包含 <a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/glossary.html#msp">Membership Service Provider</a> 的实例，允许从不同的证书颁发机构（CA）生成加密材料</li>
+</ul>
+<h5 id="隐私"><a href="#隐私" class="headerlink" title="隐私"></a>隐私</h5><p>Fabric在每个通道上使用不可变的账本，以及可操纵和修改资产当前状态的链码。账本存在于通道范围内，可以在整个网络共享（每个参与者都在同一个公共通道上），也可以被私有化，仅包括一组特定的参与者（参与者创建一个单独的通道，隔离交易和账本）。</p>
+<p>为了想在完全透明和隐私之间获得平衡的场景，可以仅在需要访问资产状态以执行读取和写入的节点上安装链码（换句话说，如果未在节点上安装链码，它将无法与账本正确连接）。</p>
+<p>当该通道上的组织子集需要对其交易数据保密时，私有数据集合用于将此数据隔离在私有数据库中，在逻辑上与通道账本分开，只有经授权的组织子集才能访问。</p>
+<p>因此，通道在更广泛的网络上保持交易的私密性，而集合则在通道上的组织子集之间保持数据的私密性。</p>
+<p>为了模糊数据，还可以在交易发送到排序服务并将区块附加到账本前，使用加密算法对链码内的只进行加密</p>
+<h5 id="区块链网络"><a href="#区块链网络" class="headerlink" title="区块链网络"></a>区块链网络</h5><p>（1）创建网络</p>
+<p><em>排序服务 O4 由一个单独的节点组成，是根据一个网络配置 NC4 来进行配置的。在网络层面上，证书颁发机构 CA4 被用来向管理员和组织 R4 的网络节点分配身份信息。</em></p>
+<p><em>![img](file:&#x2F;&#x2F;&#x2F;C:\Users\the xie\AppData\Roaming\Tencent\Users\577037595\QQ\WinTemp\RichOle\LIUI<code>68FR</code>UUGWDL$EROCGH.png)</em></p>
+<p>（2）添加网络管理员</p>
+<p>我们看到了新的组织 R1 变成了管理员，R1 和 R4 现在在网络中具有了相同的权限。我们看到证书颁发机构 CA1 也被添加进来了，他用来标识 R1 组织的用户。现在从 R1 和 R4 来的用户就已经是网络的管理员了。</p>
+<p>![img](file:&#x2F;&#x2F;&#x2F;C:\Users\the xie\AppData\Roaming\Tencent\Users\577037595\QQ\WinTemp\RichOle_9$77O)3R3PX{$6[5OTPH0U.png)![img](file:&#x2F;&#x2F;&#x2F;C:\Users\the xie\AppData\Roaming\Tencent\Users\577037595\QQ\WinTemp\RichOle]$[DVQ$PW{}[18O2L@F5O$R.png)</p>
+<p>（3）定义联盟</p>
+<p>网络管理员定义了一个包含两个成员的联盟 X1，包含组织 R1 和 R2。这个联盟的定义被存储在了网络配置 NC4 中，会在接下来的网络开发中被使用。CA1 和 CA2 是这两个组织对应的证书颁发机构。由于 NC4 的配置方式，只有 R1 和 R4 能够创建新的联盟。</p>
+<p>![img](file:&#x2F;&#x2F;&#x2F;C:\Users\the xie\AppData\Roaming\Tencent\Users\577037595\QQ\WinTemp\RichOle\GOGVT47C90%YKTR999X3G&#96;A.png)</p>
+<p>（4）为联盟创建通道</p>
+<p>使用联盟 X1 为 R1 和 R2 创建的的通道 C1。这个通道通过通道配置 CC1 来进行管理，完全独立于网络配置。CC1 是由 R1 和 R2 管理的，他们在 C1 上具有同等的权利。R4 在 CC1 中是没有任何权利的。</p>
+<p>通道C1会关联到排序服务O4，需要注意的是通道 C1 如何具有一个同网络配置 NC4 完全分开的配置 CC1。CC1 包含了赋予 R1 和 R2 在通道 C1 上的权利的规则，就像我们看到的那样，R3 和 R4 在这个通道中没有权限。</p>
+<p>通道非常有用，因为提供了一个联盟成员之间进行私有通信和私有数据的机制。通道提供了与其他通道以及整个网络的隐私性。一旦通道被创建之后，它会真正地代表了“从网络中解放出来”。从现在开始和未来，只有在通道配置中指定的组织才能够控制它。之后的对于网络配置 NC4 的任何改动都不会对通道配置 CC1 造成任何直接的影响。比如如果联盟定义 X1 被改动了，它不会影响通道 C1 的成员。</p>
+<p>![img](file:&#x2F;&#x2F;&#x2F;C:\Users\the xie\AppData\Roaming\Tencent\Users\577037595\QQ\WinTemp\RichOle\KR2$&#96;S2M8TNSZ_]3O43DZ]Y.png)</p>
+<p>（5）节点和账本</p>
+<p><em>一个 Peer 节点 P1 加入了通道 C1。物理上 P1 会存储账本 L1 的副本。P1 和 O4 可以使用通道 C1 来进行通信。</em>P1 在这个网络中的目的是单纯地放置被其他人访问的账本 L1 的副本。我们可以想象 L1 会被<strong>物理地</strong>存储在 P1 上，但是 <strong>逻辑上</strong> 是存储在通道 C1 上。</p>
+<p>P1 的配置中一个关键部分就是一个由 CA1 颁发的 X.509 身份信息，它将 P1 和组织 R1 关联了起来。当 P1 启动之后，它就可以使用排序 O4 <strong>加入</strong>通道C1。当 O4 收到这个加入请求，它会使用通道配置 CC1 来决定 P1 在这个通道中的权限。比如，CC1 决定 P1 是否能够向账本 L1 中读取或写入信息。![img](file:&#x2F;&#x2F;&#x2F;C:\Users\the xie\AppData\Roaming\Tencent\Users\577037595\QQ\WinTemp\RichOle\FMOF_WHDP0876Y%RXGQ}DCD.png)</p>
+<p>（6）应用程序和智能合约链码</p>
+<p><em>智能合约 S5 被安装在了 P1 上。在组织 R1 中的客户端应用 A1 可以通过 Peer 节点 P1 使用 S5 来访问账本。A1、P1 和 O4 都加入了通道 C1，他们都可以使用由这个通道提供的通信设施。</em></p>
+<p>客户端应用 A1 能够使用通道 C1 来连接指定的网络资源，在这个示例中，A1 能够连接 Peer 节点 P1 和排序节点 O4。就像 Peer 节点和排序节点一样，客户端应用也会有一个使它和组织相关联的身份信息。在我们的例子中，客户端应用 A1 是跟组织 R1 相关联的，尽管它处在 Fabric 区块链网络的外边，但它是可以通过通道 C1 跟网络相连的。</p>
+<p>现在我们能够清楚地看到 A1 能够通过 P1 直接访问账本 L1，但是事实上，所有的访问都是由一个称为智能合约链码 S5 的特殊程序来管理的。将 S5 理解为定义访问账本的常规模式，S5 提供了一套完整的定义来对账本 L1 进行查询及更新。简言之，客户端应用 A1 需要通过智能合约 S5 来获得账本 L1。</p>
+<p>智能合约可以被每个组织的应用开发者创建来实现一个在联盟成员间共享的业务流程。智能合约被用来帮助生成被分发到网络中每个节点的交易。大体上来说，一个智能合约定义了<strong>交易逻辑</strong>，它控制了在世界状态中包含的一个业务对象的生命周期。然后它会被打包进一个链码中，这个链码会被部署到一个区块链网络中。可以把智能合约想象为管理交易，链码则管理着智能合约应该如何被打包部署。</p>
+<p>![img](file:&#x2F;&#x2F;&#x2F;C:\Users\the xie\AppData\Roaming\Tencent\Users\577037595\QQ\WinTemp\RichOle{TW6O[3WR5%PTPW_7RB]558.png)</p>
+<h6 id="智能合约与链码"><a href="#智能合约与链码" class="headerlink" title="智能合约与链码"></a>智能合约与链码</h6><p>1）安装链码包</p>
+<p>在智能合约 S5 被开发完之后，组织 R1 中的管理员必须要把它<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/glossary.html#install">安装</a>到节点 P1 上。这是一个很简单的操作。当完成之后，P1 就完全了解了 S5。特别地，P1 能够看到 S5 的<strong>实现</strong>逻辑（用来访问账本 L1 的程序代码）。我们将这个同 S5 的<strong>接口</strong>进行对比，接口只是描述了 S5 的输入和输出，但是没有它的实现。</p>
+<p>当一个组织在一个通道中有多个 Peer 节点时，可以选择在哪个节点安装智能合约，而不需要每个 Peer 节点上都安装。</p>
+<p>2）定义链码</p>
+<p>每个组织需要批准一个<strong>链码定义</strong>，和一系列参数来定义在一个通道中链码应该被如何使用。一个组织必须要批准一个链码定义，才能使用已经安装的智能合约来查询账本和为交易背书。在我们的例子中，只有一个单独的 Peer 节点 P1，一个组织中的管理员 R1 必须要批准 S5 的链码定义。</p>
+<p>在链码定义能够被提交到通道并且用来同通道账本进行互动之前，需要有效数量的组织来批准一个链码的定义（默认为大多数）。因为通道中只有一个成员，R1 的管理员可以提交 S5 的链码定义到通道 C1。当这个定义提交后，S5 就可以被客户端应用 A1 <a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/glossary.html#invoke">调用</a>了！</p>
+<p>虽然在这个通道上的每个组件现在都可以访问 S5，但是他们是不能够看到它的程序逻辑的。这对于安装了这个智能合约的节点还是保持隐私性的，在我们的示例中指的是 P1。从概念上讲，这意味着实际上是定义并提交了智能合约的<strong>接口</strong>到通道，而不是安装了智能合约的<strong>实现</strong>。</p>
+<p>3）背书策略</p>
+<p>在链码定义提供的信息中最重要的部分就是<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/glossary.html#endorsement-policy">背书策略</a>。它描述了在交易被其他的组织接受并存储在他们的账本副本上之前，哪些组织必须要同意此交易。在我们的示例网络中，只有当 R1 和 R2 对交易进行背书之后，交易才能够被接受并存储到账本 L1 中。</p>
+<p>4）调用智能合约</p>
+<p>当智能合约被安装在 Peer 节点并且在通道上定义之后，它就可以被客户端应用<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/glossary.html#invoke">调用</a>了。客户端应用是通过发送交易提案给智能合约背书策略所指定的 Peer 的节点方式来调用智能合约的。这个交易的提案会作为智能合约的输入，智能合约会使用它来生成一个背书交易响应，这会由 Peer 节点返回给客户端应用。</p>
+<p>（7）完成网络</p>
+<p><em>这个网络通过增加新组织 R2 的基础设施变得更大了。具体来说，R2 添加了 Peer 节点 P2，它会存有账本 L1 的一个副本，和链码 S5。R2 像 R1 一样批准了相同的链码定义。P2 也加入了通道 C1，也有一个客户端应用 A2。A2 和 P2 使用由 CA2 颁发的证书来标识 A2 和 P2。所有这些都说明了 A1 和 A2 能够使用 Peer 节点 P1 或者 P2 来调用在 C1 上的 S5。</em></p>
+<h6 id="生成并接受交易"><a href="#生成并接受交易" class="headerlink" title="生成并接受交易"></a>生成并接受交易</h6><p>相较于经常会存有账本副本的 Peer 节点，我们能够看到两种类型的 Peer 节点，一类是存储智能合约而另一类则不存。在我们的网络中，每个 Peer 节点都会存储智能合约的副本，但是在一个更大的网络中，会存在更多的 Peer 节点并且没有存储智能合约的副本。节点只有在安装了智能合约之后才能够<em>运行</em>它，但是这个 Peer 节点可以通过连接到通道来<em>获取</em>一个智能合约的接口信息。</p>
+<p>对于没有安装智能合约的 Peer 节点，我们不应该认为他们在某种程度上是较差的。更多情况下，带有智能合约的 Peer 节点通常会拥有一个特殊的能力——帮助<strong>生成</strong>交易。需要注意的是所有的 Peer 节点都可以<strong>验证</strong>并<strong>接受</strong>或者<strong>拒绝</strong>交易存入他们的账本 L1 的副本中。然而，只有安装了智能合约的 Peer 节点才能够参与交易<strong>背书</strong>的流程，这是生成一笔有效交易的核心。</p>
+<h6 id="Peer节点的类型"><a href="#Peer节点的类型" class="headerlink" title="Peer节点的类型"></a>Peer节点的类型</h6><ul>
+<li><p><a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/glossary.html#commitment"><em>提交节点</em></a>。通道中的每个 Peer 节点都是一个提交节点。他们会接收生成的区块，在这些区块被验证之后会以附加的方式提交到 Peer 节点的账本副本中。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/glossary.html#endorsement"><em>背书节点</em></a>。每个安装了智能合约的 Peer 节点都<em>可以</em>作为一个背书节点。然而，想要<em>成为</em>一个真正的背书节点，节点上的智能合约必须要被客户端应用使用，来生成一个被签名的交易响应。<em>背书节点</em>的术语就是这样来的。</p>
+<p>这是 Peer 节点的两个主要类型，一个 Peer 节点还可以担任的两种其他的角色:</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/glossary.html#leading-peer"><em>主节点</em></a>。当组织在通道中具有多个 Peer 节点的时候，会有一个主节点，它负责将交易从排序节点分发到该组织中其他的提交节点。一个节点可以选择参与静态或者动态的领导选举。</p>
+<p>这是很有用的，从管理者的角度来考虑的话会有两套节点，一套是静态选择的主节点，另一套是动态选举的主节点。对于静态选择，0个或者多个节点可以被配置为主节点。对于动态选举，一个节点会被选举成为主节点。另外，在动态选举主节点中，如果一个主节点出错了，那么剩下的节点将会重新选举一个主节点。</p>
+<p>这意味着一个组织的节点可以有一个或者多个主节点连接到排序服务。这有助于改进需要处理大量交易的大型网络的弹性以及可扩展性。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/glossary.html#anchor-peer"><em>锚节点</em></a>。如果一个 Peer 节点需要同另一个组织的 Peer 节点通信的话，它可以使用对方组织通道配置中定义的锚节点。一个组织可以拥有0个或者多个锚节点，并且一个锚节点能够帮助很多不同的跨组织间的通信。</p>
+<p>![img](file:&#x2F;&#x2F;&#x2F;C:\Users\the xie\AppData\Roaming\Tencent\Users\577037595\QQ\WinTemp\RichOle\RZH30U@[5{ZQ9EP{G[7Y4UF.png)</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>（8）添加另一个联盟定义和新的通道</p>
+<p><em>来自 R1 或者 R4 的网络管理员添加了一个新的联盟定义 X2，其中包含了 R2 和 R3。这将会被用来为 X2 定义一个新的通道。</em></p>
+<p>新通道只能够由网络配置策略 NC4 中指定的组织比如 R1 或者 R4 来创建，因为只有他们才有相关的权限。+</p>
+<p><em>一个使用联盟定义 X2 为 R2 和 R3 的创建的新通道 C2。这个通道具有通道配置 CC2，完全同网络配置 NC4 以及通道配置 CC1 分离。通道 C2 由 R2 和 R3 来管理，他们两个就像 CC2 中的一个策略定义的那样具有相同的权利。R1 和 R4 在 CC2 中是没有任何权利的。</em></p>
+<h6 id="网络和通道配置"><a href="#网络和通道配置" class="headerlink" title="网络和通道配置"></a>网络和通道配置</h6><p>只要 O4 是一个好的参与者，并且在它处理网络资源的任何时候都能够正确的实现在 NC4 中定义的策略的话，那么我们的网络就会按照所有的组织一致同意的方式工作。在很多方面 NC4 被认为要比 O4 更重要，因为最终是它来管控网络的访问。</p>
+<p>尽管 Peer 节点和应用程序在网络中是关键的操作者，他们在一个通道中的行为更多的是由通道配置的策略来决定的。</p>
+<p>最后，理解网络和通道配置是如何在物理上来实现的是非常重要的。我们能够看到网络和通道的配置在逻辑上是独立的，网络会有一个配置，每个通道也会有一个配置。这一点非常重要，任何访问网络或者通道的组件必须对不同组织的授权有共同的理解。</p>
+<p>尽管在逻辑上是独立的配置，实际上它会被复制到组成网络或者通道的每个节点，并保持一致。比如，在我们的网络中，节点 P1 和 P2 都有通道配置 CC1 的副本，在这个网络完成的时候，节点 P2 和 P3 也会有通道配置 CC2 的副本。类似的，排序服务节点 O4 有网络配置的副本，但是在<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/network/network.html#the-ordering-service">多节点配置</a>中，每个排序服务节点都会有他们自己的关于网络配置的副本。</p>
+<p>网络和通道的配置使用了和用户交易所使用的相同的区块链技术来保持一致，只是被叫做<strong>配置</strong>的交易。想要改变网络或者通道的配置，管理员必须要提交一个配置交易来改变网络或者通道的配置。该交易必须被对应策略中指定的组织签名，这些组织负责配置的改变。这个策略被称为<strong>mod_policy</strong> 我们<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/network/network.html#changing-policy">稍后讨论</a>。</p>
+<p>实际上，排序服务节点运行着一个小型的区块链，通过我们前边提到过的<strong>系统通道</strong>连接。使用系统通道排序服务节点分发网络配置交易。这些交易被用来维护每个排序服务节点间网络配置副本的一致性。类似的，<strong>应用程序通道</strong>中的 Peer 节点分发通道配置交易。同样，这些交易被用来维护每个 Peer 节点通道配置的一致性。<img src="/Hyperledger-Fabric.assets/X%60X%5DAWUD5BROZIM536Z1QRR.png" alt="img"></p>
+<p><em>这个图展示了在网络 N 中关于通道 C1 和 C2 的以下内容：客户端应用程序 A1 和 A2 可以使用通道 C1 来同节点 P1 和 P2，以及排序服务 O4 进行通信。客户端应用程序 A3 能够使用 C2 同节点 P3 和排序服务 O4 进行通信。排序服务 O4 可以使用通道 C1 和 C2 的通信服务。通道配置 CC1 应用到了通道 C1 上，CC2 应用到了通道 C2 上。</em></p>
+<p>(9)把一个Peer节点添加到多个通道中<img src="/Hyperledger-Fabric.assets/AJA9ED2DPVBDALAYIVTUNHE.png" alt="img"></p>
+<p><em>这个图展示了在网络 N 中关于通道 C1 和 C2 的以下内容：客户端应用程序 A1 能够使用通道 C1 与节点 P1 和 P2 以及排序服务 O4 进行通信。客户端应用程序 A2 可以使用通道 C1 与节点 P1 和 P2 进行通信，以及使用通道 C2 与节点 P2 和 P3 以及排序服务 O4 进行通信。客户端应用程序 A3 能够使用通道 C2 与节点 P3 和 P2 和排序服务 O4 进行通信。排序服务 O4 能够使用通道 C1 和 C2 的通信服务。通道配置 CC1 应用在了通道 C1 中，CC2 应用在了通道 C2 中。</em></p>
+<p>注意，节点 P2 将智能合约 S5 安装在通道 C1 中，将智能合约 S6 安装在通道 C2 中。节点 P2 同时是两个通道的成员，并且通过不同的智能合约来处理不同的账本。在不同通道上交易时 Peer 节点 P2 的行为受到不同的约束。特别地，在通道配置 CC1 中包含的策略决定了 P2 在通道 C1 中进行交易的时候的操作，这也是通道配置 CC2 中的策略对 P2 在通道 C2 中的控制。</p>
+<h4 id="策略"><a href="#策略" class="headerlink" title="策略"></a>策略</h4><h5 id="Fabric是如何实现策略的"><a href="#Fabric是如何实现策略的" class="headerlink" title="Fabric是如何实现策略的"></a>Fabric是如何实现策略的</h5><p>策略实现在 Fabric 网络的不同层次。每个策略域都管理着网络操作的不同方面。</p>
+<h6 id="系统通道配置"><a href="#系统通道配置" class="headerlink" title="系统通道配置"></a>系统通道配置</h6><p>每个网络都从排序服务<strong>系统通道</strong>开始。网络中必须有至少一个排序服务的排序系统通道，它是第一个被创建的通道。该通道也包含着谁是排序服务（排序服务组织）以及在网络中交易（联盟组织）的成员。</p>
+<p>排序系统通道配置区块中的策略治理着排序服务使用的共识，并定义了新区块如何被创建。系统通道也治理着联盟中的哪些成员可以创建新通道。</p>
+<h6 id="应用通道配置"><a href="#应用通道配置" class="headerlink" title="应用通道配置"></a>应用通道配置</h6><p>应用 <em>通道</em> 用于向联盟中的组织间提供私有通信机制。</p>
+<p>应用通道中的策略治理着从通道中添加和删除成员的能力。应用通道也治理着使用 Fabric 链码生命周期在链码定义和提交到通道前需要哪些组织同意。当系统通道初始创建时，它默认继承了排序系统通道的所有排序服务参数。同时，这些参数（包括治理它们的策略）可以被每个通道自定义。</p>
+<h6 id="权限控制列表（ACL）"><a href="#权限控制列表（ACL）" class="headerlink" title="权限控制列表（ACL）"></a>权限控制列表（ACL）</h6><p>网络管理员可能对 Fabric 中 ACL 的使用更感兴趣，ACL 通过将资源和已有策略相关联的方式提供了资源访问配置的能力。“资源”可以是系统链码中的方法（例如，“qscc”中的“GetBlockByNumber”）或者其他资源（例如，谁可以获取区块事件）。ACL 参考应用通道配置中定义的策略并将它们扩展到了其他资源的控制。Fabric ACL 的默认集合在 <code>configtx.yaml</code> 文件的 <code>Application: &amp;ApplicationDefaults</code> 部分，但是它们可以也应该在生产环境中被重写。<code>configtx.yaml</code> 中定义的资源列表是 Fabric 当前定义的所有内部资源的完整集合。</p>
+<p>该文件中，ACL 以如下格式表示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># ACL policy for chaincode to chaincode invocation</span><br><span class="line">peer/ChaincodeToChaincode: /Channel/Application/Writers</span><br></pre></td></tr></table></figure>
+
+<p><code>peer/ChaincodeToChaincode</code> 表示该资源是被保护的，相关的交易必须符合 <code>/Channel/Application/Writers</code> 引用侧策略才能被认为是有效的。</p>
+<p>关于 ACL 更深入的信息，请参考操作指南中的 <a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/access_control.html">ACL</a> 主题。</p>
+<h6 id="智能合约背书策略"><a href="#智能合约背书策略" class="headerlink" title="智能合约背书策略"></a>智能合约背书策略</h6><p>链码包中的每一个智能合约都有一个背书策略，该策略指明了需要通道中多少不同组织的成员根据指定智能合约执行和验证交易才能使一笔交易有效。因此，背书策略定义了必须“背书”（批准）提案执行的组织（的 Peer 节点）。</p>
+<h6 id="修改策略"><a href="#修改策略" class="headerlink" title="修改策略"></a>修改策略</h6><p>还有一个对 Fabric 的策略工作有重要作用的策略类型，<code>修改（Modification）策略</code>。修改策略指明了需要签名所有配置 <em>更新</em> 的一组身份。它是定义如何更新策略的策略。因此，每个通道配置元素都包含这一个治理它的变更的策略的引用。</p>
+<h5 id="在Fabric中如何写策略"><a href="#在Fabric中如何写策略" class="headerlink" title="在Fabric中如何写策略"></a>在Fabric中如何写策略</h5><p>在 Hyperledger Fabric 中，策略中明确的签名使用 <code>Signature</code> 语法，隐含的签名使用 <code>ImplicitMeta</code> 语法。</p>
+<h6 id="签名策略"><a href="#签名策略" class="headerlink" title="签名策略"></a>签名策略</h6><p><code>Signature</code> 策略定义了要满足策略就必须签名的特定用户类型，比如 <code>Org1.Peer OR Org2.Peer</code>。策略是很强大的，应为它可以构造复杂的规则，比如“组织 A 和 2 个其他管理员，或者 6 个组织的管理员中的 5 个”。语法支持 <code>AND</code>、 <code>OR</code> 和 <code>NOutOf</code> 的任意组合。例如，一个策略可以简单表达为使用 <code>AND (Org1, Org2)</code> ，表示满足该策略就同时需要 Org1 中的一个成员和 Org2 中的一个成员的签名。</p>
+<h6 id="隐元（ImplicitMeta）策略"><a href="#隐元（ImplicitMeta）策略" class="headerlink" title="隐元（ImplicitMeta）策略"></a>隐元（ImplicitMeta）策略</h6><p><code>隐元</code>策略只在通道配置上下文中有效，通道配置在配置树策略中是基于分层的层次结构。隐元策略聚合了由签名策略最终定义的配置树深层的结果。它们是<code>隐藏的</code>，因为它们基于通道配置中的当前组织隐式构建，它们是<code>元信息</code>，因为它们的评测不依赖于特定 MSP 规范，而是依赖于配置树中它们的其他子策略。</p>
+<h6 id="链码背书策略"><a href="#链码背书策略" class="headerlink" title="链码背书策略"></a>链码背书策略</h6><p>当使用 Fabric 链码生命周期<strong>链码</strong>被批准并提交到通道时会指定一个背书策略（这个背书策略会覆盖与该链码相关的所有状态）。背书策略可以引用通道配置中的背书策略或者明确指定签名策略。</p>
+<p>如果在批准阶段没有明确指明背书策略，就默认使用 <code>Endorsement</code> 策略 <code>&quot;MAJORITY Endorsement&quot;</code>，意味着要想使交易生效就需要大多数不同通道成员（组织）的执行并验证交易。默认策略允许加入通道的组织自动加入链码背书策略。如果你不想使用默认背书策略，你可以使用签名策略格式来指定更复杂的背书策略（这样就需要链码先被通道中的一个组织签名，然后让其他组织签名）。</p>
+<p>签名策略也允许你包含<code>主角（principals）</code>，这是匹配角色和身份的一种简单方式。</p>
+<p>主角被描述为 ‘MSP.ROLE’，<code>MSP</code> 表示需要的 MSP ID（组织），<code>ROLE</code> 表示一下四种可接受的角色之一：Member、 Admin、 Client 和 Peer。</p>
+<h4 id="Peer节点"><a href="#Peer节点" class="headerlink" title="Peer节点"></a>Peer节点</h4><h5 id="应用程序和-Peer-节点"><a href="#应用程序和-Peer-节点" class="headerlink" title="应用程序和 Peer 节点"></a>应用程序和 Peer 节点</h5><p><img src="/Hyperledger-Fabric.assets/5%60KCXE7T9%5DU33Z9XYIJ221.png" alt="img"></p>
+<p><em>在这个例子中，应用程序 A 连接到了 P1 并且调用了链码 S1 来查询或者更新账本 L1。P1 调用了链码 S1 来生成提案响应，这个响应包含了查询结果或者账本更新的提案。应用程序 A 接收到了提案的响应，对于查询来说，流程到这里就结束了。对于更新来说，应用程序 A 会从所有的响应中创建一笔交易，它会把这笔交易发送给排序节点 O1 进行排序。O1 会搜集网络中的交易并打包到区块中，然后将这些区块分发到所有 Peer 节点上，包括 P1。P1 在把交易提交到账本 L1 之前对交易进行验证。当 L1 被更新之后，P1 会生成一个事件，该事件会被 A 接收到，来标识这个过程结束了。</em></p>
+<h5 id="Peer-节点和身份"><a href="#Peer-节点和身份" class="headerlink" title="Peer 节点和身份"></a>Peer 节点和身份</h5><p>Peer 节点会有一个身份信息被分给他们，这是通过一个特定的证书认证机构颁发的数字证书来实现的。</p>
+<p>姑且把数字证书看成是能够为 Peer 节点提供可验证信息的身份证。<em>在网络中的每个 Peer 节点都会被所属组织的管理员分配一个数字证书</em>。</p>
+<p><em>当 Peer 节点连接到一个通道的时候，它的数字证书会通过通道 MSP 来识别它的所属组织。<img src="/Hyperledger-Fabric.assets/U@G@4%5BZ18Z1D%5BKB%7DUCP_1Q1.png" alt="img"></em></p>
+<p><em>在这个例子中，P1 和 P2 具有由 CA1 颁发的身份信息。通道 C 通过在它的通道配置中的策略来决定来自 CA1 的身份信息应该使用 ORG1.MSP 被关联到 Org1。类似的，P3 和 P4 由 ORG2.MSP 识别为 Org2 的一部分。</em></p>
+<h5 id="Peer-节点和排序节点"><a href="#Peer-节点和排序节点" class="headerlink" title="Peer 节点和排序节点"></a>Peer 节点和排序节点</h5><p>想要更新账本的应用程序会被引入到一个三阶段的流程，这确保了在一个区块链网络中所有的 Peer 节点都彼此保持着一致的账本。</p>
+<ul>
+<li>在第一个阶段，应用程序会跟<em>背书节点</em>的子集一起工作，其中的每个节点都会向应用程序为提案的账本更新提供背书，但是不会将提案的更新应用到他们的账本副本上。</li>
+<li>在第二个阶段，这些分散的背书会被搜集到一起当做交易被打包进区块中。</li>
+<li>在最后一个阶段，这些区块会被分发回每个 Peer 节点，在这些 Peer 节点上每笔交易在被应用到 Peer 节点的账本副本之前会被验证</li>
+</ul>
+<h6 id="第一阶段：提案"><a href="#第一阶段：提案" class="headerlink" title="第一阶段：提案"></a>第一阶段：提案<img src="/Hyperledger-Fabric.assets/7H%7B9%5B%5D%25%7B2ZJ5YI%60$N6X%7B5EN.png" alt="img"></h6><p><em>交易提案会被 Peer 节点独立地执行，Peer 节点会返回经过背书的提案响应。在这个例子中，应用程序 A1 生成了交易 T1 和提案 P，应用程序会将交易及提案发送给通道 C 上的 Peer 节点 P1 和 Peer 节点 P2。P1 使用交易 T1 和 提案 P 来执行链码 S1，这会生成对交易 T1 的响应 R1，它会提供背书 E1。P2 使用交易 T1 提案 P 执行了链码 S1，这会生成对于交易 T1 的响应 R2，它会提供背书 E2。应用程序 A1 对于交易 T1 接收到了两个背书响应，称为 E1 和 E2。</em></p>
+<h5 id="阶段2：排序和将交易打包到区块"><a href="#阶段2：排序和将交易打包到区块" class="headerlink" title="阶段2：排序和将交易打包到区块"></a>阶段2：排序和将交易打包到区块</h5><p>排序节点是这个过程的关键——它接收交易，这些交易中包含了来自很多个应用的已经背书过的交易提案，并且将交易排序并打包进区块。</p>
+<h5 id="阶段3：验证和提交"><a href="#阶段3：验证和提交" class="headerlink" title="阶段3：验证和提交"></a>阶段3：验证和提交</h5><p><img src="/Hyperledger-Fabric.assets/LAZ%7D7NOP74S2EJJNUEGE0Q.png" alt="img"></p>
+<p><em>排序节点的第二个角色是将区块分发给 Peer 节点。在这个例子中，排序节点 O1 将区块 B2 分发给了 Peer 节点 P1 和 Peer 节点 P2。Peer P1 处理了区块 B2，产生了一个会被添加到 P1 的账本 L1 中的新区块。同时，peer P2 处理了区块 B2，产生了一个会被添加到 P2 的账本 L1 中的新区块。当这个过程结束之后，账本 L1 就会被一致地更新到了 Peer 节点 P1 和 P2 上，他们也可能会通知所连接的应用程序关于这笔交易已经被处理过的消息。</em></p>
+<p>阶段三是从排序节点将区块分发到所有与它连接的 Peer 节点开始的。Peer 节点会和通道中的排序节点相连，所有跟这个排序节点相连的 Peer 节点将会收到一个新的区块的副本。每个 Peer 节点会独立处理这个区块，但是会跟这个通道上的每一个其他 Peer 节点使用完全一致的方式处理。通过这种方式，我们会看到账本是会始终保持一致的。</p>
+<p>我们也注意到了第三阶段并没有要求执行链码——那只会在第一阶段执行，这是很重要的。这意味着链码仅仅需要在背书节点中有效，而不需要在区块链网络的所有部分都要有。这个通常是很有帮助的，因为这保持了链码逻辑的机密性只有背书组织了解。这个同链码的输出（交易提案的响应）恰恰相反，这个输出会被分享给通道中的所有 Peer 节点，不管这些 Peer 节点是否为这交易提供背书。这个关于背书节点的特殊性是被设计用来帮助扩展性和保密性的。</p>
+<p>我们也注意到了第三阶段并没有要求执行链码——那只会在第一阶段执行，这是很重要的。这意味着链码仅仅需要在背书节点中有效，而不需要在区块链网络的所有部分都要有。这个通常是很有帮助的，因为这保持了链码逻辑的机密性只有背书组织了解。这个同链码的输出（交易提案的响应）恰恰相反，这个输出会被分享给通道中的所有 Peer 节点，不管这些 Peer 节点是否为这交易提供背书。这个关于背书节点的特殊性是被设计用来帮助扩展性和保密性的。</p>
+<h4 id="智能合约和链码"><a href="#智能合约和链码" class="headerlink" title="智能合约和链码"></a>智能合约和链码</h4><h6 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h6><p>在各业务彼此进行交互之前，必须先定义一套通用的合约，其中包括通用术语、数据、规则、概念定义和流程。将这些合约放在一起，就构成了管理交易各方之间所有交互的<strong>业务模型</strong>。使用区块链网络，我们可以将这些合约转换为可执行程序（业内称为<strong>智能合约</strong>），从而实现了各种各样的新可能性。</p>
+<p>通常，智能合约定义的是控制世界状态中业务对象生命周期的<strong>交易逻辑</strong>，随后该交易逻辑被打包进链码，紧接着链码会被部署到区块链网络中。可以将智能合约看成交易的管理者，而链码则管理着如何将智能合约打包以便用于部署。</p>
+<p><em>一个智能合约定义在一个链码中。而多个智能合约也可以定义在同一个链码中。当一个链码部署完毕，该链码中的所有智能合约都可供应用程序使用。</em>智能合约是一个特定领域的程序，它与特定的业务流程相关，而链码则是一组相关智能合约安装和实例化的技术容器。</p>
+<h6 id="背书"><a href="#背书" class="headerlink" title="背书"></a>背书</h6><p>每个链码都有一个背书策略与之相关联，该背书策略适用于此链码中定义的所有智能合约。背书策略非常重要，它指明了区块链网络中哪些组织必须对一个给定的智能合约所生成的交易进行签名，以此来宣布该交易<strong>有效</strong>。</p>
+<p>一个示例背书策略可能这样定义：参与区块链网络的四个组织中有三个必须在交易被认为<strong>有效</strong>之前签署该交易。所有的交易，无论是<strong>有效的</strong>还是<strong>无效的</strong>，都会被添加到分布式账本中，但只有<strong>有效</strong>交易会更新世界状态。</p>
+<p>背书策略是 Hyperledger Fabric 与以太坊（Ethereum）或比特币（Bitcoin）等其他区块链的区别所在。在这些区块链系统中，网络上的任何节点都可以生成有效的交易。而 Hyperledger Fabric 更真实地模拟了现实世界；交易必须由 Fabric 网络中受信任的组织验证。例如，一个政府组织必须签署一个有效的 <code>issueIdentity</code> 交易，或者一辆车的 <code>买家</code> 和 <code>卖家</code> 都必须签署一个 <code>车辆</code> 转移交易。背书策略的设计旨在让 Hyperledger Fabric 更好地模拟这些真实发生的交互。</p>
+<h6 id="有效交易"><a href="#有效交易" class="headerlink" title="有效交易"></a>有效交易</h6><p>当智能合约执行时，它会在区块链网络中组织所拥有的节点上运行。智能合约提取一组名为<strong>交易提案</strong>的输入参数，并将其与程序逻辑结合起来使用以读写账本。对世界状态的更改被捕获为<strong>交易提案响应</strong>（或简称<strong>交易响应</strong>），该响应包含一个<strong>读写集</strong>，其中既含有已读取的状态，也含有还未书写的新状态（如果交易有效的话）。注意，在执行智能合约时<strong>世界状态没有更新</strong>！</p>
+<p><em>所有的交易都有一个识别符、一个提案和一个被一群组织签名的响应。所有交易，无论是否有效，都会被记录在区块链上，但仅有效交易会更新世界状态。</em></p>
+<h6 id="通道"><a href="#通道" class="headerlink" title="通道"></a>通道</h6><p><em>通道在一群组织之间提供了一种完全独立的通信机制。当链码定义被提交到通道上时，该通道上所有的应用程序都可以使用此链码中的智能合约。</em></p>
+<p>虽然智能合约代码被安装在组织节点的链码包内，但是只有等到链码被定义在通道上之后，该通道上的成员才能够执行其中的智能合约。</p>
+<p><strong>链码定义</strong>是一种包含了许多参数的结构，这些参数管理着链码的运行方式，包含着链码名、版本以及背书策略。</p>
+<p>各通道成员批准各自组织的一个链码定义，以表示其对该链码的参数表示同意。当足够数量（默认是大多数）的组织都已批准同一个链码定义，该定义可被提交至这些组织所在的通道。随后，通道成员可依据该链码定义中指明的背书策略来执行其中的智能合约。这个背书策略可同等使用于在相同链码中定义的所有智能合约。</p>
+<h6 id="互通"><a href="#互通" class="headerlink" title="互通"></a>互通</h6><p>一个智能合约既可以调用同通道上的其他智能合约，也可以调用其他通道上的智能合约。这样一来，智能合约就可以读写原本因为智能合约命名空间而无法访问的世界状态数据。</p>
+<h6 id="系统链码"><a href="#系统链码" class="headerlink" title="系统链码"></a>系统链码</h6><p>链码中定义的智能合约为一群区块链组织共同认可的业务流程编码了领域相关规则。然而，链码还可以定义低级别程序代码，这些代码符合无关于领域的<em>系统</em>交互，但与业务流程的智能合约无关。</p>
+<p>以下是不同类型的系统链码及其相关缩写：</p>
+<ul>
+<li><strong>生命周期</strong> 在所有 Peer 节点上运行，它负责管理节点上的链码安装、批准组织的链码定义、将链码定义提交到通道上。 你可以了解更多<code>生命周期</code>是如何实现 Fabric 链码声明周期<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/chaincode_lifecycle.html">过程</a>的。</li>
+<li><strong>生命周期系统链码（LSCC）</strong> 负责为 1.x 版本的 Fabric 管理链码生命周期。该版本的生命周期要求在通道上实例化或升级链码。你可以阅读更多关于 LSCC 如何实现这一<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/chaincode4noah.html">过程</a>。如果你的 V1_4_x 或更低版本设有通道应用程序的功能，那么你也可以使用 LSCC 来管理链码。</li>
+<li><strong>配置系统链码（CSCC）</strong> 在所有 Peer 节点上运行，以处理通道配置的变化，比如策略更新。你可以在<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/configtx.html#configuration-updates">这里</a>阅读更多 CSCC 实现的内容。</li>
+<li><strong>查询系统链码（QSCC）</strong> 在所有 Peer 节点上运行，以提供账本 API（应用程序编码接口），其中包括区块查询、交易查询等。你可以在交易场景<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/developapps/transactioncontext.html">主题</a>中查阅更多这些账本 API 的信息。</li>
+<li><strong>背书系统链码（ESCC）</strong> 在背书节点上运行，对一个交易响应进行密码签名。你可以在<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/peers/peers.html#phase-1-proposal">这里</a>阅读更多 ESCC 实现的内容。</li>
+<li><strong>验证系统链码（VSCC）</strong> 验证一个交易，包括检查背书策略和读写集版本。你可以在<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/peers/peers.html#phase-3-validation">这里</a>阅读更多 VSCC 实现的内容。</li>
+</ul>
+<p>以下是不同类型的系统链码及其相关缩写：</p>
+<ul>
+<li><strong>生命周期</strong> 在所有 Peer 节点上运行，它负责管理节点上的链码安装、批准组织的链码定义、将链码定义提交到通道上。 你可以了解更多<code>生命周期</code>是如何实现 Fabric 链码声明周期<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/chaincode_lifecycle.html">过程</a>的。</li>
+<li><strong>生命周期系统链码（LSCC）</strong> 负责为 1.x 版本的 Fabric 管理链码生命周期。该版本的生命周期要求在通道上实例化或升级链码。你可以阅读更多关于 LSCC 如何实现这一<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/chaincode4noah.html">过程</a>。如果你的 V1_4_x 或更低版本设有通道应用程序的功能，那么你也可以使用 LSCC 来管理链码。</li>
+<li><strong>配置系统链码（CSCC）</strong> 在所有 Peer 节点上运行，以处理通道配置的变化，比如策略更新。你可以在<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/configtx.html#configuration-updates">这里</a>阅读更多 CSCC 实现的内容。</li>
+<li><strong>查询系统链码（QSCC）</strong> 在所有 Peer 节点上运行，以提供账本 API（应用程序编码接口），其中包括区块查询、交易查询等。你可以在交易场景<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/developapps/transactioncontext.html">主题</a>中查阅更多这些账本 API 的信息。</li>
+<li><strong>背书系统链码（ESCC）</strong> 在背书节点上运行，对一个交易响应进行密码签名。你可以在<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/peers/peers.html#phase-1-proposal">这里</a>阅读更多 ESCC 实现的内容。</li>
+<li><strong>验证系统链码（VSCC）</strong> 验证一个交易，包括检查背书策略和读写集版本。你可以在<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/peers/peers.html#phase-3-validation">这里</a>阅读更多 VSCC 实现的内容。</li>
+</ul>
+<h4 id="账本"><a href="#账本" class="headerlink" title="账本"></a>账本</h4><p>Hyperledger Fabric 中的账本由“世界状态“和”区块链“这两部分组成，它们彼此不同但却相互关联。二者都代表了与业务对象有关的一些事实。</p>
+<p>首先，<strong>世界状态</strong>是一个数据库，它存储了一组账本状态的<strong>当前值</strong>。通过世界状态，程序可以直接访问一个账本状态的当前值，不需要遍历整个交易日志来计算当前值。默认情况下，账本状态是以<strong>键值</strong>对的方式来表示的，稍后我们将看到 Hyperledger Fabric 如何提供这一方面的灵活性。因为我们可以创建、更新和删除状态，所以世界状态能够频繁更改。</p>
+<p>其次，<strong>区块链</strong>是交易日志，它记录了促成当前世界状态的所有改变。交易被收集在附加到区块链的区块中，能帮助我们理解所有促成当前世界状态的改变的历史。区块链数据结构与世界状态相差甚远，因为一旦把数据写入区块链，就无法修改，它是<strong>不可篡改的</strong>。</p>
+<h6 id="世界状态"><a href="#世界状态" class="headerlink" title="世界状态"></a>世界状态</h6><p>世界状态被作为数据库来实现。这一点很有意义，因为数据库为有效存储和状态检索提供了充分的算子。稍后我们将看到，我们可以将 Hyperledger Fabric 配置为使用不同的世界状态数据库来满足以下需求：不同类型的状态值，应用程序所需的访问模式，例如，当遇到复杂查询的情况时。</p>
+<p>您还会注意到，每个状态都有一个版本号，版本号是供 Hyperledger Fabric 内部使用的，并且每次状态更改时版本号会发生递增。每当更新状态时，都会检查该状态的版本，以确保当前状态与背书时的版本相匹配。这就确保了世界状态是按照预期进行更新的，没有发生并发更新。<img src="/Hyperledger-Fabric.assets/%5D%7BMEQGWV6OCUQV04%7B%5BH%5DH55.png" alt="img"></p>
+<h6 id="区块链"><a href="#区块链" class="headerlink" title="区块链"></a>区块链</h6><p>区块链的结构是一群相互链接的区块的序列化日志，其中每个区块都包含一系列交易，各项交易代表了一个对世界状态进行的查询或更新操作。我们在<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/peers/peers.html#peers-and-orderers">其他地方</a>讨论了排序交易的确切机制；其中重要的是区块排序以及区块内的交易排序，这一机制是在 Hyperledger Fabric 的<strong>排序服务</strong>组件首次创建区块时被建立起来的。</p>
+<p>区块由三个部分组成</p>
+<p><strong>区块头</strong></p>
+<p>这个部分包含三个字段，这些字段是在创建一个区块时候被写入的。</p>
+<ul>
+<li><strong>区块编号</strong>：编号从0（初始区块）开始，每在区块链上增加一个新区块，编号的数字都会加1。</li>
+<li><strong>当前区块的哈希值</strong>：当前区块中包含的所有交易的哈希值。</li>
+<li><strong>前一个区块头的哈希值</strong>：区块链中前一个区块头的哈希值。</li>
+</ul>
+<p><strong>区块数据</strong></p>
+<p>这部分包含了一个有序的交易列表。区块数据是在排序服务创建区块时被写入的。这些交易的结构很复杂但也很直接。</p>
+<p><strong>区块元数据</strong></p>
+<p>这个部分包含了区块被写入的时间，还有区块写入者的证书、公钥以及签名。随后，区块的提交者也会为每一笔交易添加一个有效或无效的标记，但由于这一信息与区块同时产生，所以它不会被包含在哈希中。</p>
+<h5 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h5><p>上文中我们讨论账本时，似乎它只包括一个世界状态和一条区块链，但这显然过于简单化了。实际上，每个链码都有自己的世界状态，并且与所有其他链码的世界状态分离。世界状态位于一个命名空间中，因此只有位于同一链码中的智能合约才能访问一个给定的命名空间。</p>
+<p>现在让我们看看命名空间的概念是如何被应用到 Hyperledger Fabric 通道中的</p>
+<p>在 Hyperledger Fabric 中，每个<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/channels.html">通道</a>都有一个完全独立的账本。这意味着完全独立的区块链和完全独立的世界状态，包括命名空间。应用程序和智能合约可以在通道之间通信，以便在通道间访问账本信息。</p>
+<h4 id="排序服务"><a href="#排序服务" class="headerlink" title="排序服务"></a>排序服务</h4><p>Hyperledger Fabric有一种称为<strong>排序节点</strong>的节点使交易有序，并与其他排序节点一起形成一个<strong>排序服务</strong>。因为 Fabric 的设计依赖于<strong>确定性</strong>的共识算法，所以 Peer 节点所验证的区块都是最终的和正确的。账本不会像其他分布式的以及无需许可的区块链中那样产生分叉。</p>
+<p>除了促进确定性之外，排序节点还将链码执行的背书（发生在节点）与排序分离，这在性能和可伸缩性方面给 Fabric 提供了优势，消除了由同一个节点执行和排序时可能出现的瓶颈。</p>
+<p>除了促进确定性之外，排序节点还将链码执行的背书（发生在节点）与排序分离，这在性能和可伸缩性方面给 Fabric 提供了优势，消除了由同一个节点执行和排序时可能出现的瓶颈。</p>
+<h5 id="排序节点和通道配置"><a href="#排序节点和通道配置" class="headerlink" title="排序节点和通道配置"></a>排序节点和通道配置</h5><p>除了<strong>排序</strong>角色之外，排序节点还维护着允许创建通道的组织列表。此组织列表称为“联盟”，列表本身保存在“排序节点系统通道”（也称为“排序系统通道”）的配置中。默认情况下，此列表及其所在的通道只能由排序节点管理员编辑。请注意，排序服务可以保存这些列表中的几个，这使得联盟成为 Fabric 多租户的载体。</p>
+<p>排序节点还对通道执行基本访问控制，限制谁可以读写数据，以及谁可以配置数据。请记住，谁有权修改通道中的配置元素取决于相关管理员在创建联盟或通道时设置的策略。配置交易由排序节点处理，因为它需要知道当前的策略集合，并根据策略来执行其基本的访问控制。在这种情况下，排序节点处理配置更新，以确保请求者拥有正确的管理权限。如果有权限，排序节点将根据现有配置验证更新请求，生成一个新的配置交易，并将其打包到一个区块中，该区块将转发给通道上的所有节点。然后节点处理配置交易，以验证排序节点批准的修改确实满足通道中定义的策略。</p>
+<h5 id="排序节点和交易流程"><a href="#排序节点和交易流程" class="headerlink" title="排序节点和交易流程"></a>排序节点和交易流程</h5><p>区块内交易的严格排序使得 Hyperledger Fabric 与其他区块链稍有不同，在其他区块链中，相同的交易可以被打包成多个不同的区块，从而形成一个链。在 Hyperledger Fabric 中，由排序服务生成的区块是<strong>最终的</strong>。一旦一笔交易被写进一个区块，它在账本中的地位就得到了保证。正如我们前面所说，Hyperledger Fabric 的最终性意味着没有<strong>账本分叉</strong>，也就是说，经过验证的交易永远不会被重写或删除。</p>
+<h5 id="排序服务实现"><a href="#排序服务实现" class="headerlink" title="排序服务实现"></a>排序服务实现</h5><ul>
+<li><p><strong>Raft</strong> (推荐)</p>
+<p>作为 v1.4.1 的新特性，Raft 是一种基于 <a target="_blank" rel="noopener" href="https://coreos.com/etcd/"><code>etcd</code></a> 中 <a target="_blank" rel="noopener" href="https://raft.github.io/raft.pdf">Raft 协议</a>实现的崩溃容错（Crash Fault Tolerant，CFT）排序服务。Raft 遵循“领导者跟随者”模型，这个模型中，在每个通道上选举领导者节点，其决策被跟随者复制。Raft 排序服务会比基于 Kafka 的排序服务更容易设置和管理，它的设计允许不同的组织为分布式排序服务贡献节点。</p>
+</li>
+<li><p><strong>Kafka</strong> (在 v2.0 中被弃用)</p>
+<p>和基于 Raft 的排序类似，Apache Kafka 是一个 CFT 的实现，它使用“领导者和跟随者”节点配置。Kafka 利用一个 ZooKeeper 进行管理。基于 Kafka 的排序服务从 Fabric v1.0 开始就可以使用，但许多用户可能会发现管理 Kafka 集群的额外管理开销令人生畏或不受欢迎。</p>
+</li>
+<li><p><strong>Solo</strong> (在 v2.0 中被弃用)</p>
+<p>排序服务的 Solo 实现仅仅是为了测试，并且只包含了一个单一的排序节点。它已经被弃用了，可能会在将来的版本中被完全移除。既存的 Solo 用户应该迁移到一个单一节点的 Raft 网络获得同样的功能。</p>
+</li>
+</ul>
+<h5 id="Raft"><a href="#Raft" class="headerlink" title="Raft"></a>Raft</h5><p>对于将用于生产网络的排序服务，Fabric 实现了使用“领导者跟随者”模型的 Raft 协议，领导者是在一个通道的排序节点中动态选择的（这个集合的节点称为“共识者集合（consenter set）”），领导者将信息复制到跟随者节点。Raft 被称为“崩溃容错”是因为系统可以承受节点的损失，包括领导者节点，前提是要剩余大量的排序节点（称为“法定人数（quorum）”）。换句话说，如果一个通道中有三个节点，它可以承受一个节点的丢失（剩下两个节点）。如果一个通道中有五个节点，则可以丢失两个节点（剩下三个节点）。</p>
+<p>每个通道都在 Raft 协议的<strong>单独</strong>实例上运行，该协议允许每个实例选择不同的领导者。这种配置还允许在集群由不同组织控制的排序节点组成的用例中进一步分散服务。虽然所有 Raft 节点都必须是系统通道的一部分，但它们不一定必须是所有应用程序通道的一部分。通道创建者（和通道管理员）能够选择可用排序节点的子集，并根据需要添加或删除排序节点（只要一次只添加或删除一个节点）。</p>
+<p>虽然这种配置以冗余心跳消息和线程的形式产生了更多的开销，但它为 BFT 奠定了必要的基础。</p>
+<p>在 Raft 中，交易（以提案或配置更新的形式）由接收交易的排序节点自动路由到该通道的当前领导者。这意味着 Peer 节点和应用程序在任何特定时间都不需要知道谁是领导者节点。只有排序节点需要知道。</p>
+<p>当排序节点检查完成后，将按照我们交易流程的第二阶段的描述，对交易进行排序、打包成区块、协商并分发。</p>
+<h5 id="架构说明"><a href="#架构说明" class="headerlink" title="架构说明"></a>架构说明</h5><h6 id="Raft-是如何选举领导者的"><a href="#Raft-是如何选举领导者的" class="headerlink" title="Raft 是如何选举领导者的"></a>Raft 是如何选举领导者的</h6><p>尽管选举领导者的过程发生在排序节点的内部过程中，但是值得注意一下这个过程是如何工作的。</p>
+<p>节点总是处于以下三种状态之一：跟随者、候选人或领导者。所有节点最初都是作为<strong>跟随者</strong>开始的。在这种状态下，他们可以接受来自领导者的日志条目（如果其中一个已经当选），或者为领导者投票。如果在一段时间内没有接收到日志条目或心跳（例如，5秒），节点将自己提升到<strong>候选</strong>状态。在候选状态中，节点从其他节点请求选票。如果候选人获得法定人数的选票，那么他就被提升为领导者。领导者必须接受新的日志条目并将其复制到跟随者。</p>
+<h6 id="快照"><a href="#快照" class="headerlink" title="快照"></a>快照</h6><p>如果一个排序节点宕机，它如何在重新启动时获得它丢失的日志？</p>
+<p>虽然可以无限期地保留所有日志，但是为了节省磁盘空间，Raft 使用了一个称为“快照”的过程，在这个过程中，用户可以定义日志中要保留多少字节的数据。这个数据量将决定区块的数量（这取决于区块中的数据量。注意，快照中只存储完整的区块）。</p>
+<p>例如，假设滞后副本 <code>R1</code> 刚刚重新连接到网络。它最新的区块是<code>100</code>。领导者 <code>L</code> 位于第 <code>196</code> 块，并被配置为快照20个区块。<code>R1</code> 因此将从 <code>L</code> 接收区块 <code>180</code>，然后为区块 <code>101</code> 到 <code>180</code> 区块 <code>分发</code> 请求。然后<code>180</code> 到 <code>196</code> 的区块将通过正常 Raft 协议复制到 <code>R1</code>。</p>
+<h4 id="私有数据"><a href="#私有数据" class="headerlink" title="私有数据"></a>私有数据</h4><h6 id="什么是私有数据"><a href="#什么是私有数据" class="headerlink" title="什么是私有数据"></a>什么是私有数据</h6><p>如果一个通道上的一组组织需要对该通道上的其他组织保持数据私有，则可以选择创建一个新通道，其中只包含需要访问数据的组织。但是，在每种情况下创建单独的通道会产生额外的管理开销（维护链码版本、策略、MSP等），并且不能在保留一部分数据私有的同时，可以让所有通道参与者看到该事务。</p>
+<h6 id="什么是私有数据集合？"><a href="#什么是私有数据集合？" class="headerlink" title="什么是私有数据集合？"></a>什么是私有数据集合？</h6><p>集合是两个元素的组合:</p>
+<ol>
+<li><p><strong>实际的私有数据</strong>，通过 <a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/gossip.html">Gossip 协议</a>点对点地发送给授权可以看到它的组织。私有数据保存在被授权的组织的节点上的私有数据库上，它们可以被授权节点的链码访问。排序节点不能影响这里也不能看到私有数据。注意，由于 gossip 以点对点的方式向授权组织分发私有数据，所以必须设置通道上的锚节点，也就是每个节点上的 CORE_PEER_GOSSIP_EXTERNALENDPOINT 配置，以此来引导跨组织的通信。</p>
+</li>
+<li><p><strong>该数据的 hash 值</strong>，该 hash 值被背书、排序之后写入通道上每个节点的账本。Hash 值作为交易的证明用于状态验证，并可用于审计。</p>
+<h6 id="什么时候使用一个通道内的组织集合，什么时候使用单独的通道"><a href="#什么时候使用一个通道内的组织集合，什么时候使用单独的通道" class="headerlink" title="什么时候使用一个通道内的组织集合，什么时候使用单独的通道"></a>什么时候使用一个通道内的组织集合，什么时候使用单独的通道</h6><ul>
+<li>当必须将整个账本在属于通道成员的组织中保密时，使用<strong>通道</strong>比较合适。</li>
+<li>当账本必须共享给一些组织，但是只有其中的部分组织可以在交易中使用这些数据的一部分或者全部时，使用<strong>集合</strong>比较合适。此外，由于私有数据是点对点传播的，而不是通过块传播的，所以在交易数据必须对排序服务节点保密时，应该使用私有数据集合。</li>
+</ul>
+</li>
+</ol>
+<h6 id="使用私有数据的交易流"><a href="#使用私有数据的交易流" class="headerlink" title="使用私有数据的交易流"></a>使用私有数据的交易流</h6><p>当在链码中引用私有数据集合时，交易流程略有不同，以便在交易被提案、背书并提交到账本时保持私有数据的机密性。</p>
+<ol>
+<li>客户端应用程序提交一个提案请求，让属于授权集合的背书节点执行链码函数（读取或写入私有数据）。 私有数据，或用于在链码中生成私有数据的数据，被发送到提案的 <code>transient</code>（瞬态）字段中。</li>
+<li>背书节点模拟交易，并将私有数据存储在 <code>瞬态数据存储</code>（ transient data store ，节点的本地临时存储）中。它们根据组织集合的策略将私有数据通过<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/gossip.html">gossip</a>分发给授权的 Peer 节点。</li>
+<li>背书节点将提案响应发送回客户端。提案响应中包含经过背书的读写集，这其中包含了公共数据，还包含任何私有数据键和值的 hash。<em>私有数据不会被发送回客户端</em>。更多关于带有私有数据的背书的信息，请查看<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/private-data-arch.html#endorsement">这里</a>。</li>
+<li>客户端应用程序将交易（包含带有私有数据 hash 的提案响应）提交给排序服务。带有私有数据 hash 的交易同样被包含在区块中。带有私有数据 hash 的区块被分发给所有节点。这样，通道中的所有节点就可以在不知道真实私有数据的情况下，用同样的方式来验证带有私有数据 hash 值的交易。</li>
+<li>在区块提交的时候，授权节点会根据集合策略来决定它们是否有权访问私有数据。如果节点有访问权，它们会先检查自己的本地 <code>瞬态数据存储</code> ，以确定它们是否在链码背书的时候已经接收到了私有数据。如果没有的话，它们会尝试从其他已授权节点那里拉取私有数据，然后对照公共区块上的 hash 来验证私有数据并提交交易和区块。当验证或提交结束后，私有数据会被移动到这些节点私有数据库和私有读写存储的副本中。随后 <code>瞬态数据存储</code> 中存储的这些私有数据会被删除。</li>
+</ol>
+<h4 id="fabric二进制工具"><a href="#fabric二进制工具" class="headerlink" title="fabric二进制工具"></a>fabric二进制工具</h4><p>其中几个主要的工具说明：</p>
+<ul>
+<li><code>cryptogen</code> ：用来生成 Hyperledger Fabric 密钥材料的工具，这个过程是静态的。<code>cryptogen</code> 工具通过一个包含网络拓扑的 <code>crypto-config.yaml</code> 文件，为所有组织和属于这些组织的组件生成一组证书和秘钥。<code>cryptogen</code> 适合用于测试开发环境，在生产环境建议使用动态的 CA 服务。</li>
+<li><code>configtxgen</code> ：用于创建和查看排序节点的创世区块、通道配置交易等相关的工具。<code>configtxgen</code> 使用 <code>configtx.yaml</code> 文件来定义网络配置。</li>
+<li><code>configtxlator</code>：fabric 中 <code>Protobuf</code> 和 <code>JSON</code> 格式转换的工具，fabric 中任何的使用 <code>Protobuf</code> 定义的类型，都可使用该工具进行转换。</li>
+<li><code>peer</code>：peer 命令有 5 个不同的子命令，每个命令都可以让指定的 peer 节点执行特定的一组任务。比如，可以使用子命令 <code>peer channel</code> 让一个 peer 节点加入通道，或者使用 <code>peer chaincode</code> 命令把智能合约链码部署到 peer 节点上。</li>
+</ul>
+<h5 id="生成证书和秘钥"><a href="#生成证书和秘钥" class="headerlink" title="生成证书和秘钥"></a>生成证书和秘钥</h5><p>我们将使用 <code>cryptogen</code> 工具生成各种加密材料（ x509 证书和签名秘钥）。这些证书是身份的代表，在实体相互通信和交易的时候，可以对其身份进行签名和验证。</p>
+<p>首先创建 <code>crypto-config.yaml</code> 文件，定义网络拓扑，为所有组织和属于这些组织的组件（也就是节点）生成一组证书和秘钥：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># 排序节点的组织定义</span><br><span class="line">OrdererOrgs:</span><br><span class="line">  - Name: QQ # 名称</span><br><span class="line">    Domain: qq.com # 域名</span><br><span class="line">    Specs: # 节点域名：orderer.qq.com</span><br><span class="line">      - Hostname: orderer # 主机名</span><br><span class="line"></span><br><span class="line"># peer节点的组织定义</span><br><span class="line">PeerOrgs:</span><br><span class="line">  # Taobao-组织</span><br><span class="line">  - Name: Taobao # 名称</span><br><span class="line">    Domain: taobao.com # 域名</span><br><span class="line">    Template: # 使用模板定义。Count 指的是该组织下组织节点的个数</span><br><span class="line">      Count: 2 # 节点域名：peer0.taobao.com 和 peer1.taobao.com</span><br><span class="line">    Users: # 组织的用户信息。Count 指该组织中除了 Admin 之外的用户的个数</span><br><span class="line">      Count: 1 # 用户：Admin 和 User1</span><br><span class="line"></span><br><span class="line">  # JD-组织</span><br><span class="line">  - Name: JD</span><br><span class="line">    Domain: jd.com</span><br><span class="line">    Template:</span><br><span class="line">      Count: 2 # 节点域名：peer0.jd.com 和 peer1.jd.com</span><br><span class="line">    Users:</span><br><span class="line">      Count: 1 # 用户：Admin 和 User1</span><br></pre></td></tr></table></figure>
+
+<p>接着执行 <code>cryptogen generate</code> 命令，生成结果将默认保存在 <code>crypto-config</code> 文件夹中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cryptogen generate --config=./crypto-config.yaml</span><br></pre></td></tr></table></figure>
+
+<p>在这个环节中，我们假设 <code>QQ</code> 作为一个运营方，提供了 1 个 Orderer 节点 <code>orderer.qq.com</code> 来创建联盟链的基础设施， 而 <code>Taobao</code> 和 <code>JD</code> 则是作为组织成员加入到链中，各自提供 2 个 Peer 节点 <code>peer0.xx.com</code> 和 <code>peer1.xx.com</code> 参与工作，以及还各自创建了 2 个组织用户 <code>Admin</code> 和 <code>User1</code> 。然后我们使用 <code>crypto-config.yaml</code> 文件和 <code>cryptogen</code> 工具为其定义所需要的证书文件以供后续使用。</p>
+<h5 id="创建排序通道创世区块"><a href="#创建排序通道创世区块" class="headerlink" title="创建排序通道创世区块"></a>创建排序通道创世区块</h5><p>我们可以使用 <code>configtx.yaml</code> 文件和 <code>configtxgen</code> 工具轻松地创建通道的配置。<code>configtx.yaml</code> 文件可以以易于理解和编辑的 <code>yaml</code> 格式来构建通道配置所需的信息。<code>configtxgen</code> 工具通过读取 <code>configtx.yaml</code> 文件中的信息，将其转成 Fabric 可以读取的 <code>protobuf</code> 格式。</p>
+<p>先来创建 <code>configtx.yaml</code> 文件，内容如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"># 定义组织机构实体</span><br><span class="line">Organizations:</span><br><span class="line">  - &amp;QQ</span><br><span class="line">    Name: QQ # 组织的名称</span><br><span class="line">    ID: QQMSP # 组织的 MSPID</span><br><span class="line">    MSPDir: crypto-config/ordererOrganizations/qq.com/msp #组织的证书相对位置（生成的crypto-config目录)</span><br><span class="line"></span><br><span class="line">  - &amp;Taobao</span><br><span class="line">    Name: Taobao</span><br><span class="line">    ID: TaobaoMSP</span><br><span class="line">    MSPDir: crypto-config/peerOrganizations/taobao.com/msp</span><br><span class="line">    AnchorPeers: # 组织锚节点的配置</span><br><span class="line">      - Host: peer0.taobao.com</span><br><span class="line">        Port: 7051</span><br><span class="line"></span><br><span class="line">  - &amp;JD</span><br><span class="line">    Name: JD</span><br><span class="line">    ID: JDMSP</span><br><span class="line">    MSPDir: crypto-config/peerOrganizations/jd.com/msp</span><br><span class="line">    AnchorPeers: # 组织锚节点的配置</span><br><span class="line">      - Host: peer0.jd.com</span><br><span class="line">        Port: 7051</span><br><span class="line"></span><br><span class="line"># 定义了排序服务的相关参数，这些参数将用于创建创世区块</span><br><span class="line">Orderer: &amp;OrdererDefaults</span><br><span class="line">  # 排序节点类型用来指定要启用的排序节点实现，不同的实现对应不同的共识算法</span><br><span class="line">  OrdererType: solo # 共识机制</span><br><span class="line">  Addresses: # Orderer 的域名（用于连接）</span><br><span class="line">    - orderer.qq.com:7050</span><br><span class="line">  BatchTimeout: 2s # 出块时间间隔</span><br><span class="line">  BatchSize: # 用于控制每个block的信息量</span><br><span class="line">    MaxMessageCount: 10 #每个区块的消息个数</span><br><span class="line">    AbsoluteMaxBytes: 99 MB #每个区块最大的信息大小</span><br><span class="line">    PreferredMaxBytes: 512 KB #每个区块包含的一条信息最大长度</span><br><span class="line">  Organizations:</span><br><span class="line"></span><br><span class="line"># 定义Peer组织如何与应用程序通道交互的策略</span><br><span class="line"># 默认策略：所有Peer组织都将能够读取数据并将数据写入账本</span><br><span class="line">Application: &amp;ApplicationDefaults</span><br><span class="line">  Organizations:</span><br><span class="line"></span><br><span class="line"># 用来定义用于 configtxgen 工具的配置入口</span><br><span class="line"># 将 Profile 参数（ TwoOrgsOrdererGenesis 或 TwoOrgsChannel ）指定为 configtxgen 工具的参数</span><br><span class="line">Profiles:</span><br><span class="line">  #  TwoOrgsOrdererGenesis配置文件用于创建系统通道创世块</span><br><span class="line">  #  该配置文件创建一个名为SampleConsortium的联盟</span><br><span class="line">  #  该联盟在configtx.yaml文件中包含两个Peer组织Taobao和JD</span><br><span class="line">  TwoOrgsOrdererGenesis:</span><br><span class="line">    Orderer:</span><br><span class="line">      &lt;&lt;: *OrdererDefaults</span><br><span class="line">      Organizations:</span><br><span class="line">        - *QQ</span><br><span class="line">    Consortiums:</span><br><span class="line">      SampleConsortium:</span><br><span class="line">        Organizations:</span><br><span class="line">          - *Taobao</span><br><span class="line">          - *JD</span><br><span class="line">  # 使用TwoOrgsChannel配置文件创建应用程序通道</span><br><span class="line">  TwoOrgsChannel:</span><br><span class="line">    Consortium: SampleConsortium</span><br><span class="line">    Application:</span><br><span class="line">      &lt;&lt;: *ApplicationDefaults</span><br><span class="line">      Organizations:</span><br><span class="line">        - *Taobao</span><br><span class="line">        - *JD</span><br></pre></td></tr></table></figure>
+
+<p>执行 <code>configtxgen</code> 命令，并指定 Profile 为 <code>TwoOrgsOrdererGenesis</code> 参数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configtxgen -profile TwoOrgsOrdererGenesis -outputBlock ./config/genesis.block -channelID firstchannel</span><br></pre></td></tr></table></figure>
+
+<p>排序区块是排序服务的创世区块，通过以上命令就可以预先生成创世区块的 <code>protobuf</code> 格式的配置文件 <code>./config/genesis.block</code> 了。这一步也是为后续做准备用的。</p>
+<h5 id="5、创建通道配置交易"><a href="#5、创建通道配置交易" class="headerlink" title="5、创建通道配置交易"></a>5、创建通道配置交易</h5><p>接下来，我们需要继续使用 <code>configtxgen</code> 根据去创建通道的交易配置，和第 4 步不同的是，这次需要指定 Profile 为 <code>TwoOrgsChannel</code> 参数。</p>
+<p>生成通道配置事务 <code>./config/appchannel.tx</code> ：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./config/appchannel.tx -channelID appchannel</span><br></pre></td></tr></table></figure>
+
+<p>为 <code>Taobao</code> 组织定义锚节点，生成 <code>./config/TaobaoAnchor.tx</code> ：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./config/TaobaoAnchor.tx -channelID appchannel -asOrg Taobao</span><br></pre></td></tr></table></figure>
+
+<p>至此，需要准备的配置都齐了。</p>
+<h5 id="6、创建并启动各组织的节点"><a href="#6、创建并启动各组织的节点" class="headerlink" title="6、创建并启动各组织的节点"></a>6、创建并启动各组织的节点</h5><p>我们接下来就可以使用 Docker Compose 来模拟启动这些节点服务。</p>
+<p>由于这些节点之间需要互相通信，所以我们需要将这些节点都放入到一个 Docker 网络中，以 <code>fabric_network</code> 为例。</p>
+<p><code>docker-compose.yaml</code> 的内容如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br></pre></td><td class="code"><pre><span class="line">version: &#x27;2.1&#x27;</span><br><span class="line"></span><br><span class="line">volumes:</span><br><span class="line">  orderer.qq.com:</span><br><span class="line">  peer0.taobao.com:</span><br><span class="line">  peer1.taobao.com:</span><br><span class="line">  peer0.jd.com:</span><br><span class="line">  peer1.jd.com:</span><br><span class="line"></span><br><span class="line">networks:</span><br><span class="line">  fabric_network:</span><br><span class="line">    name: fabric_network</span><br><span class="line"></span><br><span class="line">services:</span><br><span class="line">  # 排序服务节点</span><br><span class="line">  orderer.qq.com:</span><br><span class="line">    container_name: orderer.qq.com</span><br><span class="line">    image: hyperledger/fabric-orderer:1.4.12</span><br><span class="line">    environment:</span><br><span class="line">      - GODEBUG=netdns=go</span><br><span class="line">      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0</span><br><span class="line">      - ORDERER_GENERAL_GENESISMETHOD=file</span><br><span class="line">      - ORDERER_GENERAL_GENESISFILE=/etc/hyperledger/config/genesis.block # 注入创世区块</span><br><span class="line">      - ORDERER_GENERAL_LOCALMSPID=QQMSP</span><br><span class="line">      - ORDERER_GENERAL_LOCALMSPDIR=/etc/hyperledger/orderer/msp # 证书相关</span><br><span class="line">    command: orderer</span><br><span class="line">    ports:</span><br><span class="line">      - &quot;7050:7050&quot;</span><br><span class="line">    volumes: # 挂载由cryptogen和configtxgen生成的证书文件以及创世区块</span><br><span class="line">      - ./config/genesis.block:/etc/hyperledger/config/genesis.block</span><br><span class="line">      - ./crypto-config/ordererOrganizations/qq.com/orderers/orderer.qq.com/:/etc/hyperledger/orderer</span><br><span class="line">      - orderer.qq.com:/var/hyperledger/production/orderer</span><br><span class="line">    networks:</span><br><span class="line">      - fabric_network</span><br><span class="line"></span><br><span class="line">  #  Taobao 组织 peer0 节点</span><br><span class="line">  peer0.taobao.com:</span><br><span class="line">    extends:</span><br><span class="line">      file: docker-compose-base.yaml</span><br><span class="line">      service: peer-base</span><br><span class="line">    container_name: peer0.taobao.com</span><br><span class="line">    environment:</span><br><span class="line">      - CORE_PEER_ID=peer0.taobao.com</span><br><span class="line">      - CORE_PEER_LOCALMSPID=TaobaoMSP</span><br><span class="line">      - CORE_PEER_ADDRESS=peer0.taobao.com:7051</span><br><span class="line">    ports:</span><br><span class="line">      - &quot;7051:7051&quot; # grpc服务端口</span><br><span class="line">      - &quot;7053:7053&quot; # eventhub端口</span><br><span class="line">    volumes:</span><br><span class="line">      - ./crypto-config/peerOrganizations/taobao.com/peers/peer0.taobao.com:/etc/hyperledger/peer</span><br><span class="line">      - peer0.taobao.com:/var/hyperledger/production</span><br><span class="line">    depends_on:</span><br><span class="line">      - orderer.qq.com</span><br><span class="line"></span><br><span class="line">  #  Taobao 组织 peer1 节点</span><br><span class="line">  peer1.taobao.com:</span><br><span class="line">    extends:</span><br><span class="line">      file: docker-compose-base.yaml</span><br><span class="line">      service: peer-base</span><br><span class="line">    container_name: peer1.taobao.com</span><br><span class="line">    environment:</span><br><span class="line">      - CORE_PEER_ID=peer1.taobao.com</span><br><span class="line">      - CORE_PEER_LOCALMSPID=TaobaoMSP</span><br><span class="line">      - CORE_PEER_ADDRESS=peer1.taobao.com:7051</span><br><span class="line">    ports:</span><br><span class="line">      - &quot;17051:7051&quot;</span><br><span class="line">      - &quot;17053:7053&quot;</span><br><span class="line">    volumes:</span><br><span class="line">      - ./crypto-config/peerOrganizations/taobao.com/peers/peer1.taobao.com:/etc/hyperledger/peer</span><br><span class="line">      - peer1.taobao.com:/var/hyperledger/production</span><br><span class="line">    depends_on:</span><br><span class="line">      - orderer.qq.com</span><br><span class="line"></span><br><span class="line">  #  JD 组织 peer0 节点</span><br><span class="line">  peer0.jd.com:</span><br><span class="line">    extends:</span><br><span class="line">      file: docker-compose-base.yaml</span><br><span class="line">      service: peer-base</span><br><span class="line">    container_name: peer0.jd.com</span><br><span class="line">    environment:</span><br><span class="line">      - CORE_PEER_ID=peer0.jd.com</span><br><span class="line">      - CORE_PEER_LOCALMSPID=JDMSP</span><br><span class="line">      - CORE_PEER_ADDRESS=peer0.jd.com:7051</span><br><span class="line">    ports:</span><br><span class="line">      - &quot;27051:7051&quot;</span><br><span class="line">      - &quot;27053:7053&quot;</span><br><span class="line">    volumes:</span><br><span class="line">      - ./crypto-config/peerOrganizations/jd.com/peers/peer0.jd.com:/etc/hyperledger/peer</span><br><span class="line">      - peer0.jd.com:/var/hyperledger/production</span><br><span class="line">    depends_on:</span><br><span class="line">      - orderer.qq.com</span><br><span class="line"></span><br><span class="line">  #  JD 组织 peer1 节点</span><br><span class="line">  peer1.jd.com:</span><br><span class="line">    extends:</span><br><span class="line">      file: docker-compose-base.yaml</span><br><span class="line">      service: peer-base</span><br><span class="line">    container_name: peer1.jd.com</span><br><span class="line">    environment:</span><br><span class="line">      - CORE_PEER_ID=peer1.jd.com</span><br><span class="line">      - CORE_PEER_LOCALMSPID=JDMSP</span><br><span class="line">      - CORE_PEER_ADDRESS=peer1.jd.com:7051</span><br><span class="line">    ports:</span><br><span class="line">      - &quot;37051:7051&quot;</span><br><span class="line">      - &quot;37053:7053&quot;</span><br><span class="line">    volumes:</span><br><span class="line">      - ./crypto-config/peerOrganizations/jd.com/peers/peer1.jd.com:/etc/hyperledger/peer</span><br><span class="line">      - peer1.jd.com:/var/hyperledger/production</span><br><span class="line">    depends_on:</span><br><span class="line">      - orderer.qq.com</span><br><span class="line"></span><br><span class="line">  # 客户端节点</span><br><span class="line">  cli:</span><br><span class="line">    container_name: cli</span><br><span class="line">    image: hyperledger/fabric-tools:1.4.12</span><br><span class="line">    tty: true</span><br><span class="line">    environment:</span><br><span class="line">      # go 环境设置</span><br><span class="line">      - GO111MODULE=auto</span><br><span class="line">      - GOPROXY=https://goproxy.cn</span><br><span class="line">      - CORE_PEER_ID=cli</span><br><span class="line">    command: /bin/bash</span><br><span class="line">    volumes:</span><br><span class="line">      - ./config:/etc/hyperledger/config</span><br><span class="line">      - ./crypto-config/peerOrganizations/taobao.com/:/etc/hyperledger/peer/taobao.com</span><br><span class="line">      - ./crypto-config/peerOrganizations/jd.com/:/etc/hyperledger/peer/jd.com</span><br><span class="line">      - ./../chaincode:/opt/gopath/src/chaincode # 链码路径注入</span><br><span class="line">    networks:</span><br><span class="line">      - fabric_network</span><br><span class="line">    depends_on:</span><br><span class="line">      - orderer.qq.com</span><br><span class="line">      - peer0.taobao.com</span><br><span class="line">      - peer1.taobao.com</span><br><span class="line">      - peer0.jd.com</span><br><span class="line">      - peer1.jd.com</span><br></pre></td></tr></table></figure>
+
+<p>为了方便，这里我还定义了一个 <code>docker-compose-base.yaml</code> 作为 Peer 节点的公共模板，内容如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">version: &#x27;2.1&#x27;</span><br><span class="line"></span><br><span class="line">services:</span><br><span class="line">  peer-base: # peer的公共服务</span><br><span class="line">    image: hyperledger/fabric-peer:1.4.12</span><br><span class="line">    environment:</span><br><span class="line">      - GODEBUG=netdns=go</span><br><span class="line">      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock</span><br><span class="line">      - CORE_LOGGING_PEER=info</span><br><span class="line">      - CORE_CHAINCODE_LOGGING_LEVEL=INFO</span><br><span class="line">      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/peer/msp # msp证书（节点证书）</span><br><span class="line">      - CORE_LEDGER_STATE_STATEDATABASE=goleveldb # 状态数据库的存储引擎（or CouchDB）</span><br><span class="line">      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=fabric_network # docker 网络</span><br><span class="line">    volumes:</span><br><span class="line">      - /var/run/docker.sock:/host/var/run/docker.sock</span><br><span class="line">    working_dir: /opt/gopath/src/github.com/hyperledger/fabric</span><br><span class="line">    command: peer node start</span><br><span class="line">    networks:</span><br><span class="line">      - fabric_network</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>volumes</code> 配置项中，我们将 <code>config</code> 和 <code>crypto-config</code> 内的配置文件都挂载到相对应的节点中了。并且在 peer 的公共服务中，我们还挂载了 <code>/var/run/docker.sock</code> 文件，有了该文件，在容器内就可以向其发送 http 请求和 Docker Daemon 通信，通俗理解，就是有了它，就可以在容器内操作宿主机的 Docker 了，比如在容器内控制 Docker 再启动一个容器出来。而这，就是为了后面可以部署智能合约（节点部署链码其实就是启动一个链码容器）。</p>
+<p>现在继续将这些节点服务启动起来：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+
+<p>除了必须的节点服务，我还启动了一个 <code>cli</code> 服务，来自 <code>hyperledger/fabric-tools</code> 镜像，这个其实就是集成了前面第 1 步提到的 fabric 工具的容器，我们接下来的命令执行就使用这个容器内的工具来完成了，你也可以继续使用自己下载的二进制工具，只是个人觉得环境配置起来会比较麻烦。</p>
+<h5 id="7、为-cli-服务配置环境"><a href="#7、为-cli-服务配置环境" class="headerlink" title="7、为 cli 服务配置环境"></a>7、为 <code>cli</code> 服务配置环境</h5><p>接下来我们要使用 <code>cli</code> 服务来执行 <code>peer</code> 命令，所以要为其先配置一下环境变量，使用四个不同的变量 <code>TaobaoPeer0Cli</code>、<code>TaobaoPeer1Cli</code>、<code>JDPeer0Cli</code>、<code>JDPeer1Cli</code> ，代表 <code>cli</code> 服务代表着不同的节点：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ TaobaoPeer0Cli=&quot;CORE_PEER_ADDRESS=peer0.taobao.com:7051 CORE_PEER_LOCALMSPID=TaobaoMSP CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/peer/taobao.com/users/Admin@taobao.com/msp&quot;</span><br><span class="line">$ TaobaoPeer1Cli=&quot;CORE_PEER_ADDRESS=peer1.taobao.com:7051 CORE_PEER_LOCALMSPID=TaobaoMSP CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/peer/taobao.com/users/Admin@taobao.com/msp&quot;</span><br><span class="line">$ JDPeer0Cli=&quot;CORE_PEER_ADDRESS=peer0.jd.com:7051 CORE_PEER_LOCALMSPID=JDMSP CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/peer/jd.com/users/Admin@jd.com/msp&quot;</span><br><span class="line">$ JDPeer1Cli=&quot;CORE_PEER_ADDRESS=peer1.jd.com:7051 CORE_PEER_LOCALMSPID=JDMSP CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/peer/jd.com/users/Admin@jd.com/msp&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="8、开始创建通道"><a href="#8、开始创建通道" class="headerlink" title="8、开始创建通道"></a>8、开始创建通道</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec cli bash -c &quot;$TaobaoPeer0Cli peer channel create -o orderer.qq.com:7050 -c appchannel -f /etc/hyperledger/config/appchannel.tx&quot;</span><br></pre></td></tr></table></figure>
+
+<h5 id="9、将所有节点加入通道"><a href="#9、将所有节点加入通道" class="headerlink" title="9、将所有节点加入通道"></a>9、将所有节点加入通道</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ docker exec cli bash -c &quot;$TaobaoPeer0Cli peer channel join -b appchannel.block&quot;</span><br><span class="line">$ docker exec cli bash -c &quot;$TaobaoPeer1Cli peer channel join -b appchannel.block&quot;</span><br><span class="line">$ docker exec cli bash -c &quot;$JDPeer0Cli peer channel join -b appchannel.block&quot;</span><br><span class="line">$ docker exec cli bash -c &quot;$JDPeer1Cli peer channel join -b appchannel.block&quot;</span><br></pre></td></tr></table></figure>
+
+<h5 id="10、更新锚节点"><a href="#10、更新锚节点" class="headerlink" title="10、更新锚节点"></a>10、更新锚节点</h5><p>锚节点是必需的。普通节点只能发现本组织下的其它节点，而锚节点可以跨组织服务发现到其它组织下的节点，建议每个组织都选择至少一个锚节点。</p>
+<p>利用之前准备好的配置文件，向通道更新锚节点：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker exec cli bash -c &quot;$TaobaoPeer0Cli peer channel update -o orderer.qq.com:7050 -c appchannel -f /etc/hyperledger/config/TaobaoAnchor.tx&quot;</span><br><span class="line">$ docker exec cli bash -c &quot;$JDPeer0Cli peer channel update -o orderer.qq.com:7050 -c appchannel -f /etc/hyperledger/config/JDAnchor.tx&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="编写智能合约"><a href="#编写智能合约" class="headerlink" title="编写智能合约"></a>编写智能合约</h4><p>。。。。</p>
+<h4 id="部署链码"><a href="#部署链码" class="headerlink" title="部署链码"></a>部署链码</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker exec cli bash -c &quot;$TaobaoPeer0Cli peer chaincode install -n fabric-realty -v 1.0.0 -l golang -p chaincode&quot;</span><br><span class="line">$ docker exec cli bash -c &quot;$JDPeer0Cli peer chaincode install -n fabric-realty -v 1.0.0 -l golang -p chaincode&quot;</span><br></pre></td></tr></table></figure>
+
+<p>其中 <code>-n</code> 参数是链码名称，可以自己随便设置，<code>-v</code> 是链码版本号，<code>-p</code> 是链码的目录（我们已经将链码挂载到 <code>cli</code> 容器中了，在 <code>/opt/gopath/src/</code> 目录下）</p>
+<p>链码安装后，还需要实例化后才可以使用，只需要在任意一个节点实例化就可以了，以 <code>Taobao</code> 组织的 <code>peer0</code> 节点为例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker exec cli bash -c &quot;$TaobaoPeer0Cli peer chaincode instantiate -o orderer.qq.com:7050 -C appchannel -n fabric-realty -l golang -v 1.0.0 -c &#x27;&#123;\&quot;Args\&quot;:[\&quot;init\&quot;]&#125;&#x27; -P \&quot;AND (&#x27;TaobaoMSP.member&#x27;,&#x27;JDMSP.member&#x27;)\&quot;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>实例化链码主要就是传入 <code>&#123;&quot;Args&quot;:[&quot;init&quot;]&#125;</code> 参数，此时会调用我们编写的 <code>func (c *MyChaincode) Init</code> 方法，进行链码的初始化。其中 <code>-P</code> 参数用于指定链码的背书策略，<code>AND (&#39;TaobaoMSP.member&#39;,&#39;JDMSP.member&#39;)</code> 代表链码的写入操作需要同时得到 <code>Taobao</code>和 <code>JD</code> 组织成员的背书才允许通过。<code>AND</code> 也可以替换成 <code>OR</code>，代表任意一组织成员背书即可，更多具体用法，可以去看官方文档。</p>
+<p>链码实例化成功之后就会启动链码容器，而启动的方法，就是我们之前提过的 peer 节点服务挂载了 <code>/var/run/docker.sock</code> 文件。</p>
+<p>我们可以试着使用 <code>cli</code> 服务去调用链码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec cli bash -c &quot;$TaobaoPeer0Cli peer chaincode invoke -C appchannel -n fabric-realty -c &#x27;&#123;\&quot;Args\&quot;:[\&quot;query\&quot;]&#125;&#x27;&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="编写应用程序"><a href="#编写应用程序" class="headerlink" title="编写应用程序"></a>编写应用程序</h4><p>第一步调用其 <code>New</code> 方法创建一个 <code>FabricSDK</code> 实例，后续使用这个实例就可以调用操作合约的方法了。</p>
+<p>创建一个 <code>config.yaml</code> ，配置如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line">version: 1.0.0</span><br><span class="line"></span><br><span class="line"># GO SDK 客户端配置</span><br><span class="line">client:</span><br><span class="line">  # 客户端所属的组织，必须是organizations定义的组织</span><br><span class="line">  organization: JD</span><br><span class="line">  # 日志级别</span><br><span class="line">  logging:</span><br><span class="line">    level: info</span><br><span class="line">  # MSP证书的根路径</span><br><span class="line">  cryptoconfig:</span><br><span class="line">    path: /network/crypto-config</span><br><span class="line"></span><br><span class="line"># 通道定义</span><br><span class="line">channels:</span><br><span class="line">  appchannel:</span><br><span class="line">    orderers:</span><br><span class="line">      - orderer.qq.com</span><br><span class="line">    peers:</span><br><span class="line">      peer0.jd.com:</span><br><span class="line">        endorsingPeer: true</span><br><span class="line">        chaincodeQuery: true</span><br><span class="line">        ledgerQuery: true</span><br><span class="line">        eventSource: true</span><br><span class="line">      peer1.jd.com:</span><br><span class="line">        endorsingPeer: true</span><br><span class="line">        chaincodeQuery: true</span><br><span class="line">        ledgerQuery: true</span><br><span class="line">        eventSource: true</span><br><span class="line"></span><br><span class="line"># 组织配置</span><br><span class="line">organizations:</span><br><span class="line">  JD:</span><br><span class="line">    mspid: &quot;JDMSP&quot;</span><br><span class="line">    cryptoPath: peerOrganizations/jd.com/users/&#123;username&#125;@jd.com/msp</span><br><span class="line">    peers:</span><br><span class="line">      - peer0.jd.com</span><br><span class="line">      - peer1.jd.com</span><br><span class="line"></span><br><span class="line"># orderer节点列表</span><br><span class="line">orderers:</span><br><span class="line">  orderer.qq.com:</span><br><span class="line">    url: orderer.qq.com:7050</span><br><span class="line">    # 传递给gRPC客户端构造函数</span><br><span class="line">    grpcOptions:</span><br><span class="line">      ssl-target-name-override: orderer.qq.com</span><br><span class="line">      keep-alive-time: 0s</span><br><span class="line">      keep-alive-timeout: 20s</span><br><span class="line">      keep-alive-permit: false</span><br><span class="line">      fail-fast: false</span><br><span class="line">      allow-insecure: true</span><br><span class="line"></span><br><span class="line"># peers节点列表</span><br><span class="line">peers:</span><br><span class="line">  # peer节点定义，可以定义多个</span><br><span class="line">  peer0.jd.com:</span><br><span class="line">    # URL用于发送背书和查询请求</span><br><span class="line">    url: peer0.jd.com:7051</span><br><span class="line">    # 传递给gRPC客户端构造函数</span><br><span class="line">    grpcOptions:</span><br><span class="line">      ssl-target-name-override: peer0.jd.com</span><br><span class="line">      keep-alive-time: 0s</span><br><span class="line">      keep-alive-timeout: 20s</span><br><span class="line">      keep-alive-permit: false</span><br><span class="line">      fail-fast: false</span><br><span class="line">      allow-insecure: true</span><br><span class="line">  peer1.jd.com:</span><br><span class="line">    url: peer1.jd.com:7051</span><br><span class="line">    grpcOptions:</span><br><span class="line">      ssl-target-name-override: peer1.jd.com</span><br><span class="line">      keep-alive-time: 0s</span><br><span class="line">      keep-alive-timeout: 20s</span><br><span class="line">      keep-alive-permit: false</span><br><span class="line">      fail-fast: false</span><br><span class="line">      allow-insecure: true</span><br><span class="line">  peer0.taobao.com:</span><br><span class="line">    url: peer0.taobao.com:7051</span><br><span class="line">    grpcOptions:</span><br><span class="line">      ssl-target-name-override: peer0.taobao.com</span><br><span class="line">      keep-alive-time: 0s</span><br><span class="line">      keep-alive-timeout: 20s</span><br><span class="line">      keep-alive-permit: false</span><br><span class="line">      fail-fast: false</span><br><span class="line">      allow-insecure: true</span><br><span class="line">  peer1.taobao.com:</span><br><span class="line">    url: peer1.taobao.com:7051</span><br><span class="line">    grpcOptions:</span><br><span class="line">      ssl-target-name-override: peer1.taobao.com</span><br><span class="line">      keep-alive-time: 0s</span><br><span class="line">      keep-alive-timeout: 20s</span><br><span class="line">      keep-alive-permit: false</span><br><span class="line">      fail-fast: false</span><br><span class="line">      allow-insecure: true</span><br></pre></td></tr></table></figure>
+
+<p>现在开始编写代码，我们先来实例化 SDK ，创建 <code>sdk.go</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line"> &quot;github.com/hyperledger/fabric-sdk-go/pkg/client/channel&quot;</span><br><span class="line"> &quot;github.com/hyperledger/fabric-sdk-go/pkg/core/config&quot;</span><br><span class="line"> &quot;github.com/hyperledger/fabric-sdk-go/pkg/fabsdk&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">// 配置信息</span><br><span class="line">var (</span><br><span class="line"> sdk           *fabsdk.FabricSDK                              // Fabric SDK</span><br><span class="line"> channelName   = &quot;appchannel&quot;                                 // 通道名称</span><br><span class="line"> username      = &quot;Admin&quot;                                      // 用户</span><br><span class="line"> chainCodeName = &quot;fabric-realty&quot;                              // 链码名称</span><br><span class="line"> endpoints     = []string&#123;&quot;peer0.jd.com&quot;, &quot;peer0.taobao.com&quot;&#125; // 要发送交易的节点</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">// init 初始化</span><br><span class="line">func init() &#123;</span><br><span class="line"> var err error</span><br><span class="line"> // 通过配置文件初始化SDK</span><br><span class="line"> sdk, err = fabsdk.New(config.FromFile(&quot;config.yaml&quot;))</span><br><span class="line"> if err != nil &#123;</span><br><span class="line">  panic(err)</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// ChannelExecute 区块链交互</span><br><span class="line">func ChannelExecute(fcn string, args [][]byte) (channel.Response, error) &#123;</span><br><span class="line"> // 创建客户端，表明在通道的身份</span><br><span class="line"> ctx := sdk.ChannelContext(channelName, fabsdk.WithUser(username))</span><br><span class="line"> cli, err := channel.New(ctx)</span><br><span class="line"> if err != nil &#123;</span><br><span class="line">  return channel.Response&#123;&#125;, err</span><br><span class="line"> &#125;</span><br><span class="line"> // 对区块链账本的写操作（调用了链码的invoke）</span><br><span class="line"> resp, err := cli.Execute(channel.Request&#123;</span><br><span class="line">  ChaincodeID: chainCodeName,</span><br><span class="line">  Fcn:         fcn,</span><br><span class="line">  Args:        args,</span><br><span class="line"> &#125;, channel.WithTargetEndpoints(endpoints...))</span><br><span class="line"> if err != nil &#123;</span><br><span class="line">  return channel.Response&#123;&#125;, err</span><br><span class="line"> &#125;</span><br><span class="line"> //返回链码执行后的结果</span><br><span class="line"> return resp, nil</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// ChannelQuery 区块链查询</span><br><span class="line">func ChannelQuery(fcn string, args [][]byte) (channel.Response, error) &#123;</span><br><span class="line"> // 创建客户端，表明在通道的身份</span><br><span class="line"> ctx := sdk.ChannelContext(channelName, fabsdk.WithUser(username))</span><br><span class="line"> cli, err := channel.New(ctx)</span><br><span class="line"> if err != nil &#123;</span><br><span class="line">  return channel.Response&#123;&#125;, err</span><br><span class="line"> &#125;</span><br><span class="line"> // 对区块链账本查询的操作（调用了链码的invoke），只返回结果</span><br><span class="line"> resp, err := cli.Query(channel.Request&#123;</span><br><span class="line">  ChaincodeID: chainCodeName,</span><br><span class="line">  Fcn:         fcn,</span><br><span class="line">  Args:        args,</span><br><span class="line"> &#125;, channel.WithTargetEndpoints(endpoints...))</span><br><span class="line"> if err != nil &#123;</span><br><span class="line">  return channel.Response&#123;&#125;, err</span><br><span class="line"> &#125;</span><br><span class="line"> //返回链码执行后的结果</span><br><span class="line"> return resp, nil</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这段代码中，我们将使用 <code>Admin</code> 的身份去调用合约，并将每次的交易同时发送给 <code>peer0.jd.com</code> 和 <code>peer0.taobao.com</code> 节点进行背书，这是因为我们在实例化链码的时候指定了背书策略为 <code>AND (&#39;TaobaoMSP.member&#39;,&#39;JDMSP.member&#39;)</code> ，代表交易需要同时得到 <code>Taobao</code>和 <code>JD</code> 组织成员的背书才允许通过。每次写入账本时，会验证这两个节点的数据一致性，只有当这两个节点的数据一致时，交易才算最终成功。</p>
+<p>继续编写 <code>main.go</code> ，我们使用 <code>gin</code> 来创建一个 http 服务：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line"> &quot;bytes&quot;</span><br><span class="line"> &quot;encoding/json&quot;</span><br><span class="line"></span><br><span class="line"> &quot;github.com/gin-gonic/gin&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line"> g := gin.Default()</span><br><span class="line"> g.GET(&quot;/query&quot;, func(c *gin.Context) &#123;</span><br><span class="line">  args := make([][]byte, 0)</span><br><span class="line">  user := c.Query(&quot;user&quot;)</span><br><span class="line">  if user != &quot;&quot; &#123;</span><br><span class="line">   args = append(args, []byte(user))</span><br><span class="line">  &#125;</span><br><span class="line">  // 调用链码的query函数</span><br><span class="line">  resp, err := ChannelQuery(&quot;query&quot;, args)</span><br><span class="line">  if err != nil &#123;</span><br><span class="line">   c.AbortWithStatusJSON(500, gin.H&#123;&quot;err&quot;: err.Error()&#125;)</span><br><span class="line">   return</span><br><span class="line">  &#125;</span><br><span class="line">  var data []map[string]interface&#123;&#125;</span><br><span class="line">  if err = json.Unmarshal(bytes.NewBuffer(resp.Payload).Bytes(), &amp;data); err != nil &#123;</span><br><span class="line">   c.AbortWithStatusJSON(500, gin.H&#123;&quot;err&quot;: err.Error()&#125;)</span><br><span class="line">   return</span><br><span class="line">  &#125;</span><br><span class="line">  c.JSON(200, data)</span><br><span class="line"> &#125;)</span><br><span class="line"> g.POST(&quot;/transfer&quot;, func(c *gin.Context) &#123;</span><br><span class="line">  from := c.Query(&quot;from&quot;)</span><br><span class="line">  to := c.Query(&quot;to&quot;)</span><br><span class="line">  money := c.Query(&quot;money&quot;)</span><br><span class="line">  if from == &quot;&quot; || to == &quot;&quot; || money == &quot;&quot; &#123;</span><br><span class="line">   c.AbortWithStatusJSON(400, gin.H&#123;&quot;err&quot;: &quot;参数不能为空&quot;&#125;)</span><br><span class="line">   return</span><br><span class="line">  &#125;</span><br><span class="line">  args := make([][]byte, 0)</span><br><span class="line">  args = append(args, []byte(from), []byte(to), []byte(money))</span><br><span class="line">  // 调用链码的transfer函数</span><br><span class="line">  resp, err := ChannelExecute(&quot;transfer&quot;, args)</span><br><span class="line">  if err != nil &#123;</span><br><span class="line">   c.AbortWithStatusJSON(500, gin.H&#123;&quot;err&quot;: err.Error()&#125;)</span><br><span class="line">   return</span><br><span class="line">  &#125;</span><br><span class="line">  c.JSON(200, gin.H&#123;&quot;msg&quot;: string(resp.Payload)&#125;)</span><br><span class="line"> &#125;)</span><br><span class="line"> g.Run(&quot;0.0.0.0:8000&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>main</code> 函数中，我们创建了两个接口 <code>GET /query</code> 和 <code>POST /transfer</code> ，其中 <code>/query</code> 接口调用链码的 <code>query</code> 函数功能实现查询用户余额，<code>/transfer</code> 接口调用链码的 <code>transfer</code> 函数功能实现转账功能。</p>
+<p>我们将继续使用 Docker 部署该应用程序，这样的好处是可以和区块链网络处于同一网络下，方便调用节点，当然你也可以更改 <code>config.yaml</code> 文件去调用暴露在宿主机的节点端口也是可以的，首先编写 <code>Dockerfile</code> 文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">FROM golang:1.14 AS app</span><br><span class="line">ENV GO111MODULE=on</span><br><span class="line">ENV GOPROXY https://goproxy.cn,direct</span><br><span class="line">WORKDIR /root/togettoyou</span><br><span class="line">COPY . .</span><br><span class="line">RUN CGO_ENABLED=0 go build -v -o &quot;app&quot; .</span><br><span class="line"></span><br><span class="line">FROM scratch</span><br><span class="line">WORKDIR /root/togettoyou/</span><br><span class="line">COPY --from=app /root/togettoyou/app ./</span><br><span class="line">COPY --from=app /root/togettoyou/config.yaml ./</span><br><span class="line">ENTRYPOINT [&quot;./app&quot;]</span><br></pre></td></tr></table></figure>
+
+<p><code>docker-compose.yml</code> 文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">version: &#x27;2.1&#x27;</span><br><span class="line"></span><br><span class="line">networks:</span><br><span class="line">  fabric_network:</span><br><span class="line">    external:</span><br><span class="line">      name: fabric_network</span><br><span class="line"></span><br><span class="line">services:</span><br><span class="line">  app:</span><br><span class="line">    build: .</span><br><span class="line">    image: app:latest</span><br><span class="line">    ports:</span><br><span class="line">      - &quot;8000:8000&quot;</span><br><span class="line">    volumes:</span><br><span class="line">      - ./../network/crypto-config:/network/crypto-config # 挂载搭建区块链网络时生成的crypto-config文件夹</span><br><span class="line">    networks:</span><br><span class="line">      - fabric_network</span><br></pre></td></tr></table></figure>
+
+<p>其中挂载的 <code>crypto-config</code> 文件夹就是之前搭建区块链网络时生成的。</p>
+<p>编译部署应用程序：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker-compose build</span><br><span class="line">$ docker-compose up</span><br></pre></td></tr></table></figure>
+
+<p>调用应用程序的接口：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ curl &quot;http://localhost:8000/query&quot;</span><br><span class="line">[&#123;&quot;balance&quot;:1000,&quot;name&quot;:&quot;A&quot;&#125;,&#123;&quot;balance&quot;:1000,&quot;name&quot;:&quot;B&quot;&#125;]</span><br><span class="line"></span><br><span class="line">$ curl &quot;http://localhost:8000/query?user=A&quot;</span><br><span class="line">[&#123;&quot;balance&quot;:1000,&quot;name&quot;:&quot;A&quot;&#125;]</span><br><span class="line"></span><br><span class="line">$ curl &quot;http://localhost:8000/query?user=B&quot;</span><br><span class="line">[&#123;&quot;balance&quot;:1000,&quot;name&quot;:&quot;B&quot;&#125;]</span><br><span class="line"></span><br><span class="line">$ curl -X POST &quot;http://localhost:8000/transfer?from=A&amp;to=B&amp;money=500&quot;</span><br><span class="line">&#123;&quot;msg&quot;:&quot;ok&quot;&#125;</span><br><span class="line"></span><br><span class="line">$ curl &quot;http://localhost:8000/query&quot;</span><br><span class="line">[&#123;&quot;balance&quot;:500,&quot;name&quot;:&quot;A&quot;&#125;,&#123;&quot;balance&quot;:1500,&quot;name&quot;:&quot;B&quot;&#125;]</span><br></pre></td></tr></table></figure>
+
+<p>到这里，我们就已经完整地实现了一个区块链应用了。你也可以继续为这个区块链应用实现前端页面。流程呢，和传统前后端分离架构也没什么区别。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Zhen Xie</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://example.com/2023/11/13/Hyperledger-Fabric/">http://example.com/2023/11/13/Hyperledger-Fabric/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2023/11/13/%E8%B7%A8%E9%93%BE%E5%8E%9F%E5%AD%90%E6%80%A7/">跨链原子性</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Zhen Xie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

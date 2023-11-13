@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Zhen Xie">
+
+
+
+
+
+<title>跨链原子性 | Hexo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+<script>
+    !
+    function() {
+    function n(n, e, t) {
+    return n.getAttribute(e) || t
+    }
+    function e(n) {
+    return document.getElementsByTagName(n)
+    }
+    function t() {
+    var t = e("script"),
+    o = t.length,
+    i = t[o - 1];
+    return {
+    l: o,
+    z: n(i, "zIndex", -1), //置于主页面背后
+    o: n(i, "opacity", .5), //线条透明度
+    c: n(i, "color", "0,0,0"), //线条颜色
+    n: n(i, "count", 100) //线条数量
+    }
+    }
+    function o() {
+    a = m.width = window.innerWidth ||
+    document.documentElement.clientWidth || document.body.clientWidth,
+    c = m.height = window.innerHeight ||
+    document.documentElement.clientHeight || document.body.clientHeight
+    }
+    function i() {
+    r.clearRect(0, 0, a, c);
+    var n, e, t, o, m, l;
+    s.forEach(function(i, x) {
+    for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 :
+    1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1,
+    1), e = x + 1; e < u.length; e++) n = u[e],
+    null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l
+    = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o,
+    i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t /
+    2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y),
+    r.lineTo(n.x, n.y), r.stroke()))
+    }),
+    x(i)
+    }
+    var a, c, u, m = document.createElement("canvas"),
+    d = t(),
+    l = "c_n" + d.l,
+    r = m.getContext("2d"),
+    x = window.requestAnimationFrame || window.webkitRequestAnimationFrame
+    || window.mozRequestAnimationFrame || window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function(n) {
+    window.setTimeout(n, 1e3 / 45)
+    },
+    w = Math.random,
+    y = {
+    x: null,
+    y: null,
+    max: 2e4
+    };
+    m.id = l,
+    m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z +
+    ";opacity:" + d.o,
+    e("body")[0].appendChild(m),
+    o(),
+    window.onresize = o,
+    window.onmousemove = function(n) {
+    n = n || window.event,
+    y.x = n.clientX,
+    y.y = n.clientY
+    },
+    window.onmouseout = function() {
+    y.x = null,
+    y.y = null
+    };
+    for (var s = [], f = 0; d.n > f; f++) {
+    var h = w() * a,
+    g = w() * c,
+    v = 2 * w() - 1,
+    p = 2 * w() - 1;
+    s.push({
+    x: h,
+    y: g,
+    xa: v,
+    ya: p,
+    max: 6e3
+    })
+    }
+    u = s.concat([y]),
+    setTimeout(function() {
+    i()
+    },
+    100)
+    } ();
+    </script>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">TheXie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">TheXie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">跨链原子性</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Zhen Xie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">November 13, 2023&nbsp;&nbsp;11:28:41</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="跨链原子性"><a href="#跨链原子性" class="headerlink" title="跨链原子性"></a>跨链原子性</h3><h4 id="General-Purpose-Atomic-Crosschain-Transactions"><a href="#General-Purpose-Atomic-Crosschain-Transactions" class="headerlink" title="General Purpose Atomic Crosschain Transactions"></a>General Purpose Atomic Crosschain Transactions</h4><p>GPACT（通用原子跨链交易）这是一种在区块链之间实现原子、同步、合约间函数调用的协议。<br>协议流程： 包括Start、Segment、根和信号等主要功能，涵盖了跨链调用的各个阶段。</p>
+<h5 id="阶段："><a href="#阶段：" class="headerlink" title="阶段："></a>阶段：</h5><h6 id="1-Start："><a href="#1-Start：" class="headerlink" title="1.Start："></a>1.Start：</h6><p>在根区块链上调用 Start 函数，注册将提交所有事务的账户、跨链函数调用的调用图、Root Blockchain 的块时间戳超时、跨链事务标识等信息。<br>这些信息通过 Start Event 以事件的形式被广播。</p>
+<h6 id="2-Segment："><a href="#2-Segment：" class="headerlink" title="2.Segment："></a>2.Segment：</h6><p>在执行跨链函数调用时，在涉及的每个区块链上调用 Segment 函数。<br>向 Segment 函数传递签名的 Start Event 和函数调用在调用图中的位置，以证明该函数是跨链函数调用的一部分。<br>在这一步中，会对相关的合同进行锁定（Lock the contract），指示这个跨链调用正在锁定合同中的项目。<br>提供一组签名的 Segment Events，其中包含函数调用的返回结果，证明在其他区块链上的从属函数调用已经被调用并返回了特定的结果。<br>跨链函数的实际执行是通过调用 CrossCall 函数实现的，该函数比较实际参数值与 Start Event 中指定的预期参数值。<br>Segment Event 被广播以发布函数的返回结果或错误结果，以及被锁定的合同列表。</p>
+<h6 id="3-Root："><a href="#3-Root：" class="headerlink" title="3.Root："></a>3.Root：</h6><p>在根区块链上调用 Root 函数，以调用调用图的入口函数。<br>与 Segment 函数类似，Root 函数接受签名的 Start Event 和一组签名的 Segment Events。<br>执行期望和实际参数检查，包括合同锁定。<br>如果 Root 函数成功完成，根区块链上的所有锁定合同将被解锁，临时状态更新将被提交。<br>发布 Root Event，指示所有区块链上的所有临时更新都应该被提交。</p>
+<h6 id="4-Signalling："><a href="#4-Signalling：" class="headerlink" title="4.Signalling："></a>4.Signalling：</h6><p>在需要提交或中止更新的区块链上调用 Signalling 函数。<br>传递签名的 Root Event 和签名的该区块链的 Segment Events。<br>调用此函数请求由于 Segment 函数调用引起的状态更新的解锁，并根据 Root Event 中的信息提交或中止这些状态更新。<br>发布 Signalling Event，指示该合同已被解锁。</p>
+<h6 id="eg："><a href="#eg：" class="headerlink" title="eg："></a>eg：</h6><p><img src="/%E8%B7%A8%E9%93%BE%E5%8E%9F%E5%AD%90%E6%80%A7.assets/image-20231113112150963.png" alt="image-20231113112150963"></p>
+<p><img src="/%E8%B7%A8%E9%93%BE%E5%8E%9F%E5%AD%90%E6%80%A7.assets/image-20231113112218344.png" alt="image-20231113112218344"></p>
+<p>启动交易（Start Transaction）： 在钱包（Wallet）区块链上提交了一个启动交易，触发了 Start Event 的发射。该交易注册了跨链事务的调用执行树。</p>
+<p>分段交易（Segment Transactions）： 分别在价格预言机（Price Oracle）、财务（Finance）、和股票（Stock）区块链上提交了分段交易，执行调用执行树的叶子部分，即 getPrice、transfer 和 delivery 函数。作为这些交易的结果，发射了 Segment Events。被提交为 Segment Transactions 一部分的 Start Event 在价格预言机、财务和股票区块链上是可信的，从而使这些合同能够知道已提交的调用执行树。</p>
+<p>分段交易（Segment Transaction）： 在条款（Terms）区块链上提交了一个分段交易，执行从叶子部分开始的调用执行树，即 shipment 函数。作为这个交易的结果，发射了 Segment Event。被提交为 Segment Transaction 一部分的 Start Event 和 Segment Events 在条款区块链上是可信的。</p>
+<p>根交易（Root Transaction）： 在钱包区块链上提交了一个根交易，执行调用执行树的根部分并发射了一个 Root Event。被提交为 Root Transaction 一部分的 Start Event 和来自条款区块链的 Segment Event 在钱包区块链上是可信的。这使得跨链通信合同能够知道事务尚未超时，可以作为入口点函数调用的一部分执行，并且调用 shipment 和调用执行树的其余部分都在没有失败的情况下执行。</p>
+<p>信号交易（Signalling Transaction）： 在财务和物流区块链上提交了信号交易，以提交临时状态更新。在价格预言机或条款区块链上不需要信号交易，因为它们在跨链函数调用中不更新状态。</p>
+<p><img src="/%E8%B7%A8%E9%93%BE%E5%8E%9F%E5%AD%90%E6%80%A7.assets/image-20231113112255539.png" alt="image-20231113112255539"></p>
+<p>应用程序提交了对Crosschain Control合同的Start、Segment、Root和Signalling函数调用。<br>Segment、Root和Signalling函数的参数包括来自其他区块链的事件的签名或Merkle证明，用于证明这些事件信息的有效性。Registrar合同用于检查此事件信息的有效性。<br>Segment和Root函数调用在业务逻辑合同上执行函数。<br>这些业务逻辑合同可能反过来调用其他业务逻辑合同。<br>因此，Segment Events可以发射锁定合同的列表，业务逻辑合同需要告诉Crosschain Control合同合同中的哪些项目被锁定。<br>业务逻辑合同可能包括跨链调用。为了检查Root和Segment函数之间是否存在链接，业务逻辑合同将跨链调用的区块链ID、合同地址和参数传递给Crosschain Control合同。它检查实际值是否与Start Event中的预期值匹配。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Zhen Xie</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://example.com/2023/11/13/%E8%B7%A8%E9%93%BE%E5%8E%9F%E5%AD%90%E6%80%A7/">http://example.com/2023/11/13/%E8%B7%A8%E9%93%BE%E5%8E%9F%E5%AD%90%E6%80%A7/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2023/11/13/Hyperledger-Fabric/">Hyperledger Fabric</a>
+            
+            
+            <a class="next" rel="next" href="/2023/10/08/Golang%E5%AD%A6%E4%B9%A0/">Golang学习</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Zhen Xie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
