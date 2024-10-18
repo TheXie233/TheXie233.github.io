@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Zhen Xie">
+
+
+
+
+
+<title>文献分享 | Hexo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+<script>
+    !
+    function() {
+    function n(n, e, t) {
+    return n.getAttribute(e) || t
+    }
+    function e(n) {
+    return document.getElementsByTagName(n)
+    }
+    function t() {
+    var t = e("script"),
+    o = t.length,
+    i = t[o - 1];
+    return {
+    l: o,
+    z: n(i, "zIndex", -1), //置于主页面背后
+    o: n(i, "opacity", .5), //线条透明度
+    c: n(i, "color", "0,0,0"), //线条颜色
+    n: n(i, "count", 100) //线条数量
+    }
+    }
+    function o() {
+    a = m.width = window.innerWidth ||
+    document.documentElement.clientWidth || document.body.clientWidth,
+    c = m.height = window.innerHeight ||
+    document.documentElement.clientHeight || document.body.clientHeight
+    }
+    function i() {
+    r.clearRect(0, 0, a, c);
+    var n, e, t, o, m, l;
+    s.forEach(function(i, x) {
+    for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 :
+    1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1,
+    1), e = x + 1; e < u.length; e++) n = u[e],
+    null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l
+    = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o,
+    i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t /
+    2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y),
+    r.lineTo(n.x, n.y), r.stroke()))
+    }),
+    x(i)
+    }
+    var a, c, u, m = document.createElement("canvas"),
+    d = t(),
+    l = "c_n" + d.l,
+    r = m.getContext("2d"),
+    x = window.requestAnimationFrame || window.webkitRequestAnimationFrame
+    || window.mozRequestAnimationFrame || window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function(n) {
+    window.setTimeout(n, 1e3 / 45)
+    },
+    w = Math.random,
+    y = {
+    x: null,
+    y: null,
+    max: 2e4
+    };
+    m.id = l,
+    m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z +
+    ";opacity:" + d.o,
+    e("body")[0].appendChild(m),
+    o(),
+    window.onresize = o,
+    window.onmousemove = function(n) {
+    n = n || window.event,
+    y.x = n.clientX,
+    y.y = n.clientY
+    },
+    window.onmouseout = function() {
+    y.x = null,
+    y.y = null
+    };
+    for (var s = [], f = 0; d.n > f; f++) {
+    var h = w() * a,
+    g = w() * c,
+    v = 2 * w() - 1,
+    p = 2 * w() - 1;
+    s.push({
+    x: h,
+    y: g,
+    xa: v,
+    ya: p,
+    max: 6e3
+    })
+    }
+    u = s.concat([y]),
+    setTimeout(function() {
+    i()
+    },
+    100)
+    } ();
+    </script>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">TheXie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">TheXie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">文献分享</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Zhen Xie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">May 24, 2024&nbsp;&nbsp;14:56:49</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="A-lightweight-privacy-preserving-and-sharing-scheme-with-dual-blockchain-for-intelligent-pricing-system-of-smart-grid"><a href="#A-lightweight-privacy-preserving-and-sharing-scheme-with-dual-blockchain-for-intelligent-pricing-system-of-smart-grid" class="headerlink" title="A lightweight privacy-preserving and sharing scheme with dual-blockchain for intelligent pricing system of smart grid"></a>A lightweight privacy-preserving and sharing scheme with dual-blockchain for intelligent pricing system of smart grid</h3><p>2021 SCI2区</p>
+<h4 id="WHY："><a href="#WHY：" class="headerlink" title="WHY："></a>WHY：</h4><p>（1）智能电表的用电数据采集会给用户带来隐私暴露的风险，虽然假名可以保护用户的身份，但与真实<strong>身份</strong>的关联<strong>管理</strong>是一个挑战。</p>
+<p>（2）由于边缘设备时资源受限的设备，计算和存储能力有限，需要轻量级签名<strong>身份验证</strong>策略</p>
+<p>（3）需要安全高效的<strong>数据传输和共享</strong>。现有方案都是将大量本地数据加密传输到控制中心，不仅通信资源和成本消耗大，而且还没考虑系统外的参与者共享</p>
+<h4 id="HOW："><a href="#HOW：" class="headerlink" title="HOW："></a>HOW：</h4><p>1.基于<strong>双区块链</strong>的智能电网数据架构，实现用户间的安全管理和匿名性。私有区块链映射真实身份与伪名之间关系，共享区块链用户访问控制。（1）真假名身份关联管理</p>
+<p>2.<strong>基于身份的代理重加密融合同态加密</strong>，（2）轻量级签名身份验证使用户数据在本地加密后传输，在聚合器处高效聚合，传输到控制中心用于与外部参与者共享用户的私密信息。（3）聚合减少开销，重加密实现数据共享</p>
+<h4 id="WHAT："><a href="#WHAT：" class="headerlink" title="WHAT："></a>WHAT：</h4><p><strong>Identity-based proxy re-encryption</strong></p>
+<p><strong>IBE（基于身份的密码体制）</strong>与<strong>PKC（公钥密码体制）</strong>的区别：</p>
+<p>PKC：公钥是无意义的一串随机数，无法知道一个公钥就是接收者的公钥，所以必须引入一个可信的第三方，维护一个大的钥匙表格。当用户过多时，维护就很困难。</p>
+<p>IBE：（公钥就是用户的身份）（1）setup生成全局系统参数和主密钥（2）使用生成的主密钥生成对应字符串公钥的私钥（3）encrypt使用公钥ID加密消息（4）decrypt使用相应的私钥机密消息。</p>
+<p><strong>（1）Setup：生成参数{G，G<del>T</del>，H，g，P&#x3D;g^s^（公钥）}，保留私钥msk&#x3D;s。</strong></p>
+<p><strong>（2）KeyGen（params，msk，id）将id转为二进制{0，1}，生成用户公钥pk<del>id</del>&#x3D;H(id)，用户私钥sk<del>id</del>&#x3D;H(id)^s^</strong></p>
+<p>（3）Encrypt（params，id，m）：选择随机数r，生成c<del>id</del>&#x3D;（g^r^，m·e（g^s^,H(id)^r^））</p>
+<p>（4）PKGen（params，sk<del>id1</del>^-1^,id<del>2</del>）：选择随机数x，计算（R1，R2）&#x3D;Encrypt（params，id<del>2</del>, x），R1，R2为加密过后的两个子部分，即R1&#x3D;g^r^，R2&#x3D;x·e（g^s^,H(id<del>2</del>)^r^）</p>
+<p>（5）Reencrypt（params，rk<del>id1-&gt;id2</del>,c<del>id1</del>）：当密文c<del>id1</del>&#x3D;(c<del>1</del>，c<del>2</del>)在id<del>1</del>下，而且在重加密密钥rk<del>id1-&gt;id2</del>&#x3D;(R1,R2,R3)，重加密密文为c<del>id2</del>&#x3D;(c<del>1</del>,c<del>2</del>·e（c<del>1</del>，R<del>3</del>），R<del>1</del>，R<del>2</del>)&#x3D;（c<del>1</del>’，c<del>2</del>‘，c<del>3</del>’，c<del>4</del>‘）</p>
+<p>（6）Decrypt（params，sk<del>id</del>，c<del>id</del>）：对于c<del>id</del>&#x3D;(c<del>1</del>,c<del>2</del>),用私钥sk<del>id</del>来解密密文c<del>id</del>:</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\8KHV4M&#96;S]A%MI4C_$J9M53V.png)</p>
+<p>其中![img](C:\Users\the xie\Desktop\实验室\笔记\80A040SRY731DG_PWC3B$X9.png)，需要由R2来计算。</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\QG}RQ2RF0XXIPP70]EU[X8Q.png)</p>
+<p>实体包含：</p>
+<p><strong>用户：</strong>每个用户有一个智能电表和电力账户。</p>
+<p><strong>智能电表：</strong>资源有限的边缘设备，记录用电量。</p>
+<p><strong>聚合器：</strong>属于中继节点，用于判断签名是否合法并进行聚合操作，将聚合后的数据上传至私有云存储，存储地址发送给控制中心。</p>
+<p><strong>控制中心：</strong>控制中心读取并解密云中数据，再计算价格。用私有链管理匿名和身份之间的关联</p>
+<p><strong>私有云：</strong>存储数据</p>
+<p><strong>可信中心：</strong>身份注册</p>
+<p><strong>销售人员：</strong>（像销售某种大功率电器的商人，如个人电脑等）需要访问个人数据&#x2F;警务人员需要访问个人数据。</p>
+<p><strong>私有区块链：</strong>用于映射用户的真实身份和虚拟身份（智能电表的序列号）之间的关系，使用区块链来管理身份。</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\UA[{45U[F{TNP%S&#96;9LXJ4LC.png)</p>
+<p>ID就是用户的真实身份，l为其存储地址，由虚拟身份（智能电表的序列号）得出。</p>
+<p><strong>公有区块链：</strong>用于控制中心和经销商之间的数据共享。</p>
+<p>n个用户：U</p>
+<p>n个用户ID：ID<del>u</del><br>n个智能电表：SM</p>
+<p>n个智能电表序列号：SN（作为用户假名）</p>
+<p>m个聚合器：A</p>
+<p>m个聚合器ID：ID<del>A</del></p>
+<p>w个销售人员：S</p>
+<p>w个销售人员ID：ID<del>S</del></p>
+<p>w个访问策略：Policy<del>s</del></p>
+<h4 id="初始化与密钥生成阶段："><a href="#初始化与密钥生成阶段：" class="headerlink" title="初始化与密钥生成阶段："></a><strong>初始化与密钥生成阶段：</strong></h4><p><strong>私有区块链</strong>两种交易：<strong>ADDTransaction(添加)<strong>和</strong>AlterTransaction（更改）</strong></p>
+<p><strong>用户Ui注册：</strong>到TA处开户，完成初始化操作。TA生成公私钥对（pk<del>Ui</del>，sk<del>Ui</del>），通过安全通道发送给用户Ui，将RegistrationUi&#x3D;（ID<del>Ui</del>，SN<del>SMi</del>，Account<del>Ui</del>，pk<del>Ui</del>）给控制中心。然后控制中心通过ADDTransaction（ID<del>Ui</del>，SN<del>SMi</del>，Account<del>Ui</del>，pk<del>Ui</del>，Add，T），生成一个新的区块并添加到区块链中，T代表当前时间。</p>
+<p><strong>公有区块链</strong>两种交易：<strong>PolicyTransaction（ID，Policy，T）</strong>（管理销售人的访问权限）和<strong>ShareTransaction（ID，Policy，T）</strong>（与销售人共享信息）</p>
+<p><strong>销售人员注册：</strong>销售人员在系统中注册以访问特定数据，并执行与上面描述的用户注册相同的操作。到TA处开户，生成私钥sk<del>sw</del>&#x3D;H（ID<del>sw</del>）^s^和默认权限Policy<del>sw</del>，通过安全通道发送给销售人员sw，同时将RegistrationSw&#x3D;（ID<del>sw</del>，Policy<del>sw</del>）发送给控制中心。控制中心通过PolicyTransaction（ID<del>sw</del>，Policy<del>sw</del>，T），生成一个新的区块并将其添加到区块链中。</p>
+<h4 id="数据生成和聚合："><a href="#数据生成和聚合：" class="headerlink" title="数据生成和聚合："></a>数据生成和聚合：</h4><p><strong>加密阶段（加密的用电量）：</strong></p>
+<p>SM<del>i</del>在Ti时间端中产生的用电量数据为d<del>i</del>，随机选择r<del>i</del>生成c<del>i</del>&#x3D;Encrypt（params，SN<del>SMi</del>，d<del>i</del>）&#x3D;（g^ri^,e(g^s^,H(SN<del>SMi</del>)^ri^)·d<del>i</del>）&#x3D;（c<del>i,1</del>，c<del>i,2</del>）,智能电表SM<del>i</del>随机选择hi，计算k<del>i</del>&#x3D;e（h<del>i</del>，g）^ri^。签名私钥sk<del>i</del>&#x3D;H（SN<del>SMi</del>）^s^用于生成签名o<del>SMi</del>&#x3D;（v<del>i</del>，u<del>i</del>）&#x3D;（H（c<del>i</del>，k<del>i</del>）,sk<del>i</del>^vi^·h<del>i</del>^ri^），计算M<del>SMi</del>&#x3D;SN<del>SMi</del>||c<del>i</del>||T<del>i</del>||o<del>SMi</del>,发送给聚合器A<del>j</del>。</p>
+<p><strong>验证签名：</strong></p>
+<p>A<del>i</del>收到l个数据后，首先检查时间戳T<del>l</del>，计算k<del>i</del>^’^&#x3D;e(u<del>i</del>，g)·e（H（SN<del>SMi</del>）,P）^-vi^,验证o<del>SMi</del>是否有效。验证方法就是计算v<del>i</del>与H（c<del>i</del>，k<del>i</del>^’^）是否相等。为了提高聚合器的签名验证效率，对l个数据进行签名聚合后再验证是否相等。</p>
+<p><strong>聚合：</strong></p>
+<p>如果验证通过聚合器将加密后数据通过c&#x3D;c1·c2·……·cn进行聚合，并上传到私有云存储，获取存储地址L<del>i</del>。</p>
+<p><strong>再加密阶段（加密的聚合数据的地址）：</strong></p>
+<p>A<del>j</del>获取若干地址数据L，计算W<del>Aj</del>&#x3D;e（h<del>Aj</del>，g）^rAj^,计算M<del>Aj</del>&#x3D;ID<del>Aj</del>||L||T<del>j</del>||o<del>Aj</del>，送往控制中心。其中o<del>Aj</del>&#x3D;(v<del>Aj’</del>,u<del>Aj</del>)&#x3D;(H(L,k<del>Aj</del>),sk<del>Aj</del>^vAj^·h<del>Aj</del>^rAj^)其中Aj的公钥：pk<del>Aj</del>&#x3D;H（ID<del>Aj</del>），私钥为sk<del>Aj</del>&#x3D;H（ID<del>Aj</del>）^s^.</p>
+<p><strong>再验证签名：</strong></p>
+<p>控制中心收到A<del>j</del>提交的M<del>j</del>后，首先验证时间戳与ID，计算W<del>Aj</del>’&#x3D;e（u<del>Aj</del>，g）·e（H（ID<del>Aj</del>）,P）^-vAj^,验证签名消息，计算v<del>Aj</del>&#x3D;H（L，k<del>i</del>‘）是否相等。验证完毕过后，控制中心从云地址L获取信息c，通过主私钥s解密信息：d<del>i</del>&#x3D;c<del>i，2</del>&#x2F;e(sk<del>Ui</del>,c<del>i,1</del>).</p>
+<h4 id="数据共享："><a href="#数据共享：" class="headerlink" title="数据共享："></a><strong>数据共享：</strong></h4><p>先进行访问策略检查，若通过则数据拥有者加密对应数据，利用销售人员的ID（公钥）与数据拥有者的私钥，生成rk<del>CC–&gt;sw</del></p>
+<p>假设销售人员sw想在时间Ti访问私有云Ui的数据d<del>Ui</del>^Ti^，向控制中心提交Auditrequest（ID<del>sw</del>,Policy<del>sw</del>,U<del>i</del>,T<del>i</del>）控制中心收到从sw的数据请求后，如果sw满足访问策略，控制中心得到C<del>cc</del>&#x3D;Encrypt（params，ID<del>Ui</del>，d<del>Ui</del>^-Ti^）&#x3D;(c<del>CC,1</del>&lt;–g^ri^,c<del>CC,2</del>&lt;–d<del>Ui</del>^-Ti^·e（g^s^,H(ID<del>Ui</del>)^ri^）).然后控制中心计算（R<del>CC，1</del>，R<del>CC，2</del>）&#x3D;（g^rw^,x<del>sw</del>·e（g^s^,H(ID<del>sw</del>)）^rw^）和rk<del>CC–&gt;sw</del>&#x3D;(R<del>CC,1</del>,R<del>CC,2</del>,R<del>CC,3</del>&lt;–sk<del>IDUi</del>^-1^·H（x<del>sw</del>）),x<del>sw</del>是一个随机数。控制中心计算M<del>CC</del>&#x3D;c<del>CC</del>||rk<del>CC-&gt;sw</del>（存储在区块链上做记录？）,c<del>sw</del>&#x3D;(c<del>CC,1</del>,c<del>CC,2</del>·e（c<del>CC,1</del>，R<del>CC,3</del>）,Encrypt(params,ID<del>sw</del>,x<del>sw</del>)&#x3D;&#x3D;R<del>CC，1</del>，R<del>CC，2</del>).</p>
+<p>控制中心生成共享事务ShareTraction（ID<del>Ui</del>，c<del>sw</del>，ID<del>sw</del>，T<del>i</del>），生成对应区块。销售人员sw检查对应ID<del>sw</del>与T<del>i</del>。若相符，则根据c<del>sw</del>和自己的私钥，计算出x<del>sw</del>&#x3D;R<del>CC，2</del>&#x2F;e（R<del>CC，1</del>，sk<del>sw</del>）&#x3D;x<del>sw</del>·e（g^s^,H<del>1</del>(ID<del>sw</del>)）^rw^&#x2F;e(g^rw^,H(ID<del>sw</del>)^s^)</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\V6EOEXJ24DEK<code>_Q5YP</code>BHAM.png)</p>
+<p><strong>思考：</strong></p>
+<p>对比：</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\UA[{45U[F{TNP%S&#96;9LXJ4LC.png)</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记`2OLZST96[]FJ}E4I165~00.png)</p>
+<p>比较两种双链结构，都是在私有链上存储真名假名对这种隐私数据，但采用全复制的策略，不仅会导致存储开销大，而且一个节点出问题，就容易暴露出整个真名假名对，安全性不高。能想到的最好解决方式是采用RS编码分片存储，这样不仅存储开销小，也更加安全，需要一定数量的节点才能恢复出对应区块。也正在考虑与秘密共享方案结合。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Zhen Xie</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://example.com/2024/05/24/%E6%96%87%E7%8C%AE%E5%88%86%E4%BA%AB/">http://example.com/2024/05/24/%E6%96%87%E7%8C%AE%E5%88%86%E4%BA%AB/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"># 区块链</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2024/06/02/%E7%BC%96%E7%A0%81/">编码</a>
+            
+            
+            <a class="next" rel="next" href="/2024/04/26/%E8%AE%BF%E9%97%AE%E6%A0%91/">访问树</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Zhen Xie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

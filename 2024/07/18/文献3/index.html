@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Zhen Xie">
+
+
+
+
+
+<title>文献3 | Hexo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+<script>
+    !
+    function() {
+    function n(n, e, t) {
+    return n.getAttribute(e) || t
+    }
+    function e(n) {
+    return document.getElementsByTagName(n)
+    }
+    function t() {
+    var t = e("script"),
+    o = t.length,
+    i = t[o - 1];
+    return {
+    l: o,
+    z: n(i, "zIndex", -1), //置于主页面背后
+    o: n(i, "opacity", .5), //线条透明度
+    c: n(i, "color", "0,0,0"), //线条颜色
+    n: n(i, "count", 100) //线条数量
+    }
+    }
+    function o() {
+    a = m.width = window.innerWidth ||
+    document.documentElement.clientWidth || document.body.clientWidth,
+    c = m.height = window.innerHeight ||
+    document.documentElement.clientHeight || document.body.clientHeight
+    }
+    function i() {
+    r.clearRect(0, 0, a, c);
+    var n, e, t, o, m, l;
+    s.forEach(function(i, x) {
+    for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 :
+    1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1,
+    1), e = x + 1; e < u.length; e++) n = u[e],
+    null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l
+    = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o,
+    i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t /
+    2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y),
+    r.lineTo(n.x, n.y), r.stroke()))
+    }),
+    x(i)
+    }
+    var a, c, u, m = document.createElement("canvas"),
+    d = t(),
+    l = "c_n" + d.l,
+    r = m.getContext("2d"),
+    x = window.requestAnimationFrame || window.webkitRequestAnimationFrame
+    || window.mozRequestAnimationFrame || window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function(n) {
+    window.setTimeout(n, 1e3 / 45)
+    },
+    w = Math.random,
+    y = {
+    x: null,
+    y: null,
+    max: 2e4
+    };
+    m.id = l,
+    m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z +
+    ";opacity:" + d.o,
+    e("body")[0].appendChild(m),
+    o(),
+    window.onresize = o,
+    window.onmousemove = function(n) {
+    n = n || window.event,
+    y.x = n.clientX,
+    y.y = n.clientY
+    },
+    window.onmouseout = function() {
+    y.x = null,
+    y.y = null
+    };
+    for (var s = [], f = 0; d.n > f; f++) {
+    var h = w() * a,
+    g = w() * c,
+    v = 2 * w() - 1,
+    p = 2 * w() - 1;
+    s.push({
+    x: h,
+    y: g,
+    xa: v,
+    ya: p,
+    max: 6e3
+    })
+    }
+    u = s.concat([y]),
+    setTimeout(function() {
+    i()
+    },
+    100)
+    } ();
+    </script>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">TheXie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">TheXie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">文献3</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Zhen Xie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">July 18, 2024&nbsp;&nbsp;14:56:02</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="A-Threshold-Proxy-Re-Encryption-Scheme-for-Secure-IoT-Data-Sharing-Based-on-Blockchain"><a href="#A-Threshold-Proxy-Re-Encryption-Scheme-for-Secure-IoT-Data-Sharing-Based-on-Blockchain" class="headerlink" title="A Threshold Proxy Re-Encryption Scheme for Secure IoT Data Sharing Based on Blockchain"></a>A Threshold Proxy Re-Encryption Scheme for Secure IoT Data Sharing Based on Blockchain</h3><h3 id="WHY："><a href="#WHY：" class="headerlink" title="WHY："></a>WHY：</h3><p>物联网设备存储容量有限，数据需要经过加密后上传至第三方进行存储。有必要建立有效的访问控制机制以及代理重加密机制分担数据所有者计算压力。同时为了消除对于第三方中心服务提供者的依赖（代理服务节点），引入<strong>阈值代理重加密</strong>，并<strong>结合区块链的共识</strong>，实现不可篡改性与透明性。</p>
+<h3 id="HOW："><a href="#HOW：" class="headerlink" title="HOW："></a>HOW：</h3><p><strong>基于阈值的代理重加密机制：</strong>传统的代理重加密技术通常涉及单一代理或非分布式的重加密策略。该文献提出了一种基于阈值的模型，其中重加密操作需要多个节点（即达到一定数量的共识节点）共同参与和完成，这不仅增强了重加密过程的安全性，也减少了单点故障的风险。<br><strong>集成区块链的共识机制：</strong>通过利用区块链的共识机制来验证和记录每一次的代理重加密操作和密钥管理活动，确保了整个过程的不可篡改性和透明度。这种方法提高了系统的信任度，并且通过分布式账本技术，增强了跨域数据共享的效率和可行性。因为共识的存在，在此方案中，密钥不是由单一的中心化实体控制，而是分散存储和管理，需要多个授权节点协同工作才能完成重加密任务。这种分散的密钥管理方法降低了密钥泄露或滥用的风险。</p>
+<h3 id="WHAT"><a href="#WHAT" class="headerlink" title="WHAT:"></a>WHAT:</h3><p>![img](C:\Users\the xie\Desktop\实验室\笔记%RH]B{A}72YP4PPW0AUWF80.png)</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记]U<code>NZ9C5OUZ</code>QKEC_CTX5YK.png)</p>
+<h5 id="阈值代理重加密"><a href="#阈值代理重加密" class="headerlink" title="阈值代理重加密:"></a><strong>阈值代理重加密</strong>:</h5><p>将重新加密委托给多个代理节点。该机制可以实现多个代理之间的信任分割，避免了代理与被委托之间的勾结。同时也解决了单个代理容易收到拒绝服务攻击的问题。此外，单个代理可能存在性能瓶颈和单点故障。</p>
+<h6 id="Shamir秘密共享："><a href="#Shamir秘密共享：" class="headerlink" title="Shamir秘密共享："></a>Shamir秘密共享：</h6><p>将秘密分成N个参与者保管。只有当至少t个参与者在场时，才能恢复秘密。</p>
+<h6 id="拉格朗日插值："><a href="#拉格朗日插值：" class="headerlink" title="拉格朗日插值："></a>拉格朗日插值：</h6><p>对于给定的<strong>n+1</strong>个点（x0，y0），（x1，y1），…，（xn，yn）对应于它们次数都不超过<strong>n</strong>的拉格朗日多项式L只有一个。如果计入次数更高的多项式，则有无穷个，因为所有于L相差λ（x-x0）（x-x1）…（x-xn）的多项式都满足条件。</p>
+<p>有一组参与者（p1，p2，…,pn），随机选取k-1个数，记作a1，a2，…,ak-1，作为k-1次多项式f（x）的非常数项的系数（k-1项多项式需要k个点解出）：</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记@BTA_7XNNU5_1DK[F]B&#96;JBN.png)</p>
+<p>s为f（x）中的常数，每个参与者pi分配一个唯一的域元素bi，并得到对应si&#x3D;f（bi）。</p>
+<p>如果至少有k个成员（p1，p2，…,pn）参与，则可恢复秘密：</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\BRV4PKRE5XSVYLD5814WU2B.png)</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记[I1[C][1P55U[NCR[BH_}~T.png)</p>
+<h5 id="将区块链共识算法机制和阈值代理加密计算相结合"><a href="#将区块链共识算法机制和阈值代理加密计算相结合" class="headerlink" title="将区块链共识算法机制和阈值代理加密计算相结合:"></a>将区块链共识算法机制和阈值代理加密计算相结合:</h5><p>数据代理将<strong>重加密密钥拆分</strong>并发送给<strong>多个代理节点</strong>，这些代理节点可以从区块链网络中的<strong>共识节点</strong>中选择。这些节点在收到委托方的重加密请求后，根据收到的重加密密钥计算并生成相应的“<strong>重加密份额</strong>“，将请求和密文转换记录在账本上。将共识节点的<strong>哈希问题</strong>替换为<strong>使用重加密密钥转换密文</strong>的过程，并根据其他节点的验证结果生成和写入新的区块。</p>
+<p><strong>POW（工作量证明）：</strong>简单来说就是所有矿工公平竞争一个区块的挖矿权。他们对候选的区块进行Hash运算，当算出对应结果后，就可以得到挖矿权，并全网广播，其他节点会对运算结果进行验证，若超过一半的节点对该结果表示赞同，则出块，对应矿工享受出块周期的收益。</p>
+<p>为什么采用Hash呢？</p>
+<p>Hash具有<strong>难以计算，但易于验证</strong>的性质。其他节点可以轻松验证结果的对错。</p>
+<p>将哈希问题替换为使用重加密密钥转换密文，对重加密过后的密文C<del>bi</del>签名，其他节点对签名进行验证，签名验证的过程也是属于<strong>难计算但易验证。</strong></p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\N%H0URRNL{8E9%AMA&#96;T16IO.png)</p>
+<h5 id="四个实体："><a href="#四个实体：" class="headerlink" title="四个实体："></a>四个实体：</h5><p><strong>DO（Data owners）</strong>:拥有个人数据的所有权，这些数据需要经过对称加密后上传至SSP中存储。DO用自己的公钥对数据的元数据信息进行非对称加密，发布到区块链上（包括数据摘要、数据存储位置、数据密文的签名和对称密钥）在收到数据用户的访问请求后，验证访问权限，根据DU的公钥和自己的私钥生成重加密密钥。重加密密钥被发送至区块链的共识节点进行密文转换和共享。</p>
+<p><strong>DU（Data users）</strong>：包括一系列需要使用物联网设备数据的机构。DU通过浏览区块链上的数据摘要来搜索感兴趣的内容。通过基于属性访问控制和可搜索加密算法的智能合约实现。DU在获得授权后，获得重新加密的元数据密文，DU可以使用自己的私钥对重新加密的密文进行解密，获得元数据信息。再向SSP发送访问请求，获取加密数据解密</p>
+<p><strong>区块链网络</strong>：区块链共识节点扮演代理服务器的角色。采用阈值代理重加密方案。DO将多个重加密密钥共享分发给区块链网络中的多个节点。共识节点使用相应的重新加密共享对原始密文进行重新加密。转换后的元数据密文被收集并打包成新的块。改过程实现依赖设计的区块链共识算法。</p>
+<p><strong>SSP（Storage Service Providers</strong>）：物联网收集的数据经过加密后上传至第三方服务器进行存储和共享。如IPFS。</p>
+<h5 id="阈值代理重加密过程："><a href="#阈值代理重加密过程：" class="headerlink" title="阈值代理重加密过程："></a>阈值代理重加密过程：</h5><h6 id="1-System-setup（1-λ-，U）"><a href="#1-System-setup（1-λ-，U）" class="headerlink" title="1.System setup（1^λ^，U）"></a>1.System setup（1^λ^，U）</h6><p>生成随机数g，乘法循环群G1，G2，Z&#x3D;e（g，g），四个哈希函数。</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\7GE7FN$9H[5LMC3I{9}QW9C.png)</p>
+<h6 id="2-Key-Generation（PP）—-（SKDO，PKDO，SKDU，PKDU）"><a href="#2-Key-Generation（PP）—-（SKDO，PKDO，SKDU，PKDU）" class="headerlink" title="2.Key Generation（PP）—&gt;（SKDO，PKDO，SKDU，PKDU）"></a>2.Key Generation（PP）—&gt;（SK<del>DO</del>，PK<del>DO</del>，SK<del>DU</del>，PK<del>DU</del>）</h6><p>获得用户私钥和公钥。</p>
+<p>SK<del>DO</del>&#x3D;a，SK<del>DU</del>&#x3D;b,PK<del>DO</del>&#x3D;g^a^,PK<del>DU</del>&#x3D;g^b^</p>
+<h6 id="3-Data-Encryption-DEK-Data-CT"><a href="#3-Data-Encryption-DEK-Data-CT" class="headerlink" title="3.Data Encryption(DEK,Data)-&gt;CT"></a>3.Data Encryption(DEK,Data)-&gt;CT</h6><p>通过对称加密获得密文CT</p>
+<h6 id="4-Metadata-Encry（PP，PKDO-M）—-CTM"><a href="#4-Metadata-Encry（PP，PKDO-M）—-CTM" class="headerlink" title="4.Metadata Encry（PP，PKDO,M）—&gt;CTM"></a>4.Metadata Encry（PP，PK<del>DO</del>,M）—&gt;CT<del>M</del></h6><p>CT<del>M</del>&#x3D;（g^ak^，MZ^k^）,其中Z&#x3D;e（g，g），k是一个随机数（防止攻击者通过比较重复的加密输出判断原始元数据的内容）</p>
+<h6 id="5-Re-encry-Key-Generation"><a href="#5-Re-encry-Key-Generation" class="headerlink" title="5.Re-encry Key Generation"></a>5.Re-encry Key Generation</h6><p>由所有者私钥和访问者公钥生成</p>
+<p>RK<del>DO-&gt;DU</del>&#x3D;g^b&#x2F;a^（需要隐藏的共享秘密s）</p>
+<p>根据下式：</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记[4E82ZO4CUC0QP<code>5319</code>@SL.png)</p>
+<p>每个代理节点持有的密钥共享为rk^i^ <del>O-&gt;U</del>&#x3D;g^f(xi)^mod q,i&#x3D;1,2,…,n,对于代理节点Pi（t个rk^i^ <del>O-&gt;U</del>可以解出g^f(x)^，）</p>
+<h6 id="6-Re-encryption"><a href="#6-Re-encryption" class="headerlink" title="6.Re-encryption"></a>6.Re-encryption</h6><p>共识节点收到重加密密钥后，相应重加密请求。计算如下：</p>
+<p>e（g^ak^,(rk<del>pi</del>)^λi^）&#x3D;e（g^ak^,g^[λi·f（xi）]^）</p>
+<p>&#x3D;Z^ak[λi·f（xi）]^</p>
+<p>每个代理节点Pu获得密文：</p>
+<p>C<del>bi</del>&#x3D;（Z^ak[λi·f（xi）]^，MZ^K^）</p>
+<p>当有n个代理节点有t个正确完成重新加密计算后，将C<del>bi</del>合并为新密文CT<del>M</del>‘.</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\1A}UBX&#96;[J2O[J6@Z6_VG]T7.png)</p>
+<p>完成共识确认后，合并后的密文将被写入新的区块。</p>
+<h6 id="7-Metadata-Decryption："><a href="#7-Metadata-Decryption：" class="headerlink" title="7.Metadata Decryption："></a>7.Metadata Decryption：</h6><p>DU能通过SK<del>DU</del>解密密文：CT<del>M</del>’&#x3D;（Z^bk^，MZ^k^）&#x3D;(α，β)：</p>
+<p>M&#x3D;β&#x2F;α^1&#x2F;SKDU^</p>
+<h6 id="8-Data-Decryption："><a href="#8-Data-Decryption：" class="headerlink" title="8.Data Decryption："></a>8.Data Decryption：</h6><p>根据解密过后的对称密钥解密密文：</p>
+<p>Data&#x3D;decryp（DEK，CT）</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记@OV](QP&#96;~VSU11F4E)JX{HL.png)</p>
+<h5 id="阈值代理重加密与共识结合："><a href="#阈值代理重加密与共识结合：" class="headerlink" title="阈值代理重加密与共识结合："></a>阈值代理重加密与共识结合：</h5><p>1.每个共识节点根据接收到的重加密密钥，对元数据密文进行重加密转换。共识节点先再区块链账本上找到对应的原始密文CT<del>M</del>，再使用重加密密钥rk^i^ <del>O-&gt;U</del>执行转换过程。</p>
+<p>2.在限定实际内完成密文转换Cbi，并进行签名，广播到区块链网络中，每个共识节点收集并验证接收到的重新加密的密文Cbi。当一个共识节点率先收集t个经过验证的重新加密的密文时；向区块链网络发送成为领导节点的请求，并启动一轮投票。在收到此请求后，其他共识节点验证t重新加密的密文正确性。若超过一半节点支持该结果，则发送此请求的节点成为领导节点，获得共识过程记录权。</p>
+<p>3.领导节点将重新加密的密文Cbi合并为新的密文CT<del>M</del>‘,并且添加到区块链分类账上，向网络广播。其他节点完成共识确认并更新账本，将转换后的元数据密文CT<del>M</del>‘写入更新块。</p>
+<p><strong>为什么需要共识：</strong></p>
+<p>没有一个可信的第三方，无法将碎片合并到一起，所以需要节点之间互相通信，所以需要共识。</p>
+<h5 id="思考："><a href="#思考：" class="headerlink" title="思考："></a>思考：</h5><p>这篇文章将阈值代理重加密和共识结合，共识类型更偏向于POW，如果仿照之前读过的一篇论文（基于RS编码的联盟链存储方案），其中的数据分片于编码过程有点类似于文章中的代理重加密密钥碎片共享，按照PBFT的过程来进行共识。进一步的，可以参考（基于分组编码的联盟链存储方案），参考在RS编码的基础上实现分组编码，也可以考虑将代理重加密密钥进行分组共享。</p>
+<p>如果加入监管的话，有两种办法：（1）加入第三方监管组织。（2）节点内部行为监管（融合在共识过程中）：每个节点都有信誉值。节点可以通过对数字签名的验证来发现其他节点的恶意行为，当发现不合法是，广播detected消息。收到F+1个消息后，更新数组中节点的信誉值。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Zhen Xie</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://example.com/2024/07/18/%E6%96%87%E7%8C%AE3/">http://example.com/2024/07/18/%E6%96%87%E7%8C%AE3/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"># 区块链</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2024/06/02/%E7%BC%96%E7%A0%81/">编码</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Zhen Xie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

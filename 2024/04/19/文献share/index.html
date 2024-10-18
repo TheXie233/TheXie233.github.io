@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Zhen Xie">
+
+
+
+
+
+<title>文献share | Hexo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+<script>
+    !
+    function() {
+    function n(n, e, t) {
+    return n.getAttribute(e) || t
+    }
+    function e(n) {
+    return document.getElementsByTagName(n)
+    }
+    function t() {
+    var t = e("script"),
+    o = t.length,
+    i = t[o - 1];
+    return {
+    l: o,
+    z: n(i, "zIndex", -1), //置于主页面背后
+    o: n(i, "opacity", .5), //线条透明度
+    c: n(i, "color", "0,0,0"), //线条颜色
+    n: n(i, "count", 100) //线条数量
+    }
+    }
+    function o() {
+    a = m.width = window.innerWidth ||
+    document.documentElement.clientWidth || document.body.clientWidth,
+    c = m.height = window.innerHeight ||
+    document.documentElement.clientHeight || document.body.clientHeight
+    }
+    function i() {
+    r.clearRect(0, 0, a, c);
+    var n, e, t, o, m, l;
+    s.forEach(function(i, x) {
+    for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 :
+    1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1,
+    1), e = x + 1; e < u.length; e++) n = u[e],
+    null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l
+    = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o,
+    i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t /
+    2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y),
+    r.lineTo(n.x, n.y), r.stroke()))
+    }),
+    x(i)
+    }
+    var a, c, u, m = document.createElement("canvas"),
+    d = t(),
+    l = "c_n" + d.l,
+    r = m.getContext("2d"),
+    x = window.requestAnimationFrame || window.webkitRequestAnimationFrame
+    || window.mozRequestAnimationFrame || window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function(n) {
+    window.setTimeout(n, 1e3 / 45)
+    },
+    w = Math.random,
+    y = {
+    x: null,
+    y: null,
+    max: 2e4
+    };
+    m.id = l,
+    m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z +
+    ";opacity:" + d.o,
+    e("body")[0].appendChild(m),
+    o(),
+    window.onresize = o,
+    window.onmousemove = function(n) {
+    n = n || window.event,
+    y.x = n.clientX,
+    y.y = n.clientY
+    },
+    window.onmouseout = function() {
+    y.x = null,
+    y.y = null
+    };
+    for (var s = [], f = 0; d.n > f; f++) {
+    var h = w() * a,
+    g = w() * c,
+    v = 2 * w() - 1,
+    p = 2 * w() - 1;
+    s.push({
+    x: h,
+    y: g,
+    xa: v,
+    ya: p,
+    max: 6e3
+    })
+    }
+    u = s.concat([y]),
+    setTimeout(function() {
+    i()
+    },
+    100)
+    } ();
+    </script>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">TheXie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">TheXie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">文献share</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Zhen Xie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">April 19, 2024&nbsp;&nbsp;14:57:38</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="A-Distributed-Internet-of-Vehicles-Data-Privacy-Protection-Method-Based-on-Zero-knowledge-Proof-and-Blockchain"><a href="#A-Distributed-Internet-of-Vehicles-Data-Privacy-Protection-Method-Based-on-Zero-knowledge-Proof-and-Blockchain" class="headerlink" title="A Distributed Internet of Vehicles Data Privacy Protection Method Based on Zero-knowledge Proof and Blockchain"></a>A Distributed Internet of Vehicles Data Privacy Protection Method Based on Zero-knowledge Proof and Blockchain</h3><h4 id="WHY："><a href="#WHY：" class="headerlink" title="WHY："></a>WHY：</h4><p>采用<strong>IPFS</strong>避免单点故障、数据丢失和被盗、拒绝服务攻击等问题—–&gt;传统方案存在数据<strong>隐私泄漏</strong>的风险，数据匿名性差。没有对数据<strong>访问权限进行限制，安全访问控制差</strong>—–&gt;<strong>代理重加密</strong></p>
+<p>传统认证<strong>ECDSA</strong>认证采用大量加密原语，认证开销大——&gt;<strong>Schnorr零知识证明协议</strong>实现车辆分布式认证，传输数据量少</p>
+<h4 id="WHAT："><a href="#WHAT：" class="headerlink" title="WHAT："></a>WHAT：</h4><h4 id="结构："><a href="#结构：" class="headerlink" title="结构："></a>结构：</h4><h5 id="两个channel："><a href="#两个channel：" class="headerlink" title="两个channel："></a>两个channel：</h5><h6 id="认证channel："><a href="#认证channel：" class="headerlink" title="认证channel："></a>认证channel：</h6><p>存储车辆登记和认证记录，不能被车辆用户查看，所有RSU都在该通道中。</p>
+<h6 id="数据访问channel："><a href="#数据访问channel：" class="headerlink" title="数据访问channel："></a>数据访问channel：</h6><p>记录IPFS网络中VDO数据索引和加密的对称密钥。车辆用户可以通过RSU访问该通道数据，所有RSU和车辆属于该通道。</p>
+<h6 id="TA："><a href="#TA：" class="headerlink" title="TA："></a>TA：</h6><p>区块链网络创造者。TA离线注册并存储RSU公钥信息，TA有能力揭露RSU和车辆真实身份。</p>
+<h6 id="RSU："><a href="#RSU：" class="headerlink" title="RSU："></a>RSU：</h6><p>路边基础设施，作为共识节点，对车联网的车辆登记和认证记录以及数据上传和访问记录进行分布式存储。车辆进入车联网前，需要通过RSU进行注册，当连入新的RSU时，车辆需要进行身份验证。还是代理重加密服务的中间代理。</p>
+<h6 id="VDO和VDU："><a href="#VDO和VDU：" class="headerlink" title="VDO和VDU："></a>VDO和VDU：</h6><p>充当轻量级区块链节点。不存储区块链数据并参与共识过程。通过附近rsu获取或访问数据。</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\共识,公钥与私钥.assets{D~WQF2}DVO4GJK}33%}@8Y.png)</p>
+<p>①：TA创建区块链网络，注册RSU，确定系统参数。</p>
+<p>②：车辆向RSU注册，初始化身份认证参数。一些参数由RSU记录在认证通道上。（类似注册账户）</p>
+<p>③：注册车辆在使用RSU前，需进行基于Schnorr协议的身份认证（类似登录密码）以获得临时身份t1。（有效期内连接rsu不需要重新认证）（类似token）</p>
+<p>④：车辆可通过RSU基于IPFS存储数据，CID存储在数据访问通道上。</p>
+<p>⑤：车辆可搜索感兴趣的数据，并发出申请，由RSU转发给数据所有者。</p>
+<p>⑥：数据所有者同意访问，生成代理重加密密钥并发给RSU。RSU为代理重加密的中间代理。</p>
+<p>⑦：RSU使用重加密密钥对密文重新加密，将重新加密的密文发给申请者。</p>
+<p>⑧：申请人用自己的私钥解密密文，获得对称密钥，使用对称密钥解密从IPFS获得的密文。</p>
+<h4 id="HOW："><a href="#HOW：" class="headerlink" title="HOW："></a>HOW：</h4><h4 id="RSU注册：①"><a href="#RSU注册：①" class="headerlink" title="RSU注册：①"></a>RSU注册：①</h4><p>1.RSU发送{ID，pk，S&#x2F;N（硬件设备序列号）}给TA。</p>
+<p>2.TA收到申请后，填写登记证书的明文信息（可登记车辆数、有效期限等）</p>
+<p>3.TA用私钥对证书哈希进行签名，将证书与签名返回给RSU。</p>
+<p>4.RSU收到证书后，向其他RSU广播其有效身份。</p>
+<h4 id="车辆注册与Schnorr参数初始化：②③"><a href="#车辆注册与Schnorr参数初始化：②③" class="headerlink" title="车辆注册与Schnorr参数初始化：②③"></a>车辆注册与Schnorr参数初始化：②③</h4><h5 id="0-初始化（RSU与VDO通信的一些加密参数IDVEH，v（公钥）-p-q-g）注册"><a href="#0-初始化（RSU与VDO通信的一些加密参数IDVEH，v（公钥）-p-q-g）注册" class="headerlink" title="0.初始化（RSU与VDO通信的一些加密参数IDVEH，v（公钥）,p,q,g）注册"></a>0.初始化（RSU与VDO通信的一些加密参数ID<del>VEH</del>，v（公钥）,p,q,g）注册</h5><p><strong>通过真名生成假名，通过随机数Ci生成Ri，生成公钥返还给RSU。</strong></p>
+<p>v &#x3D; g^−s^ mod p,v为公钥，s为私钥。 RSU选择激励Ci发送给车辆，车辆收到后，通过本地PUF<del>V</del>（Ci）（Physical unclonable function可以看成硬件版本的HASH，可用于随机密钥生成和存储、设备身份验证、随机数生成、防伪）获得Ri，通过PID<del>VEH</del>&#x3D;PRNG（ID<del>VEH</del>）获得PID，{Ri，PID}返还给RSU，RSU将{Ci，Ri，PID，ID，v}进行上链，并将所在区块索引Ibi返还给VDO。</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\共识,公钥与私钥.assets\C@SCQ93[DC4LA&#96;KNL$[@4GW.png)</p>
+<h5 id="1-车辆认证：（双向认证，就像HTTP握手一样，两边都要确认，防止冒充攻击）"><a href="#1-车辆认证：（双向认证，就像HTTP握手一样，两边都要确认，防止冒充攻击）" class="headerlink" title="1.车辆认证：（双向认证，就像HTTP握手一样，两边都要确认，防止冒充攻击）"></a>1.车辆认证：（双向认证，就像HTTP握手一样，两边都要确认，防止冒充攻击）</h5><p><strong>①②Schnorr签名：发送者通过对M1进行签名，生成签名e，y，接收者收到过后通过y和自己所存储的公钥v生成签名e‘，验证两者是否相等，相等则内容未被篡改，不相等则被篡改。</strong></p>
+<p>零知识证明：用于在不泄露关于某个命题任何信息的情况下证明该命题的正确性。在Schnorr协议中，证明者A通过和验证者B进行交互的方式证明了其拥有公钥pk对应的私钥sk，而验证者B无法在整个过程中获取私钥sk的信息。</p>
+<p>交互式：交互式零知识证明协议依赖于验证者的随机尝试，需要证明者和验证者进行多次交互才能完成。为什么需要验证者回复一个随机标量c呢？防止Alice造假，选择特殊的c使得验证等式恒成立。</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\v2-0b149fb0635e9df8c80df5855708b390_720w.webp)</p>
+<p>非交互式：将交互次数减少到一次，可实现离线证明和公开验证。</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\v2-20d9012e1bbe091065dbe0285a549896_720w.webp)</p>
+<p><strong>③④怎么确定RSU是可信的？通过注册时留下的ID，Ci，Ri确定，但又不能直接将ID，Ci，Ri发过去，因为可能被窃取。那就将这些转换一下再发：ID与Ai，PID转为ai，再通过与Ci1异或转换为Cri，Ci1与Ci2异或转换为Cni，R<del>R</del>^i^，h1则是起验证作用。通过Cni、Cri与ai结合，可以求出Ci，而ai是随机生成的，只有VDO拥有，只有VDO才能还原出Ci，别人截取信息也没用。同时还原出随机生成的bi，通过hash验证h1’与h1，防止被篡改。如果RSU是伪造的，还原不出ai，则通不过这些认证。</strong></p>
+<p>VDO：选择随机数r，ai（生成①）</p>
+<p>RSU：验证时间戳，计算x‘&#x3D;g^y^v^e^&#x3D;x，验证e’&#x3D;H（M1||x’）?&#x3D;e（验证②）</p>
+<p>RSU：根据PID，找到对应ID，Ci，Ri，根据Ai恢复出ai，将Ci按位分为两个部分（Ci1，Ci2），计算Cni，Cri，选择随机数bi，生成R<del>R</del>^i^，hash出h1，打包信息M2发送给VDO（验证③）</p>
+<p>VDO：验证时间戳，根据根据自己随机生成的ai恢复出Ci，Ri，与收到的R<del>R</del>^i^恢复出随机数b1，验证h1‘是否等于h1.若成功，则发送确认消息（验证④）</p>
+<p>RSU：验证成功后，向区块链发送（PID<del>VEH</del>||ID<del>VEH</del>||v||T<del>suc</del>||D<del>exp</del>）D<del>exp</del>为本次验证的有效期，当下次访问车辆网时，只需检查上一次验证是否过期。</p>
+<h4 id="数据存储：④"><a href="#数据存储：④" class="headerlink" title="数据存储：④"></a>数据存储：④</h4><p>![img](C:\Users\the xie\Desktop\实验室\笔记\共识,公钥与私钥.assets\KE<del>@(2</del>H2U20&#96;WRC)KQI6EA.png)</p>
+<p><strong>（用AES加密明文，用用户公钥pk加密对称密钥K）</strong></p>
+<p>通过对称加密AES，使用对称密钥K进行加密，生成密文S1</p>
+<p>将对称密钥K通过VDO的公钥进行加密，生成密钥密文K’</p>
+<p>VDO发送S1，K‘，kw为搜索关键字。</p>
+<p>RSU上传{CID，K’，kw，ID<del>VDO</del>，timestamp}到区块链，返回CID和I<del>Bi</del>给VDO</p>
+<h4 id="代理重加密：⑤⑥⑦⑧"><a href="#代理重加密：⑤⑥⑦⑧" class="headerlink" title="代理重加密：⑤⑥⑦⑧"></a>代理重加密：⑤⑥⑦⑧</h4><p>![img](C:\Users\the xie\Desktop\实验室\笔记\共识,公钥与私钥.assets\TX4UHHPA2O~K8CG%MKQ4CZM.png)</p>
+<p><strong>（VDU根据kw找到所需密文，若对应密文所有者VDO同意，RSU将VDU的公钥发给送给VDO，VDO使用VDU的公钥和自己的私钥生成再加密密钥发送给RSU。RSU通过再加密密钥对VDO的密钥密文进行加密，将加密后的密钥密文K‘’返还。VDU就能使用自己的私钥对K‘’解密了，解密得到对称密钥，再通过对称密钥解密密文Si，得到明文）</strong></p>
+<p><strong>为什么只考虑重加密对称密钥呢，为什么不能直接重加密密文呢？</strong></p>
+<p><strong>效率上来说：1.非对称公私钥加密的效率低下，对于较大文件的数据共享是不合适，需要用到对称公私钥。2.对称密钥体积较小，密文体积一般较大，重加密一个较小的对称密钥对于重加密整个密文来说，计算资源和处理时间减少，而且密文可能被多个授权用户访问，不可能为每个用户重加密整个数据集。</strong></p>
+<p><strong>安全性上来说：重加密密钥，执行重加密操作的代理（RSU）也无法访问密文的实际内容，更加的安全。</strong></p>
+<h5 id="数据访问顺序："><a href="#数据访问顺序：" class="headerlink" title="数据访问顺序："></a>数据访问顺序：</h5><p>1.VDU根据kw查找所需的密文，选择指定密文后，向附近RSU发送申请。①②③</p>
+<p>2.RSU作为代理重加密的中间代理，将VDU的请求传递给VDO，将VDU的公钥发给VDO，将记录发给区块链。若VDO同意访问，将同意记录发送给区块链，使用VDU的公钥和自己的私钥生成再加密密钥发送给RSU。④⑤</p>
+<p>3.RSU通过重加密密钥对VDO的密钥密文进行加密，并将加密后的密钥密文K‘’给请求者。⑥</p>
+<p>4.VDU使用自己的私钥对重新加密的密钥密文K‘’进解密。⑦</p>
+<p>5.根据CID获取密文S1。⑧</p>
+<p>6.根据S1，对称密钥K，解密得到明文S。⑨</p>
+<h5 id="具体如何实现："><a href="#具体如何实现：" class="headerlink" title="具体如何实现："></a>具体如何实现：</h5><p>加密密文：C<del>file</del>&#x3D;E<del>filekey</del>(file)</p>
+<p>加密密钥：用户A利用自身公钥P<del>A</del>对filekey加密：</p>
+<p>(1)产生元数据meta&#x3D;（id<del>A</del>||T<del>0</del>）</p>
+<p>(2)输入待加密消息M&#x3D;filekey。</p>
+<p>(3)产生随机数。计算R&#x3D;r·P。</p>
+<p>(4)计算第一部分密文C<del>A</del>&#x3D;M⊕H<del>1</del>(meta||r·P<del>A</del>)</p>
+<p>(5)计算第二部分密文h<del>A</del>&#x3D;H<del>2</del>（R||M||meta）</p>
+<p>(6)计算Schnorr签名部分z<del>A</del>&#x3D;r+h<del>A</del>d<del>A</del></p>
+<p>(7)输出C<del>filekey</del>&#x3D;（C<del>A</del>,meta,h<del>A</del>,z<del>A</del>）</p>
+<p>自己怎么解密：</p>
+<p>(1)恢复随机数r&#x3D;z<del>A</del>-h<del>A</del>d<del>A</del></p>
+<p>(2)恢复M&#x3D;H<del>1</del>(meta||r·P<del>A</del>)⊕C<del>A</del></p>
+<p>(3)计算h<del>A</del>,验证z<del>A</del>是否相等</p>
+<p>生成重加密密钥rk<del>A–&gt;B</del></p>
+<p>(1)恢复随机数r&#x3D;z<del>A</del>-h<del>A</del>d<del>A</del></p>
+<p>(2)获取P<del>B</del></p>
+<p>(3)计算rk<del>A–&gt;B</del>&#x3D;H<del>1</del>（meta||r·P<del>A</del>）⊕H<del>1</del>（meta||r·P<del>B</del>）</p>
+<p>解密数据：①代理服务器利用数据拥有者上传的rk<del>A–&gt;B</del>将C<del>filekey</del>转换为密文C<del>filekey</del>’。</p>
+<p>(1)计算部分重加密密文C<del>B</del>&#x3D;rk<del>A–&gt;B</del>⊕C<del>A</del></p>
+<p>(2)输出重加密密文C<del>filekey</del>’&#x3D;（C<del>B</del>，meta，h<del>A</del>，id<del>B</del>，z<del>A</del>）</p>
+<p>②代理服务器将C<del>file</del>以及C<del>filekey</del>‘发还给数据请求者B，数据请求者利用自己的私钥将C<del>filekey</del>‘还原为filekey。</p>
+<p>(1)获得P<del>A</del>。</p>
+<p>(2)计算点R’&#x3D;z<del>A</del>·P-h<del>A</del>P<del>A</del>。</p>
+<p>(3)计算消息M‘&#x3D;C<del>B</del>⊕H<del>1</del>(meta||d<del>B</del>·R’)</p>
+<p>(4)计算部分密文h<del>A</del>‘&#x3D;H<del>2</del>(R’||M’||meta)</p>
+<p>(5)判断h<del>A</del>‘是否与h<del>A</del>相等。</p>
+<p>(6)若相等，则接收M‘；否则，拒绝M’。</p>
+<h4 id="思考："><a href="#思考：" class="headerlink" title="思考："></a>思考：</h4><p><strong>思考：</strong></p>
+<p>①采用双通道，认证channel：存储车辆登记和认证记录。数据访问channel：车辆用户可以通过RSU访问该通道数据。和之前的双链处理很像，都是为了实现数据隔离和访问控制，一条链关注隐私数据，一条链关注数据处理。这篇文章注重点在数据共享上，那篇在信息交互以实现车辆撤销上。</p>
+<p>②Schnorr可以实现多重签名，用在车载网上比较怪，但可以用在物联网上（车载网与物联网几乎可以等效类比）。</p>
+<p>③代理重加密可考虑验证性检验，验证重新加密后的密文是否正确。</p>
+<p><strong>改进：</strong></p>
+<p>①代理重加密考虑与基于属性的加密（ABE）结合，支持灵活访问的同时实现数据共享。</p>
+<p>②这篇文章中的ID与公私钥并直接联系，可以考虑将IBS或ABS与Schnorr结合。</p>
+<h4 id="安全性分析"><a href="#安全性分析" class="headerlink" title="安全性分析"></a>安全性分析</h4><p>Dolev-Yao攻击模型：攻击者可以访问通过网络的任何消息；攻击者是网络的合法用户，能发起与任何其他用户的对话；攻击者有机会成为任何主题发送的消息的接收者；攻击者可以通过伪装成其他主体向任何主体发送消息。</p>
+<p>攻击者无法猜测从足够大的空间中选择随机数；如果没有正确的密钥，无法从给定的密文中恢复明文；对于一个完整的加密算法，攻击者无法从给定的明文构造出正确的密文；攻击者无法导出私钥部分。</p>
+<h5 id="防御攻击："><a href="#防御攻击：" class="headerlink" title="防御攻击："></a>防御攻击：</h5><h6 id="1-分布式拒绝服务攻击：DDoS指通过大量的请求中断服务的正常运行，直到无法再接收请求。"><a href="#1-分布式拒绝服务攻击：DDoS指通过大量的请求中断服务的正常运行，直到无法再接收请求。" class="headerlink" title="1.分布式拒绝服务攻击：DDoS指通过大量的请求中断服务的正常运行，直到无法再接收请求。"></a>1.分布式拒绝服务攻击：DDoS指通过大量的请求中断服务的正常运行，直到无法再接收请求。</h6><p>分析：注册认证阶段：未注册攻击者如果无法通过认证，则无法访问系统。且数据存在IPFS的分散节点上，来自于多个服务器。</p>
+<p>数据共享阶段：数据存在IPFS的分散节点上，来自于多个服务器。</p>
+<h6 id="2-冒充攻击：攻击者冒充受信任实体的身份，会发生这种攻击。"><a href="#2-冒充攻击：攻击者冒充受信任实体的身份，会发生这种攻击。" class="headerlink" title="2.冒充攻击：攻击者冒充受信任实体的身份，会发生这种攻击。"></a>2.冒充攻击：攻击者冒充受信任实体的身份，会发生这种攻击。</h6><p>分析：RSU对车辆的认证阶段：无法通过公钥pk获取私钥sk，需要求解离散对数的困难；通过e获取用户私钥sk，需要面临从哈希值中获取原始文本和解密私钥的双重困难。</p>
+<p>车辆到RSU认证阶段：由于PUF和哈希函数的单向性且在通信过程中无法获得（ai，bi，Ci，Ri），如果想要伪装RSU，需要向车辆发送R<del>R</del>^i^和h1，因为得不到（ai，bi，Ci，Ri），所以无法计算正确的R<del>R</del>^i^和h1通过验证。</p>
+<h6 id="3-中间人攻击：中间人攻击包括拦截两个实体之间的通信并在其中插入新消息。"><a href="#3-中间人攻击：中间人攻击包括拦截两个实体之间的通信并在其中插入新消息。" class="headerlink" title="3.中间人攻击：中间人攻击包括拦截两个实体之间的通信并在其中插入新消息。"></a>3.中间人攻击：中间人攻击包括拦截两个实体之间的通信并在其中插入新消息。</h6><p>分析：</p>
+<p>RSU对车辆认证阶段：将{M，e，y}发送给RSU，假设敌手A在公网获取了这些信息，将M改为M‘，e改为e’，RSU可以算出x‘&#x3D;g^y^v^e’^ mod p.计算e’&#x3D;H（M‘||x’），就可以发现e‘ ！&#x3D;e。所以RSU可以推测M已经被改变了。</p>
+<p>车辆对RSU的认证阶段：攻击者想在RSU中插入数据也不切实际；C<del>Ni</del>由C<del>i1</del>和C<del>i2</del>计算，C<del>i1</del>和C<del>i2</del>由C<del>i</del>分割，并且C<del>i</del>仅在车辆注册阶段传输，所以无法修改C<del>Ni</del>和C<del>Ri</del>。车辆可以计算C<del>i1</del>和C<del>i2</del>，从而验证h1是否被修改。</p>
+<h6 id="4-窃听攻击：攻击者监听开放通道，窃取通信双方发送的未加密明文信息"><a href="#4-窃听攻击：攻击者监听开放通道，窃取通信双方发送的未加密明文信息" class="headerlink" title="4.窃听攻击：攻击者监听开放通道，窃取通信双方发送的未加密明文信息"></a>4.窃听攻击：攻击者监听开放通道，窃取通信双方发送的未加密明文信息</h6><p>分析：</p>
+<p>车辆与RSU交互前需要进行双向认证，认证通过后使用AES算法保障通信数据的保密性。共享数据是，不需要直接交互，而是通过RSU作为中间代理进行共享。</p>
+<h6 id="5-重放攻击：指攻击者劫持车辆的合法认证信息，收集信息后伪装成车辆发送给RSU，或伪装成RSU向车辆发送数据。"><a href="#5-重放攻击：指攻击者劫持车辆的合法认证信息，收集信息后伪装成车辆发送给RSU，或伪装成RSU向车辆发送数据。" class="headerlink" title="5.重放攻击：指攻击者劫持车辆的合法认证信息，收集信息后伪装成车辆发送给RSU，或伪装成RSU向车辆发送数据。"></a>5.重放攻击：指攻击者劫持车辆的合法认证信息，收集信息后伪装成车辆发送给RSU，或伪装成RSU向车辆发送数据。</h6><p>分析：</p>
+<p>因为报文中包含数据发生的时间戳，接收方可以根据接收实际判断是否发生了重放攻击。</p>
+<h6 id="6-机器学习和克隆攻击：攻击者在认证过程中收集相关数据，从而符合车辆的唯一PUF。当攻击者收集到一定数量的（Ci，Ri），可以通过机器学习来训练模型，以复制PUF。"><a href="#6-机器学习和克隆攻击：攻击者在认证过程中收集相关数据，从而符合车辆的唯一PUF。当攻击者收集到一定数量的（Ci，Ri），可以通过机器学习来训练模型，以复制PUF。" class="headerlink" title="6.机器学习和克隆攻击：攻击者在认证过程中收集相关数据，从而符合车辆的唯一PUF。当攻击者收集到一定数量的（Ci，Ri），可以通过机器学习来训练模型，以复制PUF。"></a>6.机器学习和克隆攻击：攻击者在认证过程中收集相关数据，从而符合车辆的唯一PUF。当攻击者收集到一定数量的（C<del>i</del>，R<del>i</del>），可以通过机器学习来训练模型，以复制PUF。</h6><p>分析：</p>
+<p>攻击者可获取的是（C<del>Ni</del>，C<del>Ri</del>，R<del>R</del>^i^）。C<del>i</del>分裂为（C<del>i1</del>，C<del>i2</del>），C<del>i1</del>与C<del>i2</del>和ai可以同构得到（C<del>Ni</del>，C<del>Ri</del>）。但是传输过程没有ai，所以无法获取。若想通过R<del>R</del>^i^获取Ci，但由于Hash函数的单向性，以及传输过程不包含随机数（ai，bi），这是不可能的。</p>
+<h5 id="数据安全："><a href="#数据安全：" class="headerlink" title="数据安全："></a>数据安全：</h5><h6 id="隐私性："><a href="#隐私性：" class="headerlink" title="隐私性："></a>隐私性：</h6><p>原始数据S用K加密，K使用数据所有者的公钥pk进行加密。共享数据时不需要公开sk和K。未经授权的人通过CID下载IPFS数据，得到的是密文。车主注册时，只需提供一些私人数据，在以后访问时，均不需要再次披露。数据查询中可以通过计算密文的哈希值，验证密文附带上传者签名。</p>
+<h6 id="完整性："><a href="#完整性：" class="headerlink" title="完整性："></a>完整性：</h6><p>从系统提取的文件与数据上传者上传的数据完全相同，即使被篡改，也能验证来源的正确性。</p>
+<h6 id="可用性："><a href="#可用性：" class="headerlink" title="可用性："></a>可用性：</h6><p>数据的去中心化和复制时区块链最重要的属性之一，消除了单点故障的风险。</p>
+<p>对比：</p>
+<p>Z-DDPPM</p>
+<p>VRepChain：专注共享数据质量与隐私保护，但没提出车辆接入方案，非法车辆仍可以进入车联网（身份验证？）</p>
+<p>CPPHSS：专注构建安全的车辆认证方案，没提出相应的安全数据管理方案，也没使用区块链。</p>
+<p>计算开销、通信开销、存储开销和认证时间</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Zhen Xie</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://example.com/2024/04/19/%E6%96%87%E7%8C%AEshare/">http://example.com/2024/04/19/%E6%96%87%E7%8C%AEshare/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"># 区块链</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2024/04/25/%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90/">安全性分析</a>
+            
+            
+            <a class="next" rel="next" href="/2024/04/18/%E6%A0%BC/">格</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Zhen Xie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Zhen Xie">
+
+
+
+
+
+<title>安全性分析 | Hexo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+<script>
+    !
+    function() {
+    function n(n, e, t) {
+    return n.getAttribute(e) || t
+    }
+    function e(n) {
+    return document.getElementsByTagName(n)
+    }
+    function t() {
+    var t = e("script"),
+    o = t.length,
+    i = t[o - 1];
+    return {
+    l: o,
+    z: n(i, "zIndex", -1), //置于主页面背后
+    o: n(i, "opacity", .5), //线条透明度
+    c: n(i, "color", "0,0,0"), //线条颜色
+    n: n(i, "count", 100) //线条数量
+    }
+    }
+    function o() {
+    a = m.width = window.innerWidth ||
+    document.documentElement.clientWidth || document.body.clientWidth,
+    c = m.height = window.innerHeight ||
+    document.documentElement.clientHeight || document.body.clientHeight
+    }
+    function i() {
+    r.clearRect(0, 0, a, c);
+    var n, e, t, o, m, l;
+    s.forEach(function(i, x) {
+    for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 :
+    1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1,
+    1), e = x + 1; e < u.length; e++) n = u[e],
+    null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l
+    = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o,
+    i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t /
+    2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y),
+    r.lineTo(n.x, n.y), r.stroke()))
+    }),
+    x(i)
+    }
+    var a, c, u, m = document.createElement("canvas"),
+    d = t(),
+    l = "c_n" + d.l,
+    r = m.getContext("2d"),
+    x = window.requestAnimationFrame || window.webkitRequestAnimationFrame
+    || window.mozRequestAnimationFrame || window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function(n) {
+    window.setTimeout(n, 1e3 / 45)
+    },
+    w = Math.random,
+    y = {
+    x: null,
+    y: null,
+    max: 2e4
+    };
+    m.id = l,
+    m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z +
+    ";opacity:" + d.o,
+    e("body")[0].appendChild(m),
+    o(),
+    window.onresize = o,
+    window.onmousemove = function(n) {
+    n = n || window.event,
+    y.x = n.clientX,
+    y.y = n.clientY
+    },
+    window.onmouseout = function() {
+    y.x = null,
+    y.y = null
+    };
+    for (var s = [], f = 0; d.n > f; f++) {
+    var h = w() * a,
+    g = w() * c,
+    v = 2 * w() - 1,
+    p = 2 * w() - 1;
+    s.push({
+    x: h,
+    y: g,
+    xa: v,
+    ya: p,
+    max: 6e3
+    })
+    }
+    u = s.concat([y]),
+    setTimeout(function() {
+    i()
+    },
+    100)
+    } ();
+    </script>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">TheXie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">TheXie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">安全性分析</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Zhen Xie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">April 25, 2024&nbsp;&nbsp;19:49:28</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="安全性分析："><a href="#安全性分析：" class="headerlink" title="安全性分析："></a>安全性分析：</h3><p>什么是安全的加密：确定性加密和概率性加密？</p>
+<h4 id="确定性加密"><a href="#确定性加密" class="headerlink" title="确定性加密"></a>确定性加密</h4><p>例如，公元前5世纪希腊的“木棒密码学”。</p>
+<p>加密：把纸条或布啥的绕在木棍上面，书写内容，然后传输。</p>
+<p>解密：拿到布条后，拿根相同大小的木条再绕一下。</p>
+<p>朴素的安全性：其他人不晓得木棍的大小就“没法”得知具体的内容。</p>
+<p>棍子毕竟不好用一次就换了，这就对应到确定性加密（具体讲是，确定性对称加密）。也就是<strong>多次加密相同的明文，输出的密文是相同的</strong>。<strong>即同样的内容，写出来的布条是一样的</strong>。在如今，大概有这“两个肯定”，我们认为确定性加密<strong>肯定</strong>是不安全的。确定性加密<strong>肯定</strong>无法达到CPA安全。</p>
+<h4 id="概率性加密"><a href="#概率性加密" class="headerlink" title="概率性加密"></a>概率性加密</h4><p>确定性加密，同一个明文多次加密，输出的密文都相同。</p>
+<p>概率性加密，同一个明文多次加密，输出的密文不同（实际是输出的密文相同的概率，是可忽略的小）。</p>
+<p>概率性加密就是加密时候，引入随机数啥的，使得同一个明文多次加密得到的密文极大概率是不同。</p>
+<h4 id="什么是安全的加密？"><a href="#什么是安全的加密？" class="headerlink" title="什么是安全的加密？"></a>什么是安全的加密？</h4><p>安全的加密，自然是能够至少抵抗现有的攻击手段（这是最低限度的要求）。但是我们设计密码方案，总不可能去追求最低限度。因此，就要去琢磨一下比最低限度高一点的要求，然后再尝试去<strong>剥离具体的攻击手段，把攻击手段抽象为一种能力(Power, maybe 可以理解为安全模型中常见的Oracle寓言机)，把攻击过程抽象化为一种框架</strong> ，让我们更简单的去设计密码方案。</p>
+<p>所以研究人员先尝试去构建一个<strong>安全的抽象（可以包含所有的攻击手段和过程）</strong>，只要达到了这个要求就是安全的密码方案了。把这个抽象称为，安全模型。</p>
+<h4 id="评估密码系统安全性主要有三种方法："><a href="#评估密码系统安全性主要有三种方法：" class="headerlink" title="评估密码系统安全性主要有三种方法："></a>评估密码系统安全性主要有三种方法：</h4><p>（1）无条件安全性<br>这种评价方法考虑的是假定攻击者拥有无限的计算资源，但仍然无法破译该密码系统。<br>（2）计算安全性<br>这种方法是指使用目前最好的方法攻破它所需要的计算远远超出攻击者的计算资源水平，则可以定义这个密码体制是安全的。<br>（3）<strong>可证明安全性</strong><br>这种方法是将密码系统的安全性归结为某个经过深入研究的<strong>数学难题</strong>（如大整数素因子分解、计算离散对数等），数学难题被证明求解困难。这种评估方法存在的问题是它只说明了这个密码方法的安全性与某个困难问题相关，没有完全证明问题本身的安全性，并给出它们的等价性证明。</p>
+<h4 id="实际安全性"><a href="#实际安全性" class="headerlink" title="实际安全性"></a>实际安全性</h4><p>对于实际应用中的密码系统而言，由于至少存在一种破译方法，即强力攻击法，因此都不能满足无条件安全性，只提供计算安全性。密码系统要达到实际安全性，就要满足以下准则：<br>（1）破译该密码系统的实际计算量（包括计算时间或费用）十分巨大，以致于在实际上是无法实现的。<br>（2）破译该密码系统所需要的计算时间超过被加密信息有用的生命周期。例如，战争中发起战斗攻击的作战命令只需要在战斗打响前需要保密；重要新闻消息在公开报道前需要保密的时间往往也只有几个小时。<br>（3）破译该密码系统的费用超过被加密信息本身的价值。<br>如果一个密码系统能够满足以上准则之一，就可以认为是满足实际安全性的。</p>
+<h4 id="可证明安全性"><a href="#可证明安全性" class="headerlink" title="可证明安全性"></a><strong>可证明安全性</strong></h4><h5 id="可证明安全性体系的三大要素"><a href="#可证明安全性体系的三大要素" class="headerlink" title="可证明安全性体系的三大要素"></a>可证明安全性体系的三大要素</h5><p>在可证明安全体系中，有三大要素：<strong>安全模型</strong>，<strong>安全性定义</strong>和<strong>困难性问题</strong>。<br><strong>安全模型分为安全目标和敌手能力</strong>。安全目标描述了安全模型要达到什么程度的安全，例如，对于加密算法的不可区分性（Indistinguishablity 简称 IND）、对于签名算法的存在性不可伪造（Existable Unforgeble 简称 EU）等。</p>
+<p>其中<strong>不可区分性（IND）</strong>也称为<strong>语义安全（Semantic scurity）</strong>，其定义如下。<strong>敌手即使获得了密文，也不能得到其对应明文的任何信息，哪怕是 1bit 的信息。</strong>其形式化的表示方法为：已知 m0，m1以及 Cb&#x3D;Enc(pk，mb)，其中 mb是 m0或 m1中的任意一个，即 Cb是 m0、m1其中之一的密文，敌手无法有效判断加密过程中 b 到底是 0 还是 1。</p>
+<h5 id="安全性定义"><a href="#安全性定义" class="headerlink" title="安全性定义"></a>安全性定义</h5><p>刻画敌手的能力，主要有四类，选择<strong>明文攻击</strong>（Chosen Plaintext Attacke 简称 <strong>CPA</strong>）、选择<strong>密文攻击</strong>（Chosen Ciphertext Attack 简称 <strong>CCA</strong>）、<strong>惟密文攻击</strong>（Ciphertext-Only Attack）、<strong>已知明文攻击</strong>（Known Plaintext Attack）。常用的刻画敌手能力是前面两类，<strong>选择明文攻击（CPA）是指由敌手选择明文并且可以得到对应的密文</strong>。<strong>选择密文攻击（CCA）是指敌手不仅可以选择明文获得密文，还能选择有限次的密文，获得对应的明文</strong>。CCA比 CPA 描述敌手的能力更强。</p>
+<h6 id="CPA-安全"><a href="#CPA-安全" class="headerlink" title="CPA 安全"></a>CPA 安全</h6><p>我们把选择明文攻击（CPA）描述成一个游戏以方便我们更好的理解。首先声明一点，这个<strong>游戏的目的是在选择明文攻击的前提下攻破系统的不可区分性（Indistinguishablity）</strong>，所以下面简称这个<strong>游戏为 IND-CPA</strong>。其次，还要定义两个角色挑战者 C 和敌手 A。挑战者（challenger）的任务相当裁判，主持游戏并且对敌手的行为进行反馈。敌手顾名思义，就是去攻击当前系统，而且对于这个游戏来说是采用选择明文攻击的方法进行攻击。游戏的描述如下： </p>
+<p>A. 初始化：挑战者 C 创建 IND-CPA 系统，并且将公钥发送给敌手 A。 </p>
+<p>B. 敌手 A 选择两个<strong>长度相同的明文</strong> m0，m1发送给挑战者 C。挑战者 C <strong>随机选择 b</strong>∈｛0,1｝，并将 mb加<strong>密记作 cb</strong>，然后将<strong>密文cb发送给敌手 A</strong>。</p>
+<p>C. 敌手 A <strong>猜测</strong>挑战者 C 上一步进行加密的明文是 m0还是 m1，并且将猜测结果输出，输出结果记为 b‘。若 b‘&#x3D;b，那么敌手攻击成功。</p>
+<p>敌手攻击的优势可以定义为如下函数：</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\1169376-20190929205819450-854538106.png)</p>
+<p> 其中 w 是加密方案密钥的长度。因为随机猜测就有 1&#x2F;2 的概率赢得 IND-CPA 游戏。所以</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\1169376-20190929205920989-583472343.png)</p>
+<p>才是敌手经过努力得到的优势。如果对任何多项式时间的敌手 A，存在一个可忽略的优势σ，使得</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\1169376-20190929210038506-1845852337.png)</p>
+<p>那么就称这个加密算法在选择明文攻击下具有不可区分性，或者称为 IND-CPA 安全。</p>
+<h5 id="困难问题"><a href="#困难问题" class="headerlink" title="困难问题"></a>困难问题</h5><p>有了安全模型和安全性定义，通常使用规约到困难问题的方法来进行安全性证明。</p>
+<h6 id="大整数因数分解问题"><a href="#大整数因数分解问题" class="headerlink" title="大整数因数分解问题"></a>大整数因数分解问题</h6><p>1）给定两个素数p,q,计算乘积p·q&#x3D;n很容易；<br>2）给定大整数n，求n的素因素p,q使得n&#x3D;p·q非常困难.</p>
+<h6 id="DLP：The-Discrete-Logarithm-Problem-离散对数问题"><a href="#DLP：The-Discrete-Logarithm-Problem-离散对数问题" class="headerlink" title="DLP：The Discrete Logarithm Problem 离散对数问题"></a>DLP：The Discrete Logarithm Problem 离散对数问题</h6><p>让G为一个阿贝尔群(交换群).我们把G中的二元操作写成乘法*.</p>
+<p>1）给定G,g和h&#x3D;ga,计算a是困难的.</p>
+<p>2）这里a就叫做h的以g为底的离散对数.</p>
+<h6 id="CDH：The-Computational-Diffie-Hellman-Problem-计算DH问题"><a href="#CDH：The-Computational-Diffie-Hellman-Problem-计算DH问题" class="headerlink" title="CDH：The Computational Diffie-Hellman Problem 计算DH问题"></a>CDH：The Computational Diffie-Hellman Problem 计算DH问题</h6><p>CDH是基于由Whit Diffie和Martin Hellman提出的两方协商密钥在公共信道上不会被窃取的问题:</p>
+<p>1）Alice和Bob共同确定使用的循环群G,和生成器q<br>2）Alice选择一个随机的密钥整数a,Bob选择了一个随机的整数b<br>3）Alice计算g^a^ 在公共信道上发送给Bob,同时Bob也计算出 g^b^在公共信道上发送给Alice.<br>4）Alice和Bob都计算g^ab^&#x3D;(g^a^)^b^&#x3D;(g^b^)^a^通过知道他们自己的随机的整数,这个生成的就是他们协商的密钥.<br>密钥gab是一个能被用于Alice和Bob之间的对称加密.<br>但是有一些人窃听了他们之间的交换获得了G,g,g^a^,g^b^.</p>
+<p>给定G,g,g^a^,g^b^,多项式时间内找出g^ab^</p>
+<h6 id="DDH：The-Decisional-Diffie-Hellman-Problem-决策Diffie-Hellman问题"><a href="#DDH：The-Decisional-Diffie-Hellman-Problem-决策Diffie-Hellman问题" class="headerlink" title="DDH：The Decisional Diffie-Hellman Problem 决策Diffie-Hellman问题"></a>DDH：The Decisional Diffie-Hellman Problem 决策Diffie-Hellman问题</h6><p>用于证明难以区分的属性.假如说Alice和Bob执行如上所述的Diffie-Hellman密钥协议,那么G,g,g^a^,g^b^都是公共的,g^ab^是密钥.直观上,DDH问题就是是否对手能够从随机的G中的元素区分出Alice和Bob的密钥g^ab^.正式来说:</p>
+<p>给定G,g,g^a^,g^b^和Tx。使得T0是G中随机的一个元素,T1&#x3D;g^ab^同时x被随机均匀的从{0,1}中选择,找出x.即判断Tx 是 T0 还是 T1.</p>
+<p>尽管不能直接计算出来.而且很明显,如果对手能解决CDH问题,那么它可以有效率的解决DDH,因为它已经可以得到g^ab^的值.这意味着,CDH至少和DDH一样难.</p>
+<p>困难性进行排序:DLP&gt;,CDH&gt;DDH<br>DLP有时候是简单的,会让CDH和DDH都变简单.因此群G和生成器g的选择在做密码学的时候是十分重要的!</p>
+<h6 id="GDH：Gap-Diffie-Hellman"><a href="#GDH：Gap-Diffie-Hellman" class="headerlink" title="GDH：Gap Diffie-Hellman"></a>GDH：Gap Diffie-Hellman</h6><p>给定三元组（g,g^a^,g^b^）,a,b属于Z*q,在DDH（·）预言机的辅助下计算gab是困难的</p>
+<h6 id="BDH：双线性DH问题"><a href="#BDH：双线性DH问题" class="headerlink" title="BDH：双线性DH问题"></a>BDH：双线性DH问题</h6><p>给定四元组（P,aP,bP,cP）,a,b,c属于Z*q,判断等式e(P,P)^d^ &#x3D; e(P,P)^abc^是困难的</p>
+<h6 id="CBDH-Comptational-Bilinear-Diffie-Hellman-Problem-计算双线性DH问题"><a href="#CBDH-Comptational-Bilinear-Diffie-Hellman-Problem-计算双线性DH问题" class="headerlink" title="CBDH :Comptational Bilinear Diffie-Hellman Problem 计算双线性DH问题"></a>CBDH :Comptational Bilinear Diffie-Hellman Problem 计算双线性DH问题</h6><p>给定输入G,g,g^a^,g^b^，计算输出e(g,g)^ab^是困难的</p>
+<h6 id="DBDH：Decisional-Bilinear-Diffie-Hellman-判断双线性DH问题"><a href="#DBDH：Decisional-Bilinear-Diffie-Hellman-判断双线性DH问题" class="headerlink" title="DBDH：Decisional Bilinear Diffie-Hellman 判断双线性DH问题"></a>DBDH：Decisional Bilinear Diffie-Hellman 判断双线性DH问题</h6><p>给定输入G,g,g^a^,g^b^，g^c^找出 e(g,g)^ab^是困难的</p>
+<h6 id="GBDH：Gap-双线性DH问题"><a href="#GBDH：Gap-双线性DH问题" class="headerlink" title="GBDH：Gap 双线性DH问题"></a>GBDH：Gap 双线性DH问题</h6><p>给定四元组（P,aP,bP,cP）,a,b,c属于Z*q,在DBDH（·）预言机的辅助下计算e(P,P)^abc^是困难的</p>
+<h6 id="CDHI-Computation-Diffie-Hellman-Inverse-Problem计算DH逆问题"><a href="#CDHI-Computation-Diffie-Hellman-Inverse-Problem计算DH逆问题" class="headerlink" title="CDHI :Computation Diffie-Hellman Inverse Problem计算DH逆问题"></a>CDHI :Computation Diffie-Hellman Inverse Problem计算DH逆问题</h6><p>给定g^x^属于G，x未知，输出(g^x^)^-1^是困难的，CDHI和CDH问题等价</p>
+<h6 id="ECDLP：Elliptic-Curve-Discrete-Logarithm-Problem-椭圆曲线离散对数问题"><a href="#ECDLP：Elliptic-Curve-Discrete-Logarithm-Problem-椭圆曲线离散对数问题" class="headerlink" title="ECDLP：Elliptic Curve Discrete Logarithm Problem,椭圆曲线离散对数问题"></a>ECDLP：Elliptic Curve Discrete Logarithm Problem,椭圆曲线离散对数问题</h6><p>椭圆曲线上的离散对数问题，两个元素P,Q属于G1求整数a属于Zq*使得，Q &#x3D; aP成立是困难的</p>
+<h6 id="BCDH"><a href="#BCDH" class="headerlink" title="BCDH"></a>BCDH</h6><p>任意选取(a,b,c)，在多项式时间内计算出𝑔^𝑎𝑏𝑐</p>
+<h6 id="BDDH"><a href="#BDDH" class="headerlink" title="BDDH"></a>BDDH</h6><p>任意选取(a,b,c,d), 在多项式时间内将(𝑔^𝑎^, 𝑔^𝑏^, 𝑔^𝑐^, 𝑔^𝑎𝑏𝑐^)和(𝑔^𝑎^, 𝑔^𝑏^, 𝑔^𝑐^, 𝑔^𝑑^)两者明显的区分开来。</p>
+<h6 id="decisional-q-BDHE-假设的定义"><a href="#decisional-q-BDHE-假设的定义" class="headerlink" title="decisional q-BDHE 假设的定义"></a>decisional q-BDHE 假设的定义</h6><h5 id="img-C-Users-the-xie-Desktop-实验室-笔记-WAO-3Q588CQ9TY34M-SZ68M-png"><a href="#img-C-Users-the-xie-Desktop-实验室-笔记-WAO-3Q588CQ9TY34M-SZ68M-png" class="headerlink" title="![img](C:\Users\the xie\Desktop\实验室\笔记\WAO%3Q588CQ9TY34M$SZ68M.png)"></a>![img](C:\Users\the xie\Desktop\实验室\笔记\WAO%3Q588CQ9TY34M$SZ68M.png)</h5><p>![img](C:\Users\the xie\Desktop\实验室\笔记\TS7<del>RMWE4J_ZPC4PU</del>V1${2.png)</p>
+<p>可证明安全性是指利用“规约”的方法，将攻击密码算法或安全协议的方法规约到一个攻击困难问题上。首先确定加密体制的安全目标，如<strong>签名体制</strong>的安全目标是签名的<strong>不可伪造性</strong>（Existable Unforgeble），<strong>加密体制</strong>的安全目标是信息的<strong>不可区分性</strong>（Indistinguishablity）。然后根据安全性定义确定敌手的能力构建一个安全性模型。</p>
+<p>规约是复杂性理论中的概念， 一个问题P1规约到问题P2是指，已知解决问题 P1的算法 M1，我们能构造另一算法 M2，M2可以以 M1作为子程序，用来解决问题 P2。</p>
+<p><strong>将规约的方法应用在密码算法或安全协议的安全性证明上，例如，可以将敌手对密码算法或安全协议（P1）的攻击规约到一些已经得到深入研究的困难问题（P2）。即若敌手能够对算法或协议发起有效的攻击，就可以利用敌手构建一个算法来攻破困难问题，然而困难问题是已经被证明无法攻破的，这样就出现矛盾。根据反证法，敌手可以攻破算法或协议假设不成立，证明完毕。</strong></p>
+<p>一般来说，为了证明方案 1 的安全性，我们可以将方案 1 规约到方案 2，即如果敌手 A 可以攻破方案 1，那么敌手 B 同样也可以攻击方案 2，而方案 2 已经被证明是安全的，或者是一个难题。</p>
+<p>证明过程通过一个思维游戏来描述。首先，挑战者创建方案2，B 表示方案 2 中的敌手，A 表示方案 1 中的敌手。B 为了攻破方案 2，利用 A 作为子程序来攻击方案 1。B 想要利用 A，就需要对 A 进行训练，所以 B 模拟了 A 的挑战者。 ![img](C:\Users\the xie\Desktop\实验室\笔记\1169376-20190929211822666-1392728117.png)</p>
+<p>例如，如果要对加密算法进行安全性证明，那么方案 1 就是具 体 的 加 密 算 法 。 假 设 安 全 目 标 是 信 息 的 不 可 区 分 性（Indistinguishablity），敌手 A 的能力是可以选择明文攻击，即 CPA。敌手 B 模拟敌手 A 的挑战者，与 A 进行 IND-CPA 游戏。在游戏过程中，B 为了实现自己的目的利用 A。如果 A 无法判断自己是与 B 还是与挑战者做游戏，那么称 B 的模拟是完备的。</p>
+<p><strong>对于其他加密算法或加密协议，我们必须首先确定它想要实现的安全目标，例如签名方案的不可伪造性，然后根据安全性定义确定敌手的能力构建一个安全性模型，再把对加密算法或加密协议的攻击规约到已被证明的困难问题上。 这就是可证明安全性。</strong></p>
+<p>eg:</p>
+<p><strong>安全模型</strong>:不可区分性</p>
+<p><strong>安全性定义</strong>:CPA </p>
+<p><strong>困难性问题</strong>:decisional q-BDHE</p>
+<p>simulator B 攻击 方案T（借鉴的另一篇论文）</p>
+<p>adversaryA 攻击现有方案</p>
+<p>Init: A选择一个challenge，结构（M*，ρ *），M * 有n * 列。</p>
+<p>Setup：B随机选α‘∈Z<del>p</del>，通过使e（g，g）^α^&#x3D;e（g^a^,g^(a)q^）e(g,g)^α‘^使α&#x3D;α’+a^q+1^</p>
+<p>每个x（1&lt;&#x3D;x&lt;&#x3D;U），选择一个随机值z<del>x</del>，设X表示指标集合i和集合ρ*（i）&#x3D;x。组元素按如下方法创建</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\KODJ8_I67AJ_8%F{W8Q<del>[</del>K.png)</p>
+<p>阶段1：B接收不满足（M <em>，ρ <em>）的集合S的键查询，选择一个随机数r∈Z<del>p</del>。选择向量w&#x3D;（w1，w2，…，wn</em>）∈Z<del>p</del>^n</em>^使w1&#x3D; -1，对于所有的满足ρ*（i）∈S的i，我们有w·M<del>i</del> *&#x3D;0.B通过计算定义t</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\B~BZNI8&#96;%FKVF$F84SX%K72.png)</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记~&#96;KB0SK@E5NJ()%J[_0X7KX.png)</p>
+<p>假设挑战结构中没有S中的属性，我们可以简单的让K<del>x</del>&#x3D;L^Zx^。否则，设X表示结构中涉及的属性集，B计算如下</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记@BCF5OM4[QE~{0WQMC84}2M.png)</p>
+<p>Challenge：A选择M0和M1，提交给B。B随机抛硬币b，计算</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\UNF%[U%1L&#96;P2SK}%{WV7{PU.png)</p>
+<p>为了创建元素Ci，随机选择y<del>i</del>‘和向量v：</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记]K$[J@XGT9$B0BT3IK[O0V5.png)</p>
+<p>然后随机选择r1’，r2‘，…,rl’。对于i&#x3D;1，…，n*，计算：</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\AE62WL68@AAX4P20S%R1}3C.png)</p>
+<p>第二阶段：重复第一阶段</p>
+<p>猜测：A输出它的猜测</p>
+<p>b∈{0，1}.如果b’&#x3D;b，B输出0来猜测T&#x3D;e（g，g）^s(a)q+1^，否则输出1.如果T是一个元组，模拟器给出一个完美的模拟，这样就可以</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\5185F[XPJIMO@8J[AV{MRP6.png)</p>
+<p>显然，如果A可以以不可忽略的优势攻击我们的方案，我们可以构建一个模拟器B，攻击方案T。</p>
+<h3 id="归约步骤详述"><a href="#归约步骤详述" class="headerlink" title="归约步骤详述"></a>归约步骤详述</h3><ol>
+<li><strong>初始化</strong>:<ul>
+<li>模拟器接收一个并行BDHE挑战（𝑦,<em>T</em>），这里 T 是BDHE问题中的目标值。</li>
+<li>攻击者定义了一个挑战访问结构 (<em>M</em>∗,<em>ρ</em>∗)，并选择了一个挑战矩阵M*。</li>
+</ul>
+</li>
+<li><strong>设置阶段</strong>:<ul>
+<li>模拟器随机选择一个 α′，并间接地设置α&#x3D;α‘+a^q+1^ 利用e（g，g）^α^&#x3D;e（g^a^,g^aq^）e(g,g)^α’^来实现。</li>
+</ul>
+</li>
+<li><strong>生成公共参数</strong>:<ul>
+<li>模拟器为每个属性 <em>x</em> “编程”群元素 ℎ𝑥*<em>，如果某属性 x</em> 在挑战访问结构中与多行相关联，模拟器将使用BDHE问题的不同项来为这些行生成群元素。</li>
+</ul>
+</li>
+<li><strong>私钥查询响应</strong>:<ul>
+<li>当攻击者请求私钥时，模拟器需确保生成的私钥不能解密挑战密文。这通过选择一个向量 𝑤⃗来实现，该向量与所有 ρ<em>∗(<em>i</em>)∈</em>S* 的行 𝑀𝑖∗ 正交。可以请求多个私钥，但均不能满足访问结构，否则直接丢弃。</li>
+</ul>
+</li>
+<li><strong>构建挑战密文</strong>:<ul>
+<li>攻击者选择两个明文m0，m1，挑战者随机加密一个明文mb，使用挑战矩阵M*和编程的参数来构造挑战密文，确保只有满足访问结构的属性集才能解密。</li>
+</ul>
+</li>
+<li><strong>攻击者的尝试</strong>:<ul>
+<li>攻击者尝试解密挑战密文并确定加密的是哪个消息。如果攻击者无法正确猜测，证明攻击者无法利用其所获得的信息解决BDHE问题。</li>
+</ul>
+</li>
+</ol>
+<p>总结：</p>
+<p>0.根据对应的计算困难问题生成对应的挑战元。</p>
+<p>1.挑战者生成相关加密参数（要化成和对应计算困难问题相类似的形式）并且将挑战元隐藏到对应加密参数中。</p>
+<p>2.攻击者选择希望被加密的明文m0，m1。</p>
+<p>3.挑战者随机选一明文mb。根据相关参数对明文进行加密Enc（mb，y）（b&#x3D;0或b&#x3D;1）</p>
+<p>4.攻击者A判断密文是由哪条明文加密的，猜测为b</p>
+<p>’，如果攻击者选择的b’&#x3D;b则输出0，反之则输出1。</p>
+<p>当T为随机时，由于均匀随机选择，所以A以1&#x2F;2概率输出0。有：</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\F%~]C_N06YA1{M41TY3PCF5.png)</p>
+<p>当T为T&#x3D;e（g，g）^s(a)q+1^时，此时为IND-CPA实验，有</p>
+<p><img src="file://C:/Users/the%20xie/Desktop/%E5%AE%9E%E9%AA%8C%E5%AE%A4/%E7%AC%94%E8%AE%B0/Q1U26S87C25PSJ70KU81NHG.png?lastModify=1714033401" alt="img"></p>
+<p>由DEC_CT(ID<del>req</del>,CT,SK,PK,usk)—&gt;M</p>
+<p>需要C‘，K，L，Ci，Di，Kx，g，此时这些参数就相当于y（化成和对应计算困难问题相类似的形式）</p>
+<p>所以有：</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记[SLV4&#96;L(1CI)4RU%]I]YO09.png)</p>
+<p>所以：</p>
+<p>AdvA≤ε</p>
+<p>如果攻击者能够解密挑战密文，这意味着他们能够利用私钥和公共参数构造出 T*&#x3D;<em>e</em>(<em>g</em>,<em>g</em>)*^s(a)q+1^。因此，攻击者的成功直接证明了他们可以解决并行BDHE问题。</p>
+<p>我们就把这个加密算法规约了一个计算困难问题。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Zhen Xie</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://example.com/2024/04/25/%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90/">http://example.com/2024/04/25/%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"># 区块链</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2024/04/26/%E8%AE%BF%E9%97%AE%E6%A0%91/">访问树</a>
+            
+            
+            <a class="next" rel="next" href="/2024/04/19/%E6%96%87%E7%8C%AEshare/">文献share</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Zhen Xie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

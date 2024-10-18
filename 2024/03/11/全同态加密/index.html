@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Zhen Xie">
+
+
+
+
+
+<title>全同态加密 | Hexo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+<script>
+    !
+    function() {
+    function n(n, e, t) {
+    return n.getAttribute(e) || t
+    }
+    function e(n) {
+    return document.getElementsByTagName(n)
+    }
+    function t() {
+    var t = e("script"),
+    o = t.length,
+    i = t[o - 1];
+    return {
+    l: o,
+    z: n(i, "zIndex", -1), //置于主页面背后
+    o: n(i, "opacity", .5), //线条透明度
+    c: n(i, "color", "0,0,0"), //线条颜色
+    n: n(i, "count", 100) //线条数量
+    }
+    }
+    function o() {
+    a = m.width = window.innerWidth ||
+    document.documentElement.clientWidth || document.body.clientWidth,
+    c = m.height = window.innerHeight ||
+    document.documentElement.clientHeight || document.body.clientHeight
+    }
+    function i() {
+    r.clearRect(0, 0, a, c);
+    var n, e, t, o, m, l;
+    s.forEach(function(i, x) {
+    for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 :
+    1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1,
+    1), e = x + 1; e < u.length; e++) n = u[e],
+    null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l
+    = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o,
+    i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t /
+    2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y),
+    r.lineTo(n.x, n.y), r.stroke()))
+    }),
+    x(i)
+    }
+    var a, c, u, m = document.createElement("canvas"),
+    d = t(),
+    l = "c_n" + d.l,
+    r = m.getContext("2d"),
+    x = window.requestAnimationFrame || window.webkitRequestAnimationFrame
+    || window.mozRequestAnimationFrame || window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function(n) {
+    window.setTimeout(n, 1e3 / 45)
+    },
+    w = Math.random,
+    y = {
+    x: null,
+    y: null,
+    max: 2e4
+    };
+    m.id = l,
+    m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z +
+    ";opacity:" + d.o,
+    e("body")[0].appendChild(m),
+    o(),
+    window.onresize = o,
+    window.onmousemove = function(n) {
+    n = n || window.event,
+    y.x = n.clientX,
+    y.y = n.clientY
+    },
+    window.onmouseout = function() {
+    y.x = null,
+    y.y = null
+    };
+    for (var s = [], f = 0; d.n > f; f++) {
+    var h = w() * a,
+    g = w() * c,
+    v = 2 * w() - 1,
+    p = 2 * w() - 1;
+    s.push({
+    x: h,
+    y: g,
+    xa: v,
+    ya: p,
+    max: 6e3
+    })
+    }
+    u = s.concat([y]),
+    setTimeout(function() {
+    i()
+    },
+    100)
+    } ();
+    </script>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">TheXie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">TheXie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">全同态加密</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Zhen Xie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">March 11, 2024&nbsp;&nbsp;14:55:27</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h5 id="全同态加密："><a href="#全同态加密：" class="headerlink" title="全同态加密："></a>全同态加密：</h5><p>可以将加密过后的密文与以前的原文保持着一种微妙的代数关系。如果我们把密文累加起来，我们就可以获得把原文相加起来加密过后的新密文，这叫做加法同态。同理也存在着乘法同态。整个过程中，我们不需要知道任何和密钥有关的信息，纯粹只是把看似随机乱码的密文组合起来。</p>
+<h5 id="同态加密体系分类："><a href="#同态加密体系分类：" class="headerlink" title="同态加密体系分类："></a>同态加密体系分类：</h5><p>分为部分同态、近似同态、有限级数全同态与完全同态。</p>
+<h6 id="部分同态加密："><a href="#部分同态加密：" class="headerlink" title="部分同态加密："></a>部分同态加密：</h6><p>定义就是密文只有一种同态特性。包括加法同态与乘法同态。</p>
+<p>假设有私密输入x1，x2，…，xn，希望云端可以计算f（x1，x2，…，xn），加法同态加密可以实现把各项私密输入乘以一个常数，然后相加起来：</p>
+<p>f（x1，x2，…,xn）—-&gt;c1x1+c2x2+…cnxn</p>
+<p>常见加法同态加密算法是基于循环圈G的EIGamal加密算法（过程）：</p>
+<p><img src="D:/past/实验室/笔记/全同态加密：.assets/DOY$BH@9S6WG5AG0NL4AOK.png" alt="img"></p>
+<p>g^m^应该直接明文M就行，不用log<del>g</del>（e&#x2F;w）,直接e&#x2F;w</p>
+<p>常见的乘法加密就是RSA加密：</p>
+<p><img src="D:/past/实验室/笔记/全同态加密：.assets/D4S22@_7_{PH2$7L[GLER7I.png" alt="img"></p>
+<p>^ϕ(N)&#x3D;(p-1)(q-1)</p>
+<p>该方法的正确性就在于（m^e^）^d^&#x3D;m mod N</p>
+<p>(m^e^)^d^&#x3D;m^e·d^&#x3D;m^k·ϕ(N)+1^&#x3D;m·（m^ϕ(N)^）^k^(mod N)</p>
+<p>由于（m^ϕ(N)^）^k^&#x3D;1^k^&#x3D;1 （mod N）WHY?</p>
+<p>这是由欧拉定理（Euler’s Theorem）推导而来的。欧拉定理是费马小定理的推广，它表述为：如果a 与 N 互质（最大公约数为 1），那么 a^ϕ(N)^&#x3D;1 (mod N)</p>
+<h6 id="近似同态加密"><a href="#近似同态加密" class="headerlink" title="近似同态加密"></a>近似同态加密</h6><p>部分同态加密的下一阶段是<strong>近似同态加密</strong>，这一阶段距离我们想要实现的全同态更近了一步。如果我们有近似同态加密算法的话，那么我们就可以在密文上<strong>同时计算加法与乘法了</strong>。但是需要注意的是，正因为这一阶段是<strong>近似同态（Somewhat Homomorphic）</strong>的，所以可以做的加法和乘法次数非常有限，可以计算的函数 F 也<strong>在一个有限的范围内</strong>。</p>
+<p><strong>基于配对（Pairing）的循环群加密算法</strong></p>
+<p>配对（Pairing）是基于某些特有的椭圆曲线循环群可以进行的一种特殊运算，我们用e(⋅,⋅) 来表示。具体Pairing做的事情，就是把两个循环群中的值映射到第三个循环群中：</p>
+<p>e(g^x^∈G，g^y^∈G)–&gt;g<del>T</del>^xy^∈G<del>T</del></p>
+<p>事实上，现实并没有那么美好，因为<strong>Pairing这一特殊属性并不会出现在所有的循环群当中</strong>。所以如果我们把两个可以做Pairing的群中的值通过Pairing相乘起来，映射到了一个新的群 G<del>T</del> 当中之后，那么新的群并不一定能找到对应的Pairing属性！<strong>有可能只能包涵最多一层乘法在里面</strong>。</p>
+<h6 id="有限级数全同态加密"><a href="#有限级数全同态加密" class="headerlink" title="有限级数全同态加密"></a>有限级数全同态加密</h6><p>这一阶段被称之为有限级数全同态加密。在这一阶段的话，我们已经可以对密文进行<strong>任意的加法乘法组合</strong>了，没有任何对于次数的局限性。</p>
+<p>但是之所以被称之为<strong>有限级数</strong>全同态的原因是，这个阶段的算法会引入一个新的复杂度上限 L的概念，<strong>这一复杂度上限约束了函数</strong> F的复杂度<strong>。如果我们可以把F 用二进制电路C 来表示的话，那么 C <strong>的深度和大小一定要在L</strong>的范围之内</strong>，即：</p>
+<p>我们可以了解一下这个复杂度的上限 � 是怎么来的。首先，我们可以想象一下，假如有一个全同态加密的算法，可以对密文进行任何的加法与乘法的运算。但是这个算法在加密的时候会在密文里面加入一定的<strong>随机噪音</strong>。</p>
+<p>当噪音早可控范围内的时候，那么解密算法就可以很<strong>容易从密文还原回原文</strong>。但是当我们<strong>叠加密文</strong>在一起进行同态计算的时候，每一个密文里面自带的<strong>噪音会被叠加扩大</strong>。如果我们只是对密文进行比较简单的逻辑，那么叠加起来的噪音还在一个可以接受的范围。但是如果我们过于复杂地堆叠密文在一起，那么一旦噪音的范围超过了临界值，那么就会彻底的覆盖掉原来的原文，从而导致<strong>解密会失败</strong>。</p>
+<h6 id="全同态加密（FHE）"><a href="#全同态加密（FHE）" class="headerlink" title="全同态加密（FHE）"></a>全同态加密（FHE）<img src="D:/past/实验室/笔记/全同态加密：.assets/P8FAW[%LOQV{WO63_R79O9Y.png" alt="img"></h6><h6 id="FHE与MPC的关系"><a href="#FHE与MPC的关系" class="headerlink" title="FHE与MPC的关系"></a>FHE与MPC的关系</h6><p>MPC即<strong>Secure Multi-Party Computation</strong>，就是可信多方计算。通常代表的是有多方拥有自己的私密输入，不想泄露给别人，但是他们想使用自己的输入一起计算一个函数 F 并分享计算的结果。</p>
+<p>一个MPC协议可以完全代替一个FHE协议。我们只需要把用户和私密输入作为一个协议中的一个Party，再把远程的代理计算服务器作为另一个Party，就满足了MPC协议执行的条件，只需要通过一定的交互，就可以实现代理计算，并且服务器也看不到私密输入。</p>
+<p><strong>由于MPC是有交互性的，所以需要用户和服务器共同进行计算与交流才可以完成协议。</strong>这也就和FHE代理计算最根本的需求冲突了。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Zhen Xie</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://example.com/2024/03/11/%E5%85%A8%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86/">http://example.com/2024/03/11/%E5%85%A8%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"># 区块链</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2024/03/18/%E5%A4%9A%E9%87%8D%E7%AD%BE%E5%90%8D/">多重签名</a>
+            
+            
+            <a class="next" rel="next" href="/2024/01/29/%E8%83%8C%E4%B9%A6%E7%AD%96%E7%95%A5/">背书策略</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Zhen Xie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

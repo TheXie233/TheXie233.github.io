@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Zhen Xie">
+
+
+
+
+
+<title>编码 | Hexo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+<script>
+    !
+    function() {
+    function n(n, e, t) {
+    return n.getAttribute(e) || t
+    }
+    function e(n) {
+    return document.getElementsByTagName(n)
+    }
+    function t() {
+    var t = e("script"),
+    o = t.length,
+    i = t[o - 1];
+    return {
+    l: o,
+    z: n(i, "zIndex", -1), //置于主页面背后
+    o: n(i, "opacity", .5), //线条透明度
+    c: n(i, "color", "0,0,0"), //线条颜色
+    n: n(i, "count", 100) //线条数量
+    }
+    }
+    function o() {
+    a = m.width = window.innerWidth ||
+    document.documentElement.clientWidth || document.body.clientWidth,
+    c = m.height = window.innerHeight ||
+    document.documentElement.clientHeight || document.body.clientHeight
+    }
+    function i() {
+    r.clearRect(0, 0, a, c);
+    var n, e, t, o, m, l;
+    s.forEach(function(i, x) {
+    for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 :
+    1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1,
+    1), e = x + 1; e < u.length; e++) n = u[e],
+    null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l
+    = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o,
+    i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t /
+    2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y),
+    r.lineTo(n.x, n.y), r.stroke()))
+    }),
+    x(i)
+    }
+    var a, c, u, m = document.createElement("canvas"),
+    d = t(),
+    l = "c_n" + d.l,
+    r = m.getContext("2d"),
+    x = window.requestAnimationFrame || window.webkitRequestAnimationFrame
+    || window.mozRequestAnimationFrame || window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function(n) {
+    window.setTimeout(n, 1e3 / 45)
+    },
+    w = Math.random,
+    y = {
+    x: null,
+    y: null,
+    max: 2e4
+    };
+    m.id = l,
+    m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z +
+    ";opacity:" + d.o,
+    e("body")[0].appendChild(m),
+    o(),
+    window.onresize = o,
+    window.onmousemove = function(n) {
+    n = n || window.event,
+    y.x = n.clientX,
+    y.y = n.clientY
+    },
+    window.onmouseout = function() {
+    y.x = null,
+    y.y = null
+    };
+    for (var s = [], f = 0; d.n > f; f++) {
+    var h = w() * a,
+    g = w() * c,
+    v = 2 * w() - 1,
+    p = 2 * w() - 1;
+    s.push({
+    x: h,
+    y: g,
+    xa: v,
+    ya: p,
+    max: 6e3
+    })
+    }
+    u = s.concat([y]),
+    setTimeout(function() {
+    i()
+    },
+    100)
+    } ();
+    </script>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">TheXie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">TheXie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">编码</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Zhen Xie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">June 2, 2024&nbsp;&nbsp;14:50:20</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="Rateless-Coded-Blockchain-for-Dynamic-IoT-Networks"><a href="#Rateless-Coded-Blockchain-for-Dynamic-IoT-Networks" class="headerlink" title="Rateless Coded Blockchain for Dynamic IoT Networks"></a>Rateless Coded Blockchain for Dynamic IoT Networks</h3><p>2024 SCI 一区</p>
+<h4 id="WHY："><a href="#WHY：" class="headerlink" title="WHY："></a>WHY：</h4><p>限制区块链在IOT上实现的关键约束是其巨大的<strong>存储需求</strong>。由于每个区块链节点必须存储整个区块链，增加了节点负担，也增加了新节点加入网络的通信开销。目前提出的基于固定速率和长度的纠错码的编码区块链（如RS，LDPC）减少了存储需求，但并不适合节点<strong>主动离开和加入</strong>的动态物联网网络，因为<strong>开销极大</strong>，需要从其他节点<strong>收集K个编码块解码过后重新编码</strong>，且具有高解码失败概率。</p>
+<h4 id="HOW："><a href="#HOW：" class="headerlink" title="HOW："></a>HOW：</h4><p>提出一种无速率raptor编码区块链：</p>
+<p>（1）提出一种新的<strong>增强块</strong>结构，建立在传统块之上，确保编码的区块链参数等在系统中达成共识。</p>
+<p>（2）提出一种针对新加节点的<strong>网络维护</strong>算法：当一个节点加入网络时，只需要收集几个原始块，为每组之前编码好的块编码自己的奇偶校验（或原始）块。</p>
+<p>（3）还可以根据网络状况<strong>动态调整参数k</strong>，使得在存储效率和区块链可靠性中找到一个好的权衡。</p>
+<h4 id="WHAT："><a href="#WHAT：" class="headerlink" title="WHAT："></a>WHAT：</h4><p>降低区块链存储需求的主流方法：</p>
+<p>（1）<strong>轻节点：</strong>轻节点只存储块头，完整节点存储区块链中的所有块。轻节点依赖于一个全节点来验证区块。</p>
+<p>缺点：1.轻节点可以被恶意节点伪装成完整节点欺骗。</p>
+<p>2.随着全节点和轻节点的比例增加，区块链具有半中心化结构，侵蚀了区块链去中心化特性。</p>
+<p>（2）<strong>修剪区块链：</strong>删除区块矿工不需要的区块链信息。可以在不影响新块的情况下删除已使用过的utxo或者只存储每个账户的余额。</p>
+<p>缺点：1.修剪掉的东西将永久性的丢弃，无法恢复</p>
+<p>2.不能随时访问历史信息</p>
+<p>（3）<strong>分片区块链：</strong>将区块链划分为多个子链，每个子链都是独立的区块链，有一组节点或社区或分片操作。只需要存储区块链的给定部分。</p>
+<p>缺点：1.需要跨链验证和子链合并，增加了节点的功能复杂性。</p>
+<p>2.每个分片中节点数量随着分片数量的增加而减少，降低了子链的安全性，从而降低了区块链的可靠性。</p>
+<p>（4）<strong>编码区块链：</strong>使用纠错码对块编码，以分布式的方式存储编码符合，每个节点只存储一部分的编码片段。因此，当其他参与者请求时，不必传输整个区块，有利于降低通信成本。除了减少存储空间，还有助于检测和纠正被恶意节点更改的数据。</p>
+<h5 id="编码方式："><a href="#编码方式：" class="headerlink" title="编码方式："></a>编码方式：</h5><p>（1）<strong>结构化线性码</strong>：生成器矩阵G通过节点和区块标识符作为伪随机生成器的种子来构建。生成的随机数形成生成器矩阵，用于编码和解码数据符号。确保矩阵具有满秩，这样就可以通过矩阵逆运算恢复原始数据。</p>
+<p>（2）<strong>LT（Luby Transform）码</strong>：一种无速率或喷泉码，能生成无限数量的编码符号。接收方只需要收集足够多的编码符号，就可以高概率地解码出原始信息符号。</p>
+<p>（3）<strong>Raptor码</strong>：使用固定速率外码（如LDPC码或RS码）对信息符号进行预编码，生成中间符号，然后将这些中间符号比编码为LT符号。</p>
+<p>（4）网络编码：关键思想是中间节点在转发数据时进行编码，生成新的编码数据。通过线性代数的方法，将信息符号与编码向量相乘，生成编码符号。接收方通过求解线性方程组恢复原始信息符号。</p>
+<p>（5）再生码：再生码在节点失效或离开系统时，通过最小带宽修复分布式存储系统。新的节点通过从现有节点下载编码符号，使用最少的带宽进行修复。再生码的关键是保持最大距离可分（MDS）属性，即任何 𝑘<em>k</em> 个节点都可以恢复信息符号。</p>
+<p>（6）分数重复码：分数重复码通过对信息符号进行编码，然后使用重复码对编码符号进行编码。每个MDS编码符号被重复多次，并存储在多个节点上。这种方法通过无编码修复降低延迟。</p>
+<h6 id="RS编码："><a href="#RS编码：" class="headerlink" title="RS编码："></a><strong>RS编码：</strong></h6><p>将确认的区块分为M组，每组被固定速率外码编码。假设每组k块组成，每块在有限域中分成s份![img](C:\Users\the xie\Desktop\实验室\笔记\2ED1NU@WL0H4}L@_~@}TE76.png)</p>
+<p><strong>一列</strong>表示一个<strong>区块</strong>，每一行的k个条目为信息符号。</p>
+<p>通过k X n的生成器矩阵G，可以将k个<strong>信息符号</strong>编码为n个<strong>编码符号</strong>（n通常等于编码时刻中网络的节点数）：</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\4HVIOX8PZ07%8$WU39BC7&#96;6.png)</p>
+<p>其中每个<strong>节点</strong>只用<strong>存储</strong>矩阵<strong>其中一列</strong>。这便是常用的固定速率编码。</p>
+<h6 id="无速率编码："><a href="#无速率编码：" class="headerlink" title="无速率编码："></a>无速率编码：</h6><p>使用<strong>n个信息符号</strong>来阐述可能<strong>无限数量的编码符号</strong>，将他们发送给接收器。只要接收到任意（1+β）n<strong>个编码符号</strong>，就能高概率成功解码n个信息符号（β是解码开销，因不同解码方式而不同）</p>
+<p>定度分布：是描述编码过程中使用的特定度数的概率分布。典型的定度分布为鲁宾分布。定度分布会影响编码的效率和可靠性。合适的定度分布可以确保在解码过程中高效地恢复原始数据，同时最小化解码失败概率和通信开销。</p>
+<p>LT解码：假设有n个信息符号，首先从发射器度分布Ω（d）中选择一个度d。然后随机选择d个信息符号{u<del>i1</del>，…，u<del>id</del>}从{u<del>1</del>，…，u<del>n</del>}这些d个信息符号与v<del>j</del>相邻。</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\XE08_XDES0H7_9BPDGMW&#96;{F.png)</p>
+<p>（4）表示v和哪些u相邻（5）表示v由d个u的异或操作得到（6）表示u和哪些v相邻（7）如何反求出对应的u</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记$X3]N}}8_&#96;D@YACMK~LS7TS.png)</p>
+<p>例如N（v1）&#x3D;{u1}，N（v2）&#x3D;{u1，u3}，N（v3）&#x3D;{u2，u3，u4}，Σ（u1）&#x3D;{v1}，Σ（u2）&#x3D;{v3，v4}</p>
+<p>当收到（1+β）n个编码符号后，就可解码。LT码解码就是一个剥离的过程，先找到度为1的编码符号</p>
+<p>|N（v1）|&#x3D;1。在解码了对应的信息符号ui后，将ui从Σ（ui）移除，并更新编码符号，将他们的度数减少1。以此往复。比如由{v1，v2，v3，v4}，只能解码出{u1，u3}，需要{v5}才能解码出{u2，u4}如图：</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记_J0</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Zhen Xie</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://example.com/2024/06/02/%E7%BC%96%E7%A0%81/">http://example.com/2024/06/02/%E7%BC%96%E7%A0%81/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"># 区块链</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2024/07/18/%E6%96%87%E7%8C%AE3/">文献3</a>
+            
+            
+            <a class="next" rel="next" href="/2024/05/24/%E6%96%87%E7%8C%AE%E5%88%86%E4%BA%AB/">文献分享</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Zhen Xie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

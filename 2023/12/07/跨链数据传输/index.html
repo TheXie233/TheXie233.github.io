@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Zhen Xie">
+
+
+
+
+
+<title>跨链数据传输 | Hexo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+<script>
+    !
+    function() {
+    function n(n, e, t) {
+    return n.getAttribute(e) || t
+    }
+    function e(n) {
+    return document.getElementsByTagName(n)
+    }
+    function t() {
+    var t = e("script"),
+    o = t.length,
+    i = t[o - 1];
+    return {
+    l: o,
+    z: n(i, "zIndex", -1), //置于主页面背后
+    o: n(i, "opacity", .5), //线条透明度
+    c: n(i, "color", "0,0,0"), //线条颜色
+    n: n(i, "count", 100) //线条数量
+    }
+    }
+    function o() {
+    a = m.width = window.innerWidth ||
+    document.documentElement.clientWidth || document.body.clientWidth,
+    c = m.height = window.innerHeight ||
+    document.documentElement.clientHeight || document.body.clientHeight
+    }
+    function i() {
+    r.clearRect(0, 0, a, c);
+    var n, e, t, o, m, l;
+    s.forEach(function(i, x) {
+    for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 :
+    1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1,
+    1), e = x + 1; e < u.length; e++) n = u[e],
+    null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l
+    = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o,
+    i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t /
+    2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y),
+    r.lineTo(n.x, n.y), r.stroke()))
+    }),
+    x(i)
+    }
+    var a, c, u, m = document.createElement("canvas"),
+    d = t(),
+    l = "c_n" + d.l,
+    r = m.getContext("2d"),
+    x = window.requestAnimationFrame || window.webkitRequestAnimationFrame
+    || window.mozRequestAnimationFrame || window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function(n) {
+    window.setTimeout(n, 1e3 / 45)
+    },
+    w = Math.random,
+    y = {
+    x: null,
+    y: null,
+    max: 2e4
+    };
+    m.id = l,
+    m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z +
+    ";opacity:" + d.o,
+    e("body")[0].appendChild(m),
+    o(),
+    window.onresize = o,
+    window.onmousemove = function(n) {
+    n = n || window.event,
+    y.x = n.clientX,
+    y.y = n.clientY
+    },
+    window.onmouseout = function() {
+    y.x = null,
+    y.y = null
+    };
+    for (var s = [], f = 0; d.n > f; f++) {
+    var h = w() * a,
+    g = w() * c,
+    v = 2 * w() - 1,
+    p = 2 * w() - 1;
+    s.push({
+    x: h,
+    y: g,
+    xa: v,
+    ya: p,
+    max: 6e3
+    })
+    }
+    u = s.concat([y]),
+    setTimeout(function() {
+    i()
+    },
+    100)
+    } ();
+    </script>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">TheXie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">TheXie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">跨链数据传输</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Zhen Xie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">December 7, 2023&nbsp;&nbsp;14:54:37</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="车辆双链："><a href="#车辆双链：" class="headerlink" title="车辆双链："></a>车辆双链：</h2><h4 id="上层（私有区块链）："><a href="#上层（私有区块链）：" class="headerlink" title="上层（私有区块链）："></a><strong>上层（私有区块链）</strong>：</h4><ul>
+<li>此层旨在增强访问控制和安全性。</li>
+<li>受信任的权威（TA）在此层中起到矿工的作用。</li>
+<li>在私有区块链中，智能合约加载了一个名为“实体私有信息表（EPIT）”的表格。它用作“V IDi-P IDi-V pki-ski-ti”的关联，汇总了所有车辆的信息，并响应私有区块链节点RSU的请求。</li>
+<li>TA存储车辆标识符（“V IDi”）、私有标识符（“P IDi”）、公钥（“pki”）、秘密密钥（“ski”）和时间戳（“ti”）之间的关联关系。</li>
+<li>TA具有独占特权，可以部署、插入、更新和撤销智能合约。</li>
+<li>其他受信任的实体（受信任的RSU私有区块链节点）可以访问链上信息，</li>
+<li>TA负责验证所有交易和智能合约的新状态。</li>
+<li>经过TA验证的区块可以使用实际拜占庭容错（PBFT）共识机制上传到私有区块链。</li>
+</ul>
+<h4 id="下层（联盟区块链）："><a href="#下层（联盟区块链）：" class="headerlink" title="下层（联盟区块链）："></a><strong>下层（联盟区块链）</strong>：</h4><ul>
+<li>此层使用联盟区块链作为DBCPA的底层架构。</li>
+<li>道路边缘单元（RSU）在此层充当矿工。</li>
+<li>RSU存储车辆的伪匿名身份以及它们的对应公钥。</li>
+<li>RSU及时响应与车辆相关的公钥查询。</li>
+<li>包括车辆间通信（V2V）和车辆对基础设施的通信（V2I）在内的交易在此层中汇总。</li>
+<li>车辆通过共识机制参与块验证。</li>
+<li>共识机制确保在多个共识节点之间安全处理交易和智能合约状态，并将区块添加到区块链。</li>
+<li>允许的节点可以在需要时查询这些状态，以获取联盟区块链中所需的信息。</li>
+<li>在联盟区块链中，智能合约加载了一个名为“实体伪匿名公钥表（EPPKT）”的表格。它用于汇总所有车辆的当前伪匿名身份与相应的公钥之间的关系，并自动及时地回应车辆的公钥查询。</li>
+</ul>
+<p>上层区块链在车辆自组网身份验证和通信系统中用于提供高级的安全性、隐私控制、数据管理和智能合约执行。它负责处理敏感信息、维护区块链状态，以及管理共识机制，以满足对安全和隐私的严格要求。与下层区块链相比，上层区块链通常更专注于安全性和控制，而不是大规模的去中心化。下层区块链在车辆自组网身份验证和通信系统中用于处理车辆身份、交易处理、共识机制执行和提供对公钥查询的响应。它的角色更加分散，用于处理车辆之间的实际通信和交易，同时确保数据的可靠性和安全性。与上层区块链相比，下层区块链通常更专注于处理大量交易和车辆之间的通信。</p>
+<p><img src="D:/Pictures/%7RSKUZT7]4IFZ%J{M7}XL.png" alt="img"></p>
+<h2 id="医疗双链："><a href="#医疗双链：" class="headerlink" title="医疗双链："></a>医疗双链：</h2><h4 id="医疗区块链（MEDchain）："><a href="#医疗区块链（MEDchain）：" class="headerlink" title="医疗区块链（MEDchain）："></a><strong>医疗区块链（MEDchain）：</strong></h4><ul>
+<li><p>MEDchain是一个公共区块链，采用工作量证明（PoW）共识机制来生成新的医疗区块（Mblocks）。</p>
+</li>
+<li><p>MEDchain用于记录与电子病历（EMRs）相关的交易。</p>
+</li>
+<li><p>Mblocks中的交易以两层结构记录。</p>
+<ul>
+<li>医院节点（HN）从医生节点（DNs）收集交易，然后进行验证和汇总各自的签名以形成底层。</li>
+<li>矿工节点随后从HN获得这些交易，并进行进一步的验证和次级签名汇总以创建顶层。</li>
+</ul>
+</li>
+<li><p>Mblock不存储单个交易的签名，而是保留最终的汇总签名，从而有效地节省了MEDchain的存储空间。</p>
+</li>
+<li><p>通过验证汇总签名，其他实体可以轻松验证Mblock中所有交易的真实性，从而显着降低了验证的复杂性。</p>
+<p><img src="D:/Pictures/{A{DDFU}DCKYNUVSUY[B1%U.png" alt="img"></p>
+</li>
+</ul>
+<h4 id="监管区块链（SUPchain）："><a href="#监管区块链（SUPchain）：" class="headerlink" title="监管区块链（SUPchain）："></a><strong>监管区块链（SUPchain）：</strong></h4><ul>
+<li><p>SUPchain是一个联合区块链，采用Hotstuff共识机制来生成监管区块（Sblocks）。</p>
+</li>
+<li><p>它的主要目的是管理与医生资格和紧急请求相关的交易。</p>
+</li>
+<li><p>SUPchain还记录了Mblocks的哈希摘要，并在患者处于昏迷状态时促进对电子病历（EMRs）的紧急访问。</p>
+</li>
+<li><p>此外，SUPchain采用Merkle Patricia Trie（MPT）来维护每个医院节点（HN）本地存储中医生吊销名单的一致性。</p>
+</li>
+<li><p>随着医生证书的更改，该名单可以根据需要动态扩展或收缩。</p>
+</li>
+<li><p>为了提高交易验证的效率，SUPchain实施了一个聚合签名方案。</p>
+<p><img src="D:/Pictures/HXP[ZT$NVM]6WA7Y8VMCB5C.png" alt="img"></p>
+</li>
+</ul>
+<h2 id="相同点"><a href="#相同点" class="headerlink" title="相同点:"></a>相同点:</h2><p><strong>双区块链架构</strong>：两者都使用了两种不同类型的区块链来实现特定的功能。</p>
+<p><strong>去中心化和安全性</strong>：在两个系统中，双区块链的使用都旨在提高系统的去中心化程度和整体安全性。</p>
+<h2 id="不同点："><a href="#不同点：" class="headerlink" title="不同点："></a>不同点：</h2><p>1.车辆：私有区块链用于身份认证和隐私保护，联盟区块链用于日常通信和交易处理。</p>
+<p>   医疗：MEDchain用于记录电子医疗记录相关的交易，而SUPchain用于管理医生资质和紧急请求。</p>
+<p>2.车辆：重点在于实现车辆的认证，隐私保护和去中心化管理，更像管理者</p>
+<p>   医疗：重点在于保护患者隐私和访问控制，更像监管者</p>
+<p>楼宇物联网（Building Internet of Things，BIoT）是指将物联网技术应用于建筑和楼宇管理的领域。尽管BIoT在提高建筑安全性、效率和可持续性方面具有巨大潜力，但也面临一些挑战，其中之一就是“价值孤岛问题”。</p>
+<p><strong>价值孤岛问题</strong>是指在BIoT系统中，不同的楼宇或设备可能由不同的供应商提供，并且采用不同的技术和标准，导致它们难以相互连接和共享信息。这种隔离和分隔可能会导致以下问题：</p>
+<ol>
+<li><p><strong>互操作性问题</strong>：不同供应商的BIoT设备和系统可能使用不同的通信协议、数据格式和标准，使它们难以互操作。这可能妨碍了楼宇之间设备的协同工作和信息共享。</p>
+</li>
+<li><p><strong>数据孤立</strong>：由于不同系统之间的不兼容性，楼宇可能无法将数据集成到一个集中的平台中，以进行全面的楼宇管理和分析。这可能会限制数据的价值和实用性。</p>
+</li>
+<li><p><strong>高成本</strong>：为了解决互操作性问题，楼宇管理者可能需要投入更多的资源来进行定制开发或购买昂贵的中间件，以使不同的系统能够协同工作。</p>
+</li>
+<li><p><strong>安全风险</strong>：不同供应商之间的互操作性问题可能导致安全漏洞，因为信息可能不安全地在不同系统之间传输或共享。</p>
+<p>车辆中的双链结构旨在解决车辆自组网中的身份验证和通信安全性的问题，医疗中的双链结构旨在解决EMR的安全共享和访问控制的管理。而不是特定地解决“价值孤岛”问题。双链结构的主要目标是增强安全性、隐私性和身份验证。</p>
+<p>尽管双链结构在安全性和隐私性方面具有重要作用，但解决“价值孤岛”问题通常涉及不同系统或组织之间的数据和价值共享问题。这包括确保不同楼宇或设备之间能够互操作、共享信息和协作，以提高效率和价值。</p>
+</li>
+</ol>
+<h2 id="车辆双链精读："><a href="#车辆双链精读：" class="headerlink" title="车辆双链精读："></a>车辆双链精读：</h2><h3 id="网络模型结构："><a href="#网络模型结构：" class="headerlink" title="网络模型结构："></a>网络模型结构：</h3><p>网络模型为三层模型结构：</p>
+<p>（1）TA（受信任第三方），负责系统初始化，实体注册，智能合约部署，私有区块链维护，恶意车辆跟踪与车辆撤销</p>
+<p>（2）车辆（OBU）支持DSRC协议，为轻量级节点，只需要存储联盟区块链的区块头。</p>
+<p>（3）RSU使用DSRC协议与OBU通信的路边基础设施。初始化预选的可信RSU作为私有区块链管理节点，可以查询区块链信息，定期更改车辆假名。其他RSU充当联盟区块链的矿工，聚合车辆之间通信消息并将所有交易数据存储在区块链上，并且通过车辆请求调用私有区块链的智能合约来执行违规车辆的分布式动态撤销过程。相关<br>被吊销车辆的信息将从双区块链，全网直播。</p>
+<p>网络攻击对手可以是车辆，联盟区块链节点RSU或网络入侵者，对手发起的攻击可以分为两种，被动攻击和主动攻击，被动攻击，攻击者<br>持续监控VANET通信通道，以跟踪车辆或破坏消息的机密性。为了发起主动攻击，攻击者可能会尝试修改<br>或捏造信息。</p>
+<p>智能合约：</p>
+<p>7种：</p>
+<p>（1）数据插入：向TA发起加入注册请求，通过区块链节点共识后，加入区块链的EPIT</p>
+<p>（2）数据更新：TA再安全数据即将耗尽时，生成所需要的新安全数据，通过区块链节点共识后，TA调用智能合约算法，将新数据更新到EPIT中</p>
+<p>（3）数据查询：当车辆即将更新相关安全数据时，调用智能合约，查询车辆通信所需新安全数据，保存在区块链节点中</p>
+<p>（4）数据删除：当车辆离开并向TA发出取消请求时，TA调用智能合约从区块链EPIT中删除该车相关数据</p>
+<p>（增添）</p>
+<p>（5）阈值设置：TA将调用智能合约算法，动态设置阈值。</p>
+<p>（6）举报功能：（TA和RSU）实体投诉恶意车辆时，经过共识过后，调用链码，添加车辆投诉记录</p>
+<p>（7）判断阈值自动执行车辆撤销：（TA和RSU）使用智能合约来确定投诉记录是否达到阈值，达到则自动执行撤销，并将撤销信息返回到私有区块链节点</p>
+<h5 id="注册："><a href="#注册：" class="headerlink" title="注册："></a>注册：</h5><p>（1）选择实名与密码pw，选择一个随机数bi，计算</p>
+<p>Bi &#x3D; H0(pw || bi)，将实名和Bi提交给TA</p>
+<p>（2）TA计算一个假名身份集P IDi &#x3D;V IDi ⊕ H1(ski· Ppub) （P IDi &#x3D; V IDi⊕H1(ski·s·P）？意思s.P&#x3D;Ppub,反正ski为车辆的密钥，s为TA的主密钥，只有私有区块链节点和相关车辆才能看到真实身份），ski &#x3D;H2(V IDi ∥ s ∥ ti)（ski是车辆的密码）（）（ti是假名有效期），选个随机数生成Di（存在OBU中，用于验证实名和密码是否正确）</p>
+<p>（3）返还给OBU，PID1作为第一个假名</p>
+<h5 id="登录认证过程（联盟区块链中进行）："><a href="#登录认证过程（联盟区块链中进行）：" class="headerlink" title="登录认证过程（联盟区块链中进行）："></a>登录认证过程（联盟区块链中进行）：</h5><p>消息验证通过θi·P &#x3D; Ri + αi·Vpki</p>
+<p>当车辆想和相邻的RSU和车辆广播交通信息时</p>
+<p>（1）用户向OBU输入真名和密码，如果认证失败，OBU将拒绝请求</p>
+<p>（2）生成一个随机数ri并进行一系列计算。最后向邻近的RSU和车辆广播信息（包含Ti（验证消息新鲜度），Mi（在时间戳Ti中发送的即时消息））</p>
+<p>（3）接收方使用Ti验证消息的新鲜度。如果有效，查询假名记录，并进一步搜索假名相关的EPPKT，以获得适当的公钥或err</p>
+<p>（4）接收方得到公钥后进行验证（和ri有关）。如果消息被修改，RSU或车辆可以检测并终止消息</p>
+<h5 id="假名身份更新（私有区块链到联盟区块链）："><a href="#假名身份更新（私有区块链到联盟区块链）：" class="headerlink" title="假名身份更新（私有区块链到联盟区块链）："></a>假名身份更新（私有区块链到联盟区块链）：</h5><p>（1）当假名身份即将到期时，半信任的RSU会定期从私有区块链中获取车辆新假名和对于的公私钥作为Mi，进行加密和签名后，利用生成的随机数ri（不知道什么作用），通过安全通道发送到对应的车辆（怎么发的？）</p>
+<p>（2）Ti被用来验证消息时间有效性，再验证消息的正确性，只有消息正确，才会更新OBU的车辆假名以及对应的公私钥</p>
+<p>（3）最后，RSU（为什么是RSU？）删除私有区块链的过时信息，RSU更新联盟区块链的EPPKT</p>
+<p>车辆撤销：</p>
+<p>（1）TA将终止智能合约中记录的当前状态，主节点调用智能合约撤销车辆。</p>
+<p>（2）当调用智能合约请求撤销车辆的主节点数量达到阈值时，，智能合约执行车辆撤销算法。主节点向全网广播被吊销车辆的相关信息</p>
+<h5 id="举报："><a href="#举报：" class="headerlink" title="举报："></a>举报：</h5><p>当车辆发现有违规恶意的车辆，会将举报发给私有区块链上的RSU，RSU会调用对应的链码，添加对应车辆的投诉记录，如果投诉记录超过规定的阈值，则会自动执行恶意车辆的吊销算法，相关被吊销车辆的信息将从双区块链，全网直播。</p>
+<h2 id="车载的注册和验证过程："><a href="#车载的注册和验证过程：" class="headerlink" title="车载的注册和验证过程："></a>车载的注册和验证过程：</h2><h4 id="1-车辆的注册：（单一注册：注册过后，车辆可以自行或通过联盟区块链的RSU查询获取认证信息，在没有TA的情况下进行相互认证）"><a href="#1-车辆的注册：（单一注册：注册过后，车辆可以自行或通过联盟区块链的RSU查询获取认证信息，在没有TA的情况下进行相互认证）" class="headerlink" title="1.车辆的注册：（单一注册：注册过后，车辆可以自行或通过联盟区块链的RSU查询获取认证信息，在没有TA的情况下进行相互认证）"></a>1.车辆的注册：（单一注册：注册过后，车辆可以自行或通过联盟区块链的RSU查询获取认证信息，在没有TA的情况下进行相互认证）</h4><p>车主在车辆登记阶段向TA登记，以获得沟通所需的信息，此阶段在安全通道中执行，并且TA是脱机注册的。</p>
+<p>（1）车主选择证明VIDi与密码pw，然后选择一个随机数bi（一个pw对应一个bi），计算出Bi&#x3D;H0（pw || bi），然后将VIDi与Bi提交给TA。（||为连接符号）</p>
+<p>（2）TA会计算一个假名集PIDi&#x3D;VIDi⊕H1(ski· Ppub)（只有私有区块链节点和相关车辆才能看到真实身份，⊕异或运算，当对一个数据进行两次相同的异或运算，你会得到原始数据。通常用于加密与解密），ski为车辆的私钥ski&#x3D;H2(V IDi ∥ s ∥ ti) （ti为当前假名的有效期限，有效期限到了，就要定时更换假名，s为系统私钥，用于确保生成的私钥在整个系统中是唯一的），车辆的公钥就为Vpki&#x3D;ski·P。TA会选择一个随机数ei，计算出Ai &#x3D; H0(x ∥ ei),Ci &#x3D; Ai ⊕ Bi, Di &#x3D; (V IDi ∥ Bi ∥ Ai).（Ai的作用：使用哈希函数和随机数增加了不可预测性和抵抗攻击的能力。Ci的作用：通过Bi将Ai加密为Ci，当车辆登录认证是，再异或一次Bi，得到Ai）</p>
+<p>（3）最后TA返回消息s {Ci, Di, ei, H0, q, Z∗q, ECCparams,V IDi, P IDi, ti}给OBU，PID1为假名集中的第一个，TA还会把s {V IDi, P IDi, V pki, ski}上传至智能合约中，添加到上层私链中，然后通过rsu，将车辆的{P IDi,V pki} 上传至联盟链中</p>
+<h4 id="2-车辆的登录和认证："><a href="#2-车辆的登录和认证：" class="headerlink" title="2.车辆的登录和认证："></a>2.车辆的登录和认证：</h4><p>（1）用户向OBU输入VIDi和pw，OBU计算出Bi，Ai，Di，然后验证计算结果Di‘和Di是否相等。如果认证失败，OBU将拒绝请求（为什么不直接验证pw或者VIDi是否与之前输入的相等？我觉得如果本地直接存储密码，会导致安全性非常的低，但是如果存储的是一系列计算过后的值，你只能通过计算进行验证，就算别人拿到了这些值，也无法获取密码。）</p>
+<p>（2）如果验证成功，会进一步生成一个随机数ri，计算Ri &#x3D; ri<br>· P,αi &#x3D;H2(P IDi ∥ Ri ∥ Mi ∥ Ti) 和θi &#x3D; ri+αi·ski mod n，Mi表示在时间戳Ti中发送的即时消息，最后OBU向邻近的rsu和车辆广播 {P IDi, Mi, Ri, Ti, θi}  （<strong>模运算在点乘中的作用</strong>：在椭圆曲线上执行点乘操作时，模运算mod <em>n</em> 确保了结果仍然是椭圆曲线群内的一个有效点。椭圆曲线上的点乘操作本身就是在一个有限域内进行的，所以当我们说 θi<em>⋅</em>P* 时，这个运算自然地遵循椭圆曲线群的规则，结果是椭圆曲线上的一个点，而不是一个整数。）</p>
+<p>（3）接收方用Ti验证消息的新鲜度。如果有效，接收方向联盟区块链查询PIDi的记录，通过搜索与PIDi有关的EPPKT，请求相关的公钥Vpki。</p>
+<p>（4）（接收方使用发送方的公钥来验证发送方的签名）接收方收到Vpki后，α′i &#x3D; H2(P IDi ∥ Ri ∥ Mi ∥ Ti)（这一步骤确保接收方和发送方都在处理相同的数据集。），只有当θi· P &#x3D; Ri + α′i·Vpki时，认为Vpki正确。否决拒绝这个公钥</p>
+<p>此过程RSU或车辆通过在区块链中部署和执行的智能合约获取所需信息。使用获取的信息验证其签名，并检查接收到的消息的有效性。</p>
+<p>在该方案中，TA不参与整个认证过程。因此，DBCPA无需使用在线注册中心即可实现身份验证。</p>
+<h4 id="3-假名的更新："><a href="#3-假名的更新：" class="headerlink" title="3.假名的更新："></a>3.假名的更新：</h4><p>（1）当车辆的假名身份即将到期时，私有区块链信任节点RSU将定期从私有区块链中获取车辆的新假名和对应的公私钥{P ID′i, sk′i, Vpk′i, ti}作为消息Mi，RSU会对消息进一步的加密签名（和阶段2是加密方法一样），选择随机数ri，计算Ri &#x3D; ri·P， αi &#x3D; H2(P ID ‘ i∥Ri∥Mi∥Ti)， θi &#x3D; ri+αi·ski mod n，将消息{P ID ‘ i, Mi, Ri, Ti， θi}通过安全通道发送到相应的车辆。</p>
+<p>（2）接受车辆通过Ti验证消息的新鲜度。通过计算 α’i，验证θi·P &#x3D; Ri + α ‘ i·Vpk ‘ i，如果相等则接受更新的加密与其对应的公私钥</p>
+<p>（3）最后RSU删除私有区块链EPIT中的过时信息，更新EPIT。RSU也会更新联盟区块链上的EPPKT。（操作是脱机执行的）</p>
+<h4 id="4-车辆撤销："><a href="#4-车辆撤销：" class="headerlink" title="4.车辆撤销："></a>4.车辆撤销：</h4><p>（1）TA会终止智能合约中记录的当前状态。对于车辆撤销的安全性，需要区块链节点导出共识，然后主节点调用智能合约撤销车辆。</p>
+<p>（2）设置l一个车辆撤销的阈值。当调用智能合约请求撤销车辆的主节点数量达到阈值时，智能合约执行车辆撤销算法来撤销车辆。同时双区块链中的相关元组被删除并反馈到相关主节点。主节点向全网广播被吊销车辆的相关信息。</p>
+<h4 id="5-密码切换："><a href="#5-密码切换：" class="headerlink" title="5.密码切换："></a>5.密码切换：</h4><p>密码修改用户发送VIDi和pw，pw‘给OBU，OBU先验证原pw是否正确，然后选择新的随机数b’i，生成B‘i，C’i，D‘i。OBU用{C ‘ i, D ‘ i, ei, H0, q1, Z∗q}替换元组{Ci, Di, ei, H0, q1, Z∗q}。（不用再与TA通信）</p>
+<h4 id="6-举报："><a href="#6-举报：" class="headerlink" title="6.举报："></a>6.举报：</h4><p>当车辆发现有违规恶意的车辆，会将举报发给私有区块链上的RSU，RSU会调用对应的链码，添加对应车辆的投诉记录，如果投诉记录超过规定的阈值，则会自动执行恶意车辆的吊销算法，相关被吊销车辆的信息将从双区块链，全网直播。</p>
+<h4 id="离线注册与在线注册："><a href="#离线注册与在线注册：" class="headerlink" title="离线注册与在线注册："></a>离线注册与在线注册：</h4><p>离线注册与在线注册在车辆通信系统中有显著的区别，主要体现在以下几个方面：</p>
+<ol>
+<li><strong>连接需求</strong>：<ul>
+<li><strong>在线注册</strong>：需要实时的互联网连接。车辆或用户必须在注册过程中实时与服务器或其他网络实体进行通信。</li>
+<li><strong>离线注册</strong>：不需要实时互联网连接。车辆或用户可以在没有实时网络连接的情况下完成注册过程。</li>
+</ul>
+</li>
+<li><strong>安全性</strong>：<ul>
+<li><strong>在线注册</strong>：可能面临网络安全威胁，如拦截、监听或远程攻击，因为数据传输是通过公共网络进行的。</li>
+<li><strong>离线注册</strong>：通常被认为更安全，因为它减少了数据在传输过程中被截获的风险。</li>
+</ul>
+</li>
+<li><strong>数据同步</strong>：<ul>
+<li><strong>在线注册</strong>：可以实时更新和同步数据，例如即时验证用户信息或更新系统设置。</li>
+<li><strong>离线注册</strong>：可能需要在之后的某个时间点手动或通过某种机制同步注册信息。</li>
+</ul>
+</li>
+<li><strong>便捷性和可及性</strong>：<ul>
+<li><strong>在线注册</strong>：为用户提供便捷性，因为它们可以从任何具有互联网连接的地方进行注册。</li>
+<li><strong>离线注册</strong>：可能不那么方便，因为它可能需要用户亲自到特定的地点或使用特定的设备进行注册。</li>
+</ul>
+</li>
+<li><strong>应用场景</strong>：<ul>
+<li><strong>在线注册</strong>：适用于需要实时认证和数据更新的场景。</li>
+<li><strong>离线注册</strong>：适合于安全性需求更高或网络连接不稳定的环境。</li>
+</ul>
+</li>
+</ol>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Zhen Xie</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://example.com/2023/12/07/%E8%B7%A8%E9%93%BE%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93/">http://example.com/2023/12/07/%E8%B7%A8%E9%93%BE%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"># 区块链</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2023/12/19/%E5%85%B1%E8%AF%86%EF%BC%8C%E5%85%AC%E9%92%A5%E4%B8%8E%E7%A7%81%E9%92%A5/">共识，公钥与私钥</a>
+            
+            
+            <a class="next" rel="next" href="/2023/11/13/Hyperledger-Fabric/">Hyperledger Fabric</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Zhen Xie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

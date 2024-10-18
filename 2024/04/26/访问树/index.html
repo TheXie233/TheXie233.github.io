@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Zhen Xie">
+
+
+
+
+
+<title>访问树 | Hexo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+<script>
+    !
+    function() {
+    function n(n, e, t) {
+    return n.getAttribute(e) || t
+    }
+    function e(n) {
+    return document.getElementsByTagName(n)
+    }
+    function t() {
+    var t = e("script"),
+    o = t.length,
+    i = t[o - 1];
+    return {
+    l: o,
+    z: n(i, "zIndex", -1), //置于主页面背后
+    o: n(i, "opacity", .5), //线条透明度
+    c: n(i, "color", "0,0,0"), //线条颜色
+    n: n(i, "count", 100) //线条数量
+    }
+    }
+    function o() {
+    a = m.width = window.innerWidth ||
+    document.documentElement.clientWidth || document.body.clientWidth,
+    c = m.height = window.innerHeight ||
+    document.documentElement.clientHeight || document.body.clientHeight
+    }
+    function i() {
+    r.clearRect(0, 0, a, c);
+    var n, e, t, o, m, l;
+    s.forEach(function(i, x) {
+    for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 :
+    1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1,
+    1), e = x + 1; e < u.length; e++) n = u[e],
+    null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l
+    = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o,
+    i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t /
+    2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y),
+    r.lineTo(n.x, n.y), r.stroke()))
+    }),
+    x(i)
+    }
+    var a, c, u, m = document.createElement("canvas"),
+    d = t(),
+    l = "c_n" + d.l,
+    r = m.getContext("2d"),
+    x = window.requestAnimationFrame || window.webkitRequestAnimationFrame
+    || window.mozRequestAnimationFrame || window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function(n) {
+    window.setTimeout(n, 1e3 / 45)
+    },
+    w = Math.random,
+    y = {
+    x: null,
+    y: null,
+    max: 2e4
+    };
+    m.id = l,
+    m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z +
+    ";opacity:" + d.o,
+    e("body")[0].appendChild(m),
+    o(),
+    window.onresize = o,
+    window.onmousemove = function(n) {
+    n = n || window.event,
+    y.x = n.clientX,
+    y.y = n.clientY
+    },
+    window.onmouseout = function() {
+    y.x = null,
+    y.y = null
+    };
+    for (var s = [], f = 0; d.n > f; f++) {
+    var h = w() * a,
+    g = w() * c,
+    v = 2 * w() - 1,
+    p = 2 * w() - 1;
+    s.push({
+    x: h,
+    y: g,
+    xa: v,
+    ya: p,
+    max: 6e3
+    })
+    }
+    u = s.concat([y]),
+    setTimeout(function() {
+    i()
+    },
+    100)
+    } ();
+    </script>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">TheXie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">TheXie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">访问树</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Zhen Xie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">April 26, 2024&nbsp;&nbsp;14:52:12</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="访问树"><a href="#访问树" class="headerlink" title="访问树"></a>访问树</h3><h4 id="1-BSW访问树"><a href="#1-BSW访问树" class="headerlink" title="1.BSW访问树"></a>1.BSW访问树</h4><p>（1）Setup：以隐含安全参数λ作为输入，输出系统公钥PK和主私钥MK。</p>
+<p>（2）Encrypt（PK，M，A）-&gt;输入系统公钥PK、明文M和基于属性的访问结构A，输出对明文M加密后的密文CT，只有用户拥有的属性集合满足访问结构A才能正确解密密文CT。</p>
+<p>（3）KeyGen（MK，PK，S）-&gt;SK:该算法以系统主私钥MK和属性集合S作为输入，输出用户私钥SK。</p>
+<p>（4）Decrypt（PK，CT，SK）-&gt;M：输入PK，CT和SK，若SK中的S满足A，则能正确解密密文并输出明文M。</p>
+<p>（5）Delegate（SK，S’）-&gt;SK’：输入属性集合S的私钥SK和一个属性集合S‘且S‘是S的真子集，则输出一个基于属性S’的私钥SK‘。</p>
+<p>数学知识：</p>
+<p>双线性对映射</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\共识,公钥与私钥.assets\894Q[UTZ357C@L5U55N]9DM.png)</p>
+<p>循环群：（群其实就是一些元素和这些元素的运算方式（可以是加减乘除）的集合，单位元则是和这些元素除单位元之外的其他元素运算后，还是原来的那个元素。对于整数集，加法的单位元是0，乘法的单位元是1.单位元常用e表示）</p>
+<p>若一个群中，存在一个元素g（即g∈G），使得G中的每一个元素都能用g^i^表示，则称&lt;G,·&gt;为一个循环群，如果·表示为乘法，则为乘法循环群。</p>
+<p>乘法循环群的阶：设&lt;G,·&gt;是一个群，使得a^k^&#x3D;e成立，在k的所有可能取值中找到最小的那个正整数当作这个群的阶。如果认为a^k^&#x3D;e成立，那么a^2k^&#x3D;e·e&#x3D;e，a^nk^&#x3D;e，所以我们取最小的当作循环群的阶。</p>
+<p>这时，我们可以看出，一个循环群的生成元g，通过自运算能得到群中所有元素，运算k次后能得到群的单位元。那1到k次和k+1到2k次之间结果是否相同呢？g^k+1^&#x3D;g^k^·g&#x3D;e·g&#x3D;g</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\共识,公钥与私钥.assets\6[LCX1Q5T]E@U$TL@3C]HVT.png)</p>
+<h4 id="算法详细设计："><a href="#算法详细设计：" class="headerlink" title="算法详细设计："></a>算法详细设计：</h4><p>初始化：</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\共识,公钥与私钥.assets\HQZN$A5YMHI82{BI0QO2&#96;AJ.png)</p>
+<p>Setup：</p>
+<p>选择一个阶为素数p的双线性群G<del>0</del>，该群生成元g。随机选择加密指数α，β∈Z<del>p</del>。输出的系统公钥为PK&#x3D;（G<del>0</del>，g,h&#x3D;g^β^,f&#x3D;g^1&#x2F;β^,e(g,g)^α^）;系统主密钥为MK（β，g^α^）</p>
+<p>KeyGen</p>
+<p>选择随机数r∈Z<del>p</del>，对于每个属性j属于S，随机选择r<del>j</del>∈Z<del>p</del>。这个过程是属性集合S由几个属性就在Z<del>p</del>里随机找几个数r<del>j</del>，计算SK&#x3D;（D&#x3D;g^(α+r)&#x2F;β^,存在j∈S：D<del>j</del>&#x3D;g^r^·H（j）^rj^,D<del>j</del>‘&#x3D;g^rj^）</p>
+<p>,存在j∈S：D<del>j</del>&#x3D;g^r^·H（j）^rj^,D<del>j</del>‘&#x3D;g^rj^表示属性集合S里含有几个属性，我们就从Zp里选出几个随机数来计算对于的Dj和Dj’。</p>
+<p>Encrypt</p>
+<p>对访问结构A中的访问控制树T中每一个节点x选择一个多项式qx。从上向下从根节点R选。对于x，设置多项式qx的阶dx为节点x的阈值kx减1，即dx&#x3D;kx-1.</p>
+<p>从根节点R随机选择s∈Zp，设置qR（0）&#x3D;s。随机选择多项式qR的其他dR个点来定义该多项式。对于其他节点x，令qx（0）&#x3D;q<del>parent（x）</del>（index（x））且随机选择多项式qx的其他dx个点来定义该多项式。</p>
+<p>令Y为访问控制树T的所有叶子节点的集合，则访问控制结构构造的密文为：</p>
+<p>CT&#x3D;（T，C‘&#x3D;Me（g，g）^αs^，C&#x3D;h^s^，存在y∈Y：C<del>y</del>&#x3D;g^qy(0)^,C<del>y</del>’&#x3D;H（att（y））^qy(0)^）</p>
+<p>s为根节点处想要隐藏的秘密值，且这值在Zp中随机选定。C&#x3D;h^s^,直观理解即可。</p>
+<p>存在y∈Y：C<del>y</del>&#x3D;g^qy(0)^,C<del>y</del>’&#x3D;H（att（y））^qy(0)^是对叶子节点的操作，每个叶子节点的属性取在其父节点的index的值。,C<del>y</del>’&#x3D;H（att（y））^qy(0)^表示一个函数，att（y）函数表示y是叶子节点且与y的属性管理，最后再做一次哈希运算。</p>
+<p>Decrypt</p>
+<p>解密过程是一个递归算法DecryptNode（CT，SK，x）。输入为一个密文CT（T，C‘，C，存在y∈Y：Cy，Cy’），一个基于属性集S的私钥SK和树T中的一个节点x。</p>
+<p>加入x是叶子节点，令i&#x3D;att（x），若i∈S，定义：</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\共识,公钥与私钥.assets\OR2UWSC$~S5I%ZNDCHTPAWS.png)</p>
+<p>（Cx应该是g^qy(0)^而不是h^qy(0)^）</p>
+<p>现在考虑非叶子节点：当x是非叶子节点时：对于节点x的所有孩子节点z，调用函数DecryptNode（CT，SK，z）并存储其结果F<del>z</del>。令S<del>x</del>为任意的大小为k<del>x</del>的孩子节点z的集合</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\共识,公钥与私钥.assets[<code>L</code>Y1[1TSX&#96;9C1FM~D7BWF.png)</p>
+<p>算到最后根节点的结果时e（g，g）^rqR(0)^,而这个qR（0）&#x3D;s。</p>
+<p>所有最后的解密步骤：A&#x3D;e（g，g）^rs^</p>
+<p>C’&#x2F;(e(C,D)&#x2F;A)&#x3D;C’&#x2F;(e(h^s^,g^(α+r)&#x2F;β^)&#x2F;e(g,g)^rs^)&#x3D;M</p>
+<p>Delegate</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\共识,公钥与私钥.assets{5FV(E2(8CVIVMWQ1%)Z0KT.png)</p>
+<h4 id="2-LSSS线性秘密共享方案"><a href="#2-LSSS线性秘密共享方案" class="headerlink" title="2.LSSS线性秘密共享方案"></a>2.LSSS线性秘密共享方案</h4><p>考虑处理这样一个访问策略（A and B）and (C or D)</p>
+<p>首先，我们先将树根节点标注一个长度为1的向量（1），并且初始化一个全局变量 counter &#x3D; 1。然后按照以下规则对树进行广度优先遍历。</p>
+<p>1、如果父节点是一个标注着 向量v 的OR门限</p>
+<p>1.1 那么将它的子节点标注为向量v</p>
+<p>1.2 保持counter不变</p>
+<p>2、 如果父节点是一个标注着 向量v 的AND门限</p>
+<p>2.1 将 向量v 的末尾用0填充，将其 v 的长度变为 counter</p>
+<p>2.2 右子节点用 v | 1 标注（ | 表示串联符号）</p>
+<p>2.3 左子节点用（0,…,0）| -1 标注（0的个数为counter）</p>
+<p>2.4 counter的值加1</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\共识,公钥与私钥.assets\3@F9[G<code>ZHXF4X</code>EEU80}K~7.png)</p>
+<p>最后将标记好的树中所有叶子节点拥有的 向量v 构成 LSSS矩阵的行。如果 向量v 的长度不同，将短的那些向量末尾用0填充，直到所有向量的长度相同。生成的矩阵如下图所示：</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\01Y7(LLRN20}H70H])FGR&#96;M.png)</p>
+<p>可以看出，矩阵的行数就是访问控制树的叶子节点个数，也就是访问策略中属性的个数。</p>
+<h5 id="加密过程"><a href="#加密过程" class="headerlink" title="加密过程"></a>加密过程</h5><p>加密算法随机选择向量v&#x3D;{s，y<del>2</del>，…,y<del>n</del>}，s为加密要隐藏的秘密值，y<del>2</del>，…,y<del>n</del>为群里随机选择的数，下标n为矩阵M的列数。假设我们随机选择向量v&#x3D;{1，2，3}^T^,1就是我们要隐藏的秘密值s。计算M·v&#x3D;S。</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\共识,公钥与私钥.assets\10S84{5R9YS3S$_C2R1J1BP.png)</p>
+<h5 id="解密过程"><a href="#解密过程" class="headerlink" title="解密过程"></a>解密过程</h5><p>假设有一个跟私钥绑定的属性集是{A，B，C}，那么我们很容易知道这个私钥是可以解密的。解密过程：</p>
+<p>设M<del>i</del>表示M的第1行，λ<del>i</del>为向量λ的第i行元素。</p>
+<p>根据私钥绑定的属性集{A，B，C}，取A，B，C属性对应的行向量形成一个矩阵，形成一个新的矩阵M<del>1</del></p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\共识,公钥与私钥.assets(QL%C}XO){WD{YA_KCDT8R2.png)</p>
+<p>令M<del>A</del>^T^·λ<del>A</del>&#x3D;(1,0,0,….,0)&#x3D;ε</p>
+<p>s&#x3D;ρ^T^· ε&#x3D;ρ^T^·（M<del>A</del>^T^·λ<del>A</del>）&#x3D;(M<del>A</del>·ρ)^T^·λ<del>A</del>&#x3D;S<del>A</del>^T^·λ<del>A</del></p>
+<p>先求λ<del>A</del>的值，即可求出s</p>
+<p>λ<del>A</del>&#x3D;（1，1，1）^T^，S<del>A</del>^T^&#x3D;(-3,1,3),算出隐藏的s为1.</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记_&#96;&#96;9WBYI(%XU8TD~U)FXCBS.png)</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\218ZZQXY~I}P4HDVN&#96;K{1V4.png)</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\4$B2]X]0BB{Z7QPB8%~89YV.png)</p>
+<p>修正：λ<del>A</del>&#x3D;（1，-1）^T^</p>
+<p>S<del>A</del>^T^·λ<del>A</del>&#x3D;(M<del>A</del>·ρ)^T^·λ<del>A</del>&#x3D;ρ^T^·（M<del>A</del>^T^·λ<del>A</del>）&#x3D;ρ^T^· ε&#x3D;s</p>
+<p>s&#x3D;(M<del>A</del>·ρ)^T^·λ<del>A</del>&#x3D;（5，3）·（1，-1）^T^&#x3D;2</p>
+<h5 id="2-1Setup"><a href="#2-1Setup" class="headerlink" title="2.1Setup"></a>2.1Setup</h5><p>Setup（λ，U）–&gt;（PK，MK）：参数设置，以安全参数λ和系统属性集合U为输入，生成系统的公开密钥PK和主密钥MK。</p>
+<p>具体来说，算法首先运行群生成函数获得系统参数（G，G<del>T</del>,p,e）,其中p为素数，G和G<del>T</del>是两个p阶循环群，e是一个双线性映射，g∈G为生成元。算法随机选择参数α，α∈Z<del>p</del>，另外对于每个属性i∈U，算法随机选择参数h1，h2，…，hu∈G，最后设置系统的公开密钥为PK&#x3D;（g，e（g，g）^α^，g^a^，h1，…,hu）,主密钥MK&#x3D;g^α^。</p>
+<h5 id="2-2KeyGen"><a href="#2-2KeyGen" class="headerlink" title="2.2KeyGen"></a>2.2KeyGen</h5><p>KeyGen（PK，MK，S）–&gt;SK：密钥生成算法，由属性授权只需，其中S为用户的属性集合，最后生成解密密钥SK。</p>
+<p>具体来说，该算法随机选择参数t∈Z<del>p</del>，并构造用户解密密钥为SK&#x3D;（K&#x3D;g^α^g^at^,L&#x3D;g^t^，{K<del>x</del>&#x3D;h<del>x</del>^t^}∈S）。</p>
+<h5 id="2-3Encypt"><a href="#2-3Encypt" class="headerlink" title="2.3Encypt"></a>2.3Encypt</h5><p>Encrypt(PK,M,(A,ρ))-&gt;CT:加密算法，由数据拥有着执行，M为明文数据，（A，ρ）为访问策略，CT为密文。</p>
+<p>具体来说，A表示一个l×n矩阵，ρ表示把A的每一行映射到相应属性的映射函数。然后随机选择向量v&#x3D;（s，y2，…,yn）∈Zp，对A的每一行A<del>i</del>计算内积λ<del>i</del>&#x3D;A<del>i</del>·v，并随机选择参数r1，r2，…,rl∈Zp，最后密文表示如下：</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\共识,公钥与私钥.assets\VY$Y]_1L%SHF2AW]H33RI24.png)</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\3f3bc210bbfa914cbd0dd8fd772632e7.JPG)</p>
+<h3 id="A-Secure-and-Privacy-Preserving-Machine-Learning-Model-Sharing-Scheme-for-Edge-Enabled-IoT"><a href="#A-Secure-and-Privacy-Preserving-Machine-Learning-Model-Sharing-Scheme-for-Edge-Enabled-IoT" class="headerlink" title="A Secure and Privacy-Preserving Machine Learning Model Sharing Scheme for Edge-Enabled IoT"></a>A Secure and Privacy-Preserving Machine Learning Model Sharing Scheme for Edge-Enabled IoT</h3><p>一种安全且保护隐私的边缘物联网机器学习模型共享方案</p>
+<p>![img](C:\Users\the xie\Desktop\实验室\笔记\WFBX{8XJJQR&#96;MP(1061)HEW.png)</p>
+<p>WHY：</p>
+<p>边缘智能（EI）训练的机器学习(ML)模型通常是共享的。然而，由于边缘智能的开放性和异质性，可能存在一些安全和隐私问题。</p>
+<p>因此提出了一种基于密文策略属性的代理重加密(CP-ABPRE)方案，该方案具有问责性，以解决EI模型共享中的安全和隐私问题。</p>
+<p>WHAT：</p>
+<p>创新点：</p>
+<p>（1）基于属性的代理重加密</p>
+<p>（2）可问责方案可以区分解密失败的原因，并追溯到对失败负责的一方。实现可追溯性。</p>
+<p>HOW：</p>
+<h5 id="1-Setup"><a href="#1-Setup" class="headerlink" title="1.Setup"></a>1.Setup</h5><p>  TA生成PK（系统公钥），MK（系统私钥）</p>
+<p>   为用户生成Uid（用户ID），usk（用户私钥），upk（用户公钥）</p>
+<h5 id="2-KEY-GEN"><a href="#2-KEY-GEN" class="headerlink" title="2.KEY_GEN"></a>2.KEY_GEN</h5><p>用户提供自己的属性集S与upk，给TA，TA通过PK，MK，upk，S生成对应的加密私钥SK。</p>
+<h5 id="3-DATA-ENCRYPTION"><a href="#3-DATA-ENCRYPTION" class="headerlink" title="3.DATA_ENCRYPTION"></a>3.DATA_ENCRYPTION</h5><p>数据所有者再访问结构（M，ρ）下，选择向量v&#x3D;（s，y2，y3，…，yn）∈Z<del>p</del>^n^,s为共享加密密钥s，也就是需要隐藏的东西，y2，y3。。。为随机数。λi&#x3D;Mi·v。生成CT</p>
+<p>CT：&lt;ID<del>ct</del>,C,C’,存在1≤i≤l，{Ci，Di^，Di}&gt;</p>
+<h5 id="4-DEC-CT"><a href="#4-DEC-CT" class="headerlink" title="4.DEC_CT"></a>4.DEC_CT</h5><p>数据请求者根据ID<del>req</del>请求密文。当属性集S满足（M，ρ），能解密对应CT。找到对应的wi，使Σ<del>i∈I</del>wiλi&#x3D;s</p>
+<p>求得F，C&#x2F;（F）^1&#x2F;k^&#x3D;M（原文）</p>
+<h5 id="5-RE-KEY-GEN"><a href="#5-RE-KEY-GEN" class="headerlink" title="5.RE_KEY_GEN"></a>5.RE_KEY_GEN</h5><p>请求者Alice希望将她的访问权委托给没有访问相应参数权限的Bob，令（M‘，p’）为Alice指定的新访问策略。S<del>Alice</del>为Alice的属性集。她将用自己的解密私钥SK和私钥usk结合随机选择ε。得到rk1</p>
+<p>rk1&#x3D;&lt;K<del>rk</del>,L<del>rk</del>,L<del>rk</del>‘,x∈S<del>Alice</del>，K<del>rk，x</del>&gt;</p>
+<p>使用新的访问策略（M‘，p’），选择向量v‘&#x3D;（s’，y2‘，y3’，…，yn‘）∈Z<del>p</del>^n^。λi’&#x3D;Mi‘·v’。与DATA_ENCRYPTION过程类似，但中间会随机选择R0，R1构成J~，v（目的是起一个可问责的作用）</p>
+<p>rk2&#x3D;&lt;v,J,J’,存在1≤i≤l,Ji,Ji’,Ji^,J~&gt;</p>
+<p>RK&#x3D;{rk1,rk2}</p>
+<h5 id="6-RE-ENC"><a href="#6-RE-ENC" class="headerlink" title="6.RE_ENC"></a>6.RE_ENC</h5><p>代理节点先检查S<del>Alice</del>是否满足访问策略（M，ρ），选择对应wi，使Σ<del>i∈I</del>wiλi&#x3D;s。</p>
+<p>计算A，F‘</p>
+<p>使C<del>re</del>1&#x3D;F’，C<del>re</del>2&#x3D;rk2，C<del>re</del>3&#x3D;C</p>
+<p>CT<del>RE</del>&#x3D;&lt;C<del>re</del>1,C<del>re</del>2,C<del>re</del>3&gt;</p>
+<h5 id="7-DEC-RCT"><a href="#7-DEC-RCT" class="headerlink" title="7.DEC_RCT"></a>7.DEC_RCT</h5><p>Bob运行这个算法，将CT<del>RE</del>解密。</p>
+<p>计算A，F，还原ε</p>
+<p>J&#x2F;F‘^1&#x2F;usk^&#x3D;ε</p>
+<p>C<del>re</del>3&#x2F;C<del>re</del>1^1&#x2F;ε^&#x3D;M</p>
+<h5 id="8-可问责性（设计嵌入唯一身份的密文形式）"><a href="#8-可问责性（设计嵌入唯一身份的密文形式）" class="headerlink" title="8.可问责性（设计嵌入唯一身份的密文形式）"></a>8.可问责性（设计嵌入唯一身份的密文形式）</h5><p>代理节点：</p>
+<p>CHECK（ID<del>ct</del>，ID<del>p</del>,CT<del>RE</del>,SK,PK,usk）-&gt;TRUE or FALSE</p>
+<p>计算A’，F‘</p>
+<p>f&#x3D;F’^1&#x2F;usk^</p>
+<p>当解密失败时：</p>
+<p>恢复随机数R0，R1，生成V*，与密文中的V比较： </p>
+<p>当<code>CHECK</code>操作中的解密尝试失败时，系统将根据<code>V</code>值的验证结果采取以下逻辑判断：</p>
+<ul>
+<li><strong>如果<code>V</code>值验证通过</strong>：这表明重加密过程中使用的密钥和策略是正确的，边缘节点的操作符合预期。因此，如果解密仍然失败，这通常表明问题出在用户的属性集上。可能是因为用户的属性集没有正确匹配重加密策略所需的属性，或者用户的私钥有问题。</li>
+<li><strong>如果<code>V</code>值验证不通过</strong>：这表明重加密过程可能存在问题，例如使用了错误的密钥或策略，或者边缘节点的身份标识（IDp）不正确。这种情况下，解密失败可能是由于边缘节点的操作错误引起的，需要对边缘节点的行为进行进一步的调查。</li>
+</ul>
+<p>对于用户：</p>
+<p>TA跟踪可疑请求者，要求她提交SK与参数y，用户对参数y用他的usk进行签名。</p>
+<p>TRACE（SK，y，MK，PK）—&gt;Uid </p>
+<p>TA将SK分解为几个关键组件，用MK恢复用户upk.</p>
+<p>upk可视为一个索引搜索对于Uid*。</p>
+<p>接下来算法验证SK是否通过一下检查：</p>
+<p>e（φ，upk）&#x3D;e（g，g）^a^</p>
+<p>e(k,g)&#x3D;e(upk,g^α^)e(φ，L)e(g,g^b^)</p>
+<p>存在x∈S，e（L，hx）&#x3D;e（Kx，upk）</p>
+<p>均成立且Uid*可搜索到，则输出Uid。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Zhen Xie</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://example.com/2024/04/26/%E8%AE%BF%E9%97%AE%E6%A0%91/">http://example.com/2024/04/26/%E8%AE%BF%E9%97%AE%E6%A0%91/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"># 区块链</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2024/05/24/%E6%96%87%E7%8C%AE%E5%88%86%E4%BA%AB/">文献分享</a>
+            
+            
+            <a class="next" rel="next" href="/2024/04/25/%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90/">安全性分析</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Zhen Xie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
