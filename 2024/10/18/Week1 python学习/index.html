@@ -313,7 +313,7 @@
         </header>
 
         <div class="post-content">
-            <h2 id="Week1-python学习"><a href="#Week1-python学习" class="headerlink" title="Week1 python学习"></a>Week1 python学习</h2><p>![pyhton思维导图](C:\Users\the xie\Desktop\myBlog\source\img\pyhton思维导图.jpg)</p>
+            <h2 id="Week1-python学习"><a href="#Week1-python学习" class="headerlink" title="Week1 python学习"></a>Week1 python学习</h2><p><img src="/2024/10/18/Week1%20python%E5%AD%A6%E4%B9%A0/pyhton%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE.jpg"></p>
 <h4 id="数据类型："><a href="#数据类型：" class="headerlink" title="数据类型："></a>数据类型：</h4><h5 id="1-Number数字（支持int，float-complex）"><a href="#1-Number数字（支持int，float-complex）" class="headerlink" title="1.Number数字（支持int，float, complex）"></a>1.Number数字（支持int，float, complex）</h5><h5 id="2-String字符串"><a href="#2-String字符串" class="headerlink" title="2.String字符串"></a>2.String字符串</h5><p>字符串连接</p>
 <p>1）使用+运算符</p>
 <p>2）使用join运算符 </p>
@@ -625,6 +625,10 @@
 <p><strong>scipy.stats</strong> ：包含大量的概率分布和统计函数。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from scipy import stats</span><br><span class="line"></span><br><span class="line"># 创建一个正态分布的随机变量</span><br><span class="line">random_variable = stats.norm.rvs(size=100)</span><br><span class="line"></span><br><span class="line"># 计算随机变量的均值和标准差</span><br><span class="line">mean = random_variable.mean()</span><br><span class="line">std_dev = random_variable.std()</span><br><span class="line"></span><br><span class="line">print(&quot;Mean:&quot;, mean)</span><br><span class="line">print(&quot;Standard Deviation:&quot;, std_dev)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
+<h4 id="心得体会"><a href="#心得体会" class="headerlink" title="心得体会"></a>心得体会</h4><p>1：Python的语法设计非常简洁直观，容易理解，更解决自然语言，Python省去了<strong>花括号、强类型声明</strong>等繁杂的语法规则，用<strong>缩进</strong>来控制代码块，从而让代码更加简洁和清晰。</p>
+<p>2：Python拥有<strong>丰富的第三方库</strong>，而且相比于Java和C<strong>调库非常方便</strong>，不需要配置路径或链接，只需要import相应库即可。</p>
+<p>3：Python是一种解释型语言，代码在运行时通过解释器逐行执行，在进行网络数据爬取的时候能明显感觉到python的<strong>运行速度较慢</strong></p>
+<p>4：numpy和pandas库极大地简化了数据处理的流程，而matplotlib和seaborn使得数据可视化变得更加直观和便捷。numpy简化了对数值型数据的计算，可以进行矩阵的线性代数运算，解决了<strong>大规模数据的计算问题</strong>。而panda在我看来和sql差不多，都是对数据进行操作，如筛选、排序、分组，解决了<strong>大规模数据的处理问题</strong>。而matplotlib作为<strong>最基础的画图工具</strong>，可以绘制多种图表，seaborn在matplotlib基础上，可以实现更为<strong>精美的配色和设计风格</strong>，且<strong>简化了复杂统计图表的绘制</strong>。</p>
 
         </div>
 
