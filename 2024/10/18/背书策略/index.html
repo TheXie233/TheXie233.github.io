@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Zhen Xie">
+
+
+
+
+
+<title>背书策略 | Hexo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+<script>
+    !
+    function() {
+    function n(n, e, t) {
+    return n.getAttribute(e) || t
+    }
+    function e(n) {
+    return document.getElementsByTagName(n)
+    }
+    function t() {
+    var t = e("script"),
+    o = t.length,
+    i = t[o - 1];
+    return {
+    l: o,
+    z: n(i, "zIndex", -1), //置于主页面背后
+    o: n(i, "opacity", .5), //线条透明度
+    c: n(i, "color", "0,0,0"), //线条颜色
+    n: n(i, "count", 100) //线条数量
+    }
+    }
+    function o() {
+    a = m.width = window.innerWidth ||
+    document.documentElement.clientWidth || document.body.clientWidth,
+    c = m.height = window.innerHeight ||
+    document.documentElement.clientHeight || document.body.clientHeight
+    }
+    function i() {
+    r.clearRect(0, 0, a, c);
+    var n, e, t, o, m, l;
+    s.forEach(function(i, x) {
+    for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 :
+    1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1,
+    1), e = x + 1; e < u.length; e++) n = u[e],
+    null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l
+    = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o,
+    i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t /
+    2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y),
+    r.lineTo(n.x, n.y), r.stroke()))
+    }),
+    x(i)
+    }
+    var a, c, u, m = document.createElement("canvas"),
+    d = t(),
+    l = "c_n" + d.l,
+    r = m.getContext("2d"),
+    x = window.requestAnimationFrame || window.webkitRequestAnimationFrame
+    || window.mozRequestAnimationFrame || window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function(n) {
+    window.setTimeout(n, 1e3 / 45)
+    },
+    w = Math.random,
+    y = {
+    x: null,
+    y: null,
+    max: 2e4
+    };
+    m.id = l,
+    m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z +
+    ";opacity:" + d.o,
+    e("body")[0].appendChild(m),
+    o(),
+    window.onresize = o,
+    window.onmousemove = function(n) {
+    n = n || window.event,
+    y.x = n.clientX,
+    y.y = n.clientY
+    },
+    window.onmouseout = function() {
+    y.x = null,
+    y.y = null
+    };
+    for (var s = [], f = 0; d.n > f; f++) {
+    var h = w() * a,
+    g = w() * c,
+    v = 2 * w() - 1,
+    p = 2 * w() - 1;
+    s.push({
+    x: h,
+    y: g,
+    xa: v,
+    ya: p,
+    max: 6e3
+    })
+    }
+    u = s.concat([y]),
+    setTimeout(function() {
+    i()
+    },
+    100)
+    } ();
+    </script>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">TheXie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">TheXie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">背书策略</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Zhen Xie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 18, 2024&nbsp;&nbsp;14:38:33</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>1.公有链和联盟链的区别？</p>
+<p>2.节点的添加有哪些地方可以改进的？</p>
+<p>3.节点的添加能否考虑加入优先级中断？</p>
+<h5 id="公有链，私有链，联盟链："><a href="#公有链，私有链，联盟链：" class="headerlink" title="公有链，私有链，联盟链："></a>公有链，私有链，联盟链：</h5><p>公有链：对所有人开放，任何人都可以参与；</p>
+<p>私有链：对单独的个人或实体开放。写入权限完全在一个组织手里的区块链，所有参与到这个区块链的节点都会被严格控制。</p>
+<p>联盟链：对特定的组织团体开放。联盟链介于公有链和私有链之间，实质上仍属于私有链的范畴。联盟链可视为“部分去中心化”，若干组织或机构共同参与管理的区块链，每个组织或机构控制一个或多个节点，共同记录交易数据，并且只有这些组织和机构能够对联盟链中的数据进行读写和发送交易。</p>
+<h6 id="公有链："><a href="#公有链：" class="headerlink" title="公有链："></a>公有链：</h6><p>优点：</p>
+<p>1.数据公开透明，无法篡改，任何人都可以查阅</p>
+<p>2.门槛低，任何人都可以参与</p>
+<p>4.匿名性，由于节点之间无需彼此信任，所有的操作都可以匿名进行，很好地保护使用者的隐私。（不需要通信）</p>
+<p>5.随着参与的节点越来越多，区块链越安全（作恶算力要求越来越高）</p>
+<p>缺点：</p>
+<p>1.交易速度慢，由于参与的节点多，一笔交易需要经过多个区块确认后才算有效。<br>2.数据公开透明 是缺点也是优点。</p>
+<p>3.能源消耗：一些挖矿过程是需要大量的能源的。</p>
+<h6 id="联盟链："><a href="#联盟链：" class="headerlink" title="联盟链："></a>联盟链：</h6><p>优点：</p>
+<p>1.数据隐私保护，读写权限都是可控的<br>2.效率更高，相比公链它一共就没多少节点所有确认可以很快完成<br>3.更适合商业化：多个组织共同管理和控制</p>
+<p>缺点：</p>
+<p>1.中心化：联盟链仍然具有一定程度的中心化，可能导致信任问题。</p>
+<p>2.网络管理复杂：联盟链的管理可能较为复杂，需要共识和协议来处理合作事宜。</p>
+<h6 id="私有链："><a href="#私有链：" class="headerlink" title="私有链："></a>私有链：</h6><p>优点：</p>
+<p>1.安全性高，链上成员都是需要审核授权的<br>2.数据隐私保护，读写权限都是可控的<br>3.效率更高，一般私有链节点不会很多<br>4.交易成本低，私有链的交易只需要几个受到普遍认可的高算力节点确认即可，其交易成本与公有链和联盟链相比极低。</p>
+<p>缺点：</p>
+<p>1.中心化：需要依赖特定的中心化实体，可能导致信任问题。</p>
+<p>2.可拓展性小： 私有链的生态系统通常较小，创新可能受到限制。</p>
+<h5 id="背书策略：EOV（execute-order-validate）机制"><a href="#背书策略：EOV（execute-order-validate）机制" class="headerlink" title="背书策略：EOV（execute-order-validate）机制"></a>背书策略：EOV（execute-order-validate）机制</h5><p>![60c8e8989b9342e49b6242ad6823f7db](C:\Users\the xie\Desktop\实验室\笔记\背书策略：.assets\60c8e8989b9342e49b6242ad6823f7db.png)</p>
+<h5 id="静态配置："><a href="#静态配置：" class="headerlink" title="静态配置："></a>静态配置：</h5><p>在启动前就将背书配置配置好，一但启动就无法更改。</p>
+<h5 id="服务发现"><a href="#服务发现" class="headerlink" title="服务发现:"></a>服务发现:</h5><p>通过使节点动态计算所需的信息并呈现给客户端来改善从Fabric网络获取配置的过程。该服务在Peer节点上运行，并使用由八卦通信层维护的网络元数据信息来查找在线的节点。它还获取诸如相关背书策略等信息。有了服务发现，客户端不再需要指定它们需要从哪些节点获取背书。为了使用发现服务，客户端首先要知道一组可信任的Peer节点，然后客户端可以简单地向发现服务发送一个配置查询，询问哪些节点需要用于事务背书。发现服务将计算出一个候选Peer节点列表并回复给客户端。最后，客户端将从候选Peer节点列表中随机选择目标节点来发送事务提案。</p>
+<p>节点背书是区块链系统中的一个重要步骤，它涉及验证和签署交易以确保其有效性和一致性。然而，节点背书也面临一些挑战和问题，这些挑战可能会影响区块链系统的性能和可靠性。以下是一些常见的节点背书挑战：</p>
+<ol>
+<li>负载和性能：在高交易负载的情况下，节点可能需要快速背书大量的交易。这可能导致节点的负载急剧增加，影响其性能。为了解决这个问题，需要采用高效的算法和硬件资源，以提高背书的速度和吞吐量。（负载均衡，背书组）</li>
+<li>网络延迟：区块链网络通常是分布式的，节点之间通过网络进行通信。网络延迟可能导致交易传播的时间变长，从而影响背书的效率。降低网络延迟通常需要优化网络拓扑、改进通信协议或使用更快的网络基础设施。</li>
+<li>一致性和共识：节点需要达成一致的共识，以确保所有背书节点对交易达成相同的结果。这可能涉及到拜占庭容错或其他共识算法，以应对不诚实节点或网络故障。</li>
+<li>安全性：节点背书需要确保交易的有效性和合法性，防止不良交易进入区块链。因此，节点需要实施有效的验证机制和安全策略，以防范恶意攻击或欺诈行为。（加密）</li>
+<li>资源管理：节点背书需要合理管理计算资源、存储资源和网络资源。如果节点不恰当地配置或管理资源，可能会导致性能下降或系统不稳定。负载均衡，背书组）</li>
+<li>抢占和优先级：在多任务系统中，可能需要处理不同交易的优先级。某些高优先级的交易可能需要立即背书，这可能需要实现抢占式背书策略，以确保及时响应。（优先级调度）</li>
+<li>动态节点管理：节点可能会加入或离开区块链网络，这需要动态管理节点列表和背书组。节点管理涉及到选举、配置和维护，以确保网络的稳定性和可用性。（动态选举）</li>
+</ol>
+<p>背书节点一般是由程序指定，这样容易中心化，容易被恶意节点攻击，可以考虑加入选举（信誉值，负载均衡？）加入监督人？，也可以采用真名假名，环签名等加密。</p>
+<p>当多个背书请求同时到达时，背书节点会根据区块链系统的设计和共识算法来处理这些请求。以下是可能的处理方式：</p>
+<ol>
+<li>并行处理：某些区块链系统允许背书节点同时处理多个背书请求。这可以提高系统的吞吐量和性能，因为多个请求可以并行执行。每个请求都会独立验证和背书，然后返回结果。</li>
+<li>队列排队：在其他情况下，背书节点可能会将背书请求放入队列中，然后按照先入先出（FIFO）或其他策略逐个处理这些请求。这可以确保每个请求都按顺序处理，但可能会降低系统的响应时间，特别是在高负载时。</li>
+<li>调度算法：一些区块链系统使用调度算法来动态决定哪个请求应该优先处理。这些算法可能会考虑请求的重要性、优先级或其他因素，然后选择要处理的下一个请求。</li>
+</ol>
+<p>能不能定期在背书请求前（比如接收了10笔请求）进行一次选举，选举几组背书节点，每组分别处理背书任务，根据背书请求的优先级进行分类，如果来的是高优先级，则会进行抢占，如果是低优先级，则不会抢占。</p>
+<h5 id="怎么分组（分多少组？）："><a href="#怎么分组（分多少组？）：" class="headerlink" title="怎么分组（分多少组？）："></a>怎么分组（分多少组？）：</h5><p>想法1：先通过节点的负载率进行排序，选择负载率低的作为高优先级的组，依次排下来，负载率越高的组优先级越低，高优先级的来了则会进入高优先级组，如果低优先级的来了，没有高优先级的，则会进入高优先级组。（抢不抢占呢？）</p>
+<p>想法2：也是通过节点的负载率进行排序，选择超过半数的负载率低的节点和少数负载率高的节点，每组都这样分，能达到负载均衡的效果，这样大部分背书组都能及时达到背书策略，不至于被负载率较高的节点拖慢，同样的，如果下一个请求为高优先级的，则直接抢占现有最低优先级的进程。（按什么比例分？负载低的占多少，负载高的又占多少?）</p>
+<h5 id="负载率怎么算？"><a href="#负载率怎么算？" class="headerlink" title="负载率怎么算？"></a>负载率怎么算？</h5><p>可能考虑的参数：CPU，内存，IO资源，网络带宽</p>
+<h5 id="优先级怎么设？怎么进行抢占？"><a href="#优先级怎么设？怎么进行抢占？" class="headerlink" title="优先级怎么设？怎么进行抢占？"></a>优先级怎么设？怎么进行抢占？</h5><h5 id="高优先级："><a href="#高优先级：" class="headerlink" title="高优先级："></a>高优先级：</h5><p><strong>通道配置修改</strong>：例如，添加或删除组织、更新通道策略等。</p>
+<p><strong>资产的关键更新</strong>：例如，修改关键资产的状态或属性。比如金额，所有人。</p>
+<h5 id="中优先级："><a href="#中优先级：" class="headerlink" title="中优先级："></a>中优先级：</h5><p><strong>常规资产更新</strong>：例如，修改非关键资产的状态或属性。比如时间。</p>
+<h5 id="低优先级："><a href="#低优先级：" class="headerlink" title="低优先级："></a>低优先级：</h5><p><strong>查询操作</strong>：只读操作，通常不需要背书。</p>
+<p><strong>非关键性配置更改</strong>：例如，更新非关键通道配置，比如修改通道的描述，标签或注释，超时参数这些。</p>
+<h5 id="特殊操作："><a href="#特殊操作：" class="headerlink" title="特殊操作："></a>特殊操作：</h5><p><strong>紧急操作</strong>：某些操作可能被标记为紧急操作，比如系统遭受到关键性的安全威胁或攻击时，或者系统出现严重的性能问题时。</p>
+<p><strong>特殊合同操作</strong>：特殊合同或链码操作，</p>
+<h5 id="应用场景："><a href="#应用场景：" class="headerlink" title="应用场景："></a>应用场景：</h5><p>环境监测：环境传感器（如空气质量、噪音水平监测器）收集数据，通过区块链进行分析。负载均衡策略可以确保数据在各个背书节点间均匀分配，防止某些节点因高流量而过载，提高数据处理速度和准确性。</p>
+<p>可抢占式优先级调度：</p>
+<p>中断处理可能会破坏区块链的不可篡改性，主要有以下几个原因：</p>
+<ol>
+<li><strong>中断的可逆性</strong>：中断处理通常涉及到撤销或修改之前已经提交的交易或状态。这就意味着一旦执行中断操作，区块链的历史状态可能会被更改，交易的可逆性被引入，从而破坏了不可篡改性的核心原则，即一旦交易被确认，它们不应该被更改或删除。（放在 背书环节做是不是就可以了？毕竟背书这过程又不会影响整个区块链）</li>
+<li><strong>潜在的滥用</strong>：如果允许中断处理，那么有可能被滥用。恶意用户或恶意节点可能试图通过提出中断请求来撤销他们不喜欢的交易或状态变化，这可能导致不公平的交易处理和不稳定的网络。</li>
+<li><strong>信任和可靠性</strong>：区块链的核心优势之一是建立在去中心化和分布式信任的基础上。一旦中断处理被引入，需要对执行中断操作的实体或机构产生信任，这可能导致中心化的控制和单点故障。</li>
+<li><strong>一致性和可预测性</strong>：区块链的不可篡改性有助于确保所有参与方在区块链上的交易和状态是一致的和可预测的。中断处理可能引入不确定性和混淆，使得参与方难以预测交易的最终结果。</li>
+</ol>
+<h5 id="环签名原理："><a href="#环签名原理：" class="headerlink" title="环签名原理："></a>环签名原理：</h5><p>环签名是一种签名技术，直白来说，通常是有一组公钥，签名方知道一组公钥中某一公钥所对应的私钥(只需知道一个即可)。这样，他就可以使用这一组公钥和那个对应的私钥生成一个环签名。验证者可以验证确实是这组公钥中某个私钥的拥有者生成的环签名，但是却不知道是哪个公钥对应的私钥。</p>
+<p>环签名的一个典型的应用场景是匿名举报。在一个组织内，组织内的举报人可以使用其他成员的公钥联合自己的公私钥对一次举报进行签名，管理人(验证者)会看到确实是组织内的人发起了这样的举报，但管理人不会知道具体是哪一个成员发起的举报。如此，在确保了举报的真实性的情况，隐藏了举报人，以避免了对举报人的一些不良后果，如恶意报复等。</p>
+<h6 id="预备阶段："><a href="#预备阶段：" class="headerlink" title="预备阶段："></a>预备阶段：</h6><p>签名者拥有私钥sk和公钥pk，其中pk &#x3D; sk·g，定义一个hash函数，输入值为待签名的消息m和椭圆曲线上的一点A，Hash（m，A）。</p>
+<h6 id="第一步："><a href="#第一步：" class="headerlink" title="第一步："></a>第一步：</h6><p>签名方相对消息m签名，不想再公开签名的同时，让别人知道自己的确切身份，通过环签名将自己隐藏到一群人中。签名方找来n-1个其他人的公钥，编好序号，将自己的公钥随机地插入其中，组合成一个包含n个的公钥集合。</p>
+<p>假设n个公钥为pk0，pk1，pk2，pki-1，pki，pki+1，…，pkn</p>
+<p>其中pki为签名方的公钥。</p>
+<p>签名方随机生成n-1个随机数S0，S1，…,Si-1，…,Si+1，分别与n-1个公钥意义对应。</p>
+<h6 id="第二步："><a href="#第二步：" class="headerlink" title="第二步："></a>第二步：</h6><p>签名方随机生成k，计算k·g</p>
+<p>假设k·g&#x3D;Si·g+Ci·pki</p>
+<p>推出k·g&#x3D;（Si+Ci·ski）·g，即如果知道Ci和k，则就可以反向求出Si。</p>
+<p>Ci&#x3D;Hash（m，Si-1·g+Ci-1·pki-1）</p>
+<p>已知第i-1个公钥对应的Si-1和hash值Ci-1，求下一个公钥对应的hash值Ci。</p>
+<p>而且Ci+1&#x3D;Hash（m，Si·g+Ci·pki）&#x3D;Hash（m，k·g）</p>
+<p>此时求Ci+1过程中并不知道Si和Ci，但后面计算得到Ci后，可以由k，Ci+1和Ci求出Si</p>
+<h6 id="第三步："><a href="#第三步：" class="headerlink" title="第三步："></a>第三步：</h6><p>依次计算Ci+2，…，Cn-1，C0，…,Ci-1，Ci</p>
+<p>有了Ci后，由于pki的私钥是已知的，k&#x3D;Si+Ci·ski，从而根据k，Ci，ski可以求出Si。</p>
+<h6 id="第四步："><a href="#第四步：" class="headerlink" title="第四步："></a>第四步：</h6><p>Si一旦求出，环签名的环就形成了。k值的使命也完成了，可以被抛弃了。</p>
+<p>正因为我们由私钥ski，可以构造出一个Si，配合随机生成的S0，S1，…,Si-1，Si+1，…，Si+1使用。</p>
+<p>如果这n个公钥中的任何一把私钥，签名者都没有，那么也就无法求出Si。使其成为一个环。</p>
+<p>因此，上述n个等式成立，意味着生成这n个等式的人至少拥有着n个公钥中的一把私钥。</p>
+<p>最后消息m的环签名数据为：</p>
+<p>Signature&#x3D;{C0，pk0，…，pkn-1，S0，…，Sn-1}</p>
+<h6 id="验证阶段："><a href="#验证阶段：" class="headerlink" title="验证阶段："></a>验证阶段：</h6><p>根据上述签名，依次求出C1，C2，C3，…，Cn-1最后根据Cn-1求出C‘0，判断C’0是否等于C0，如果相等则签名有效，如果不等则签名无效。</p>
+<h4 id="考虑的地方"><a href="#考虑的地方" class="headerlink" title="考虑的地方:"></a>考虑的地方:</h4><h5 id="1-分组如何分"><a href="#1-分组如何分" class="headerlink" title="1.分组如何分*"></a>1.分组如何分*</h5><h5 id="2-应用场景：环境监测怎么揉进来"><a href="#2-应用场景：环境监测怎么揉进来" class="headerlink" title="2.应用场景：环境监测怎么揉进来"></a>2.应用场景：环境监测怎么揉进来</h5><h5 id="3-动态加入：考虑环签名进行加密"><a href="#3-动态加入：考虑环签名进行加密" class="headerlink" title="3.动态加入：考虑环签名进行加密"></a>3.动态加入：考虑环签名进行加密</h5><h5 id="4-负载率：物理存储，网络存储"><a href="#4-负载率：物理存储，网络存储" class="headerlink" title="4.负载率：物理存储，网络存储"></a>4.负载率：物理存储，网络存储</h5><h5 id="5-中断的可逆性与区块链的不可篡改性怎么解决"><a href="#5-中断的可逆性与区块链的不可篡改性怎么解决" class="headerlink" title="5.中断的可逆性与区块链的不可篡改性怎么解决"></a>5.中断的可逆性与区块链的不可篡改性怎么解决</h5><p>stress</p>
+<p>metrics server</p>
+<p>cpu利用率，io负载，内存利用率，网络负载</p>
+<p>归一化矩阵</p>
+<p>多准则决策方法</p>
+<p>步骤：<br>（1）监测传感器将数据传入客户端中。</p>
+<p>（3）背书节点通过CPU利用率，IO负载，内存利用率和网络负载，算出每个节点的负载率，再进行排序。</p>
+<p>（4）将这些节点进行分组每组里面又分为两组，将每组人数除以二后，一边加一，一边减一，保证一组较多的负载率低的节点，一组较少的负载率高的节点，这样便能让负载率低的节点占大多数，而背书的默认策略为大多数人同意，这样就不会收负载率高的节点的瓶颈影响。</p>
+<p>（5）将节点按负载率的高低按每组同比例分为两组：较多的一组为负载率低的，较少的一组为负载率高的。</p>
+<p>（6）每组节点分别从这两组中等比例抽取相同的节点，既要保证负载率低的占大多数，又要保证组与组之间的总负载率大致一致</p>
+<p>（7）客户端将背书任务依次发送给这些背书组，当背书组空闲时，则立即执行背书任务，若背书组正在进行背书任务时，则可通过背书任务的优先级判断是否终止当前任务，若当前任务优先级高于等待任务，则不进行抢占，若当前任务优先级低于等待任务，则终止当前任务，进行抢占。</p>
+<p>（8）各个背书组结束后，将背书结果返回给客户端。</p>
+<ol>
+<li><strong>接收交易提案：</strong> 客户端生成交易提案并将其发送至待背书的节点。</li>
+<li><strong>提取交易信息：</strong> 背书节点接收到交易提案后，提取其中的操作类型和优先级信息。</li>
+</ol>
+<ul>
+<li><strong>执行交易：</strong> 若当前背书组空闲，则立即模拟执行和背书高、中、低优先级交易。</li>
+<li><strong>等待交易：</strong> 如果当前背书组正在处理交易，系统会根据交易的优先级进行判断。高优先级交易可能抢占低优先级交易的执行，确保紧急操作得到及时处理。</li>
+</ul>
+<p>2、利用改进的CRITIC权重法计算，包括：</p>
+<p>根据背书节点与四项评价指标，构成原始数据矩阵；</p>
+<p><img src="D:/past/实验室/笔记/背书策略：.assets/dae35740b5e749bea7bffe1c3ff6af8a.png" alt="img"></p>
+<p>四项数据均为逆向指标，对其进行数据标准化；</p>
+<p><img src="D:/past/实验室/笔记/背书策略：.assets/9adadfe1ea554fba9c4746acb38c7aab.png" alt="img"></p>
+<p>计算信息承载量，包括其波动性，冲突性，指标熵值；</p>
+<p><img src="D:/past/实验室/笔记/背书策略：.assets/f437699c433e4778b40ae9ed1c84a608.png" alt="img"></p>
+<p><img src="D:/past/实验室/笔记/背书策略：.assets/98ffbcc5eb144a0c9d5929b1225b2136.png" alt="img"></p>
+<p><img src="D:/past/实验室/笔记/背书策略：.assets/8ade646022f7490587b2f827eab8dd6a.png" alt="img"></p>
+<p><img src="D:/past/实验室/笔记/背书策略：.assets/9720776d91e244aa92c1520a36a54fb1.png" alt="img"></p>
+<p>计算出CPU利用率、IO负载、内存利用率、网络负载在节点负载率中的权重。<img src="D:/past/实验室/笔记/背书策略：.assets/b8a7f5003c61408894cf1d00d9b1d4c5.png" alt="img"></p>
+<p>2、利用TOPSIS法进行综合评价并排序，包括：</p>
+<p>将原始数据矩阵正向化，将极小型指标转换为极大型指标；</p>
+<p><img src="D:/past/实验室/笔记/背书策略：.assets/01078bf49ad843a88f45f75099d26699.png" alt="img"></p>
+<p>将正向化后的矩阵标准化；</p>
+<p><img src="D:/past/实验室/笔记/背书策略：.assets/0390172044fd4073b8d0a1b759f0ac07.png" alt="img"></p>
+<p>找到CPU利用率、IO负载、内存利用率、网络负载中的最大值，最小值，结合权重，计算得出每个节点与最大值的距离和与最小值的距离；</p>
+<p><img src="D:/past/实验室/笔记/背书策略：.assets/839bc2667db749359f3bd4f5dae81978.png" alt="img"></p>
+<p><img src="D:/past/实验室/笔记/背书策略：.assets/ad7656d5ea384ebfbe17f3483510028f.png" alt="img"></p>
+<p>通过上述两个距离，计算得出每个节点未归一化的得分；</p>
+<p><img src="D:/past/实验室/笔记/背书策略：.assets/a44c43ab5f304944b87f8a73df9973c7.png" alt="img"><img src="D:/past/实验室/笔记/背书策略：.assets/1370cbd780c246bbb0694f4cd7e9bb59.png" alt="img"></p>
+<p>根据每个节点的得分进行排序。</p>
+<p><img src="/%E8%83%8C%E4%B9%A6%E7%AD%96%E7%95%A5%EF%BC%9A.assets/8f669818265547d9a24b5ea4471724a8.png" alt="img"></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Zhen Xie</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://example.com/2024/10/18/%E8%83%8C%E4%B9%A6%E7%AD%96%E7%95%A5/">http://example.com/2024/10/18/%E8%83%8C%E4%B9%A6%E7%AD%96%E7%95%A5/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"># 区块链</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2023/11/13/Hyperledger-Fabric/">Hyperledger Fabric</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Zhen Xie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
