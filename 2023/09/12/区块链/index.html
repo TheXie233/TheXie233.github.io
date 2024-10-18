@@ -355,7 +355,13 @@
 <h5 id="工作量证明Pow"><a href="#工作量证明Pow" class="headerlink" title="工作量证明Pow"></a>工作量证明Pow</h5><p>随机性：谜题友好</p>
 <p>抗女巫攻击：算力</p>
 <p>激励机制：区块奖励+手续费</p>
-<h5 id="权益证明PoS"><a href="#权益证明PoS" class="headerlink" title="权益证明PoS"></a>权益证明PoS</h5><p>随机性：VDF，VRF等随机数</p>
+<h5 id="权益证明PoS"><a href="#权益证明PoS" class="headerlink" title="权益证明PoS"></a>权益证明PoS</h5><p>所有矿工公平竞争一个区块的挖矿权，每个矿工遵循一个规则，对候选的区块进行Hash运算，当运算的Hash值小于当前难度系数时，就认为该矿工提供的候选区块满足条件，可以广播到全网验证并确认，区块链以最长的确定的区块链主链作为链的基础，分叉会被抛弃，因此谁最先计算出这个块的Hash，谁就成为这个块的矿工，矿工享受这个出块周期的收益，获得特定数量的价值奖励。</p>
+<p>工作量证明（PoW）通过计算一个数值( nonce )，使得拼揍上交易数据后内容的Hash值满足规定的上限。在节点成功找到满足的Hash值之后，会马上对全网进行广播打包区块，网络的节点收到广播打包区块，会立刻对其进行验证。</p>
+<p>如何才能创建一个新区块呢？通过解决一个问题：即找到一个nonce值，使得新区块头的哈希值小于某个指定的值，即区块头结构中的“难度目标”。</p>
+<p>如果验证通过，则表明已经有节点成功解迷，自己就不再竞争当前区块打包，而是选择接受这个区块，记录到自己的账本中，然后进行下一个区块的竞争猜谜。网络中只有最快解谜的区块，才会添加的账本中，其他的节点进行复制，这样就保证了整个账本的唯一性。</p>
+<p>假如节点有任何的作弊行为，都会导致网络的节点验证不通过，直接丢弃其打包的区块，这个区块就无法记录到总账本中，作弊的节点耗费的成本就白费了，因此在巨大的挖矿成本下，也使得矿工自觉自愿的遵守比特币系统的共识协议，也就确保了整个系统的安全。</p>
+<p>PoW机制存在明显的弊端。一方面，PoW的前提是，节点和算力是均匀分布的，因为通过CPU的计算能力来进行投票，拥有钱包（节点）数和算力值应该是大致匹配的，然而随着人们将CPU挖矿逐渐升级到GPU、FPGA，直至ASIC矿机挖矿，节点数和算力值也渐渐失配。另一方面，PoW太浪费了。比特币网络每秒可完成数百万亿次SHA256计算，但这些计算除了使恶意攻击者不能轻易地伪装成几百万个节点和打垮比特币网络，并没有更多实际或科学价值。<br>３：如何解决拜占庭问题？<br>通过工作量证明就增加了发送信息的成本，降低节点发送消息速率，这样就以保证在一个时间只有一个节点在进行广播，同时在广播时会附上自己的签名。工作量证明其实相当于提高了做叛徒（发布虚假区块）的成本，只有第一个完成证明的节点才能广播区块，竞争难度非常大，需要很高的算力，如果不成功其算力就白白的耗费了，整个系统也因此而更稳定。</p>
+<p>随机性：VDF，VRF等随机数</p>
 <p>抗女巫攻击：锁定代币</p>
 <p>激励机制：区块奖励+手续费</p>
 <h5 id="授权权益证明DPoS"><a href="#授权权益证明DPoS" class="headerlink" title="授权权益证明DPoS"></a>授权权益证明DPoS</h5><p>PoS；币给区块投票</p>
@@ -384,6 +390,41 @@
 <li></li>
 </ol>
 <p><img src="file:///C:\Users\THEXIE~1\AppData\Local\Temp\ksohtml9064\wps1.jpg" alt="img"></p>
+<h5 id="Hotstuff："><a href="#Hotstuff：" class="headerlink" title="Hotstuff："></a>Hotstuff：</h5><p>大家首先发现，让一个节点负责消息的分发和收集，会使得整个流程简化不少。每轮流程和原始pbft类似，只是都先把消息发给leader，再由leader广播给所有节点。<br>可以发现网络消息数从O(NN)下降到O(N)，但因为每个prepareQC包含2f + 1 签名，所以通信量复杂度还是O(NＮ)。<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%AF%86%E7%A0%81%E5%AD%A6&spm=1001.2101.3001.7020">密码学</a>的进步：包含2f + 1 签名信息的prepareQC，占用空间降至O(1)，整个通信量复杂度下降到O(N)。<br>同样的，每个阶段，每个节点也是收集一轮信息，在发送一轮信息，leader和follower都类似。<br>缺点是如果leader作恶，那么共识无法达成，需要切换leader。</p>
+<p>HotStuff是基于View的的共识协议，View表示一个共识单元，共识过程是由一个接一个的View组成。在一个View中，存在一个确定leader来主导共识协议，并经过三阶段投票达成共识，然后切换到下一个View继续进行共识。假如遇到异常状况，某个View超时未能达成共识，也是切换到下一个View继续进行共识。<br>1.Pre-Commit阶段：</p>
+<p>当leader节点收到当前提案的准备票时，它将其合并为准备仲裁证书，然后以预提交消息的形式将其广播给所有节点，这表明有足够的节点确认了状态转换请求。<br>2.Commit阶段：</p>
+<p>leader节点收到Pre-Commit投票后，将它们组合成precommitQC，并以commit消息的形式向所有节点广播；接收到该消息的副本可以锁定当前状态转换请求，以便即使在视图更改期间也可以达成共识决策。<br>3.Decide阶段：</p>
+<p>领导者收到提交投票后，将它们合并为commitQC。一旦leader节点已经组建了一个commitQC，它发出了一个决定消息到所有其他副本。收到确定消息后，副本将在已提交分支中执行状态转换并启动下一个视图。<br>、<img src="/../../../../Pictures/$IZ8X05UI@1LO6YLACT_$B.png" alt="img"></p>
+<p>2.2.1. Prepare阶段</p>
+<p>每个View开始时，新的Leader收集由(n−f)个副本节点发送的NEW-VIEW消息，每个NEW-VIEW消息中包含了发送节点上高度最高的prepareQC(如果没有则设为空)。</p>
+<blockquote>
+<p>prepareQC可以看做是对于某个区块(n−f)个节点的投票集合，共识共识过程中第一轮投票达成的证据</p>
+</blockquote>
+<p>Leader从收到的NewView消息中，选取高度最高的<em>preparedQC</em>作为<em>highQC</em>。因为<em>highQC</em>是viewNumber最大的，所以不会有比它更高的区块得到确认，该区块所在的分支是安全的。</p>
+<p>下图是Leader节点本地的区块树， #71是Leader节点收到的<em>highQC</em>, 那么阴影所表示的分支就是一个安全分支，基于该分支创建新的区块不会产生冲突。</p>
+<p>Leader节点会在highQC所在的安全分支来创建一个新的区块，并广播proposal，proposal中包含了新的区块和<em>highQC</em>，其中<em>highQC</em>作为proposal的安全性验证。</p>
+<p>2.2.2. Precommit</p>
+<p>Leader发出proposal消息以后，等待(n−f)个节点对于该proposal的签名，集齐签名后会将这些签名组合成一个新的签名，以生成<em>prepare-QC</em>保存在本地，然后将其放入PRECOMMIT消息中广播给Replica节点。</p>
+<p><em>prepare-QC</em>可以表明有(n−f)个节点对相应的proposal进行了签名确认。</p>
+<p>2.2.3. Commit</p>
+<p>commit阶段与precommit阶段类似，也是Leader先收集(n-f)个precommit-vote，然后将其组合为precommit-QC,并将其放在COMMIT消息中广播。</p>
+<p>当Leader收到当前Proposal的（n-f）个precommit-vote时，会将这些投票组合成<em>precommit-QC</em>，然后将其放入COMMIT消息中广播。</p>
+<p>当Replica收到COMMIT消息时，会对其签名commit-vote，然后回复给leader。更为重要的是，在此时，replica锁定在precommitQC上，将本地的lockQC更新成收到的precommitQC.</p>
+<ul>
+<li><p>从Replica发出precommit-vote到Leader集齐消息并发出commit消息，这个过程相当于pbft、tendermint中的第二轮投票。</p>
+</li>
+<li><p>Replica收到了commit消息，验证成功后，表示第二轮投票达成。此时Replica回复给Leader，并且保存precommitQC到lockedQC</p>
+<p>2.2.4. Decide</p>
+<p>当Leader收到了（n-f）个commit-vote投票，将他们组合成commitQC，广播DECIDE消息。</p>
+<p>Replica收到DECIDE消息中的commitQC后，认为当前proposal是一个确定的消息，然后执行已经确定的分支上的tx。Viewnumber加1，开始新的阶段。</p>
+<ul>
+<li><p>Note: 这里也是针对输入做共识，共识后再执行已经确定共识分支上的交易。</p>
+<h5 id="区别："><a href="#区别：" class="headerlink" title="区别："></a>区别：</h5><p>PBFT： 两阶段投票，每个view有超时，viewchange通过一轮投票来完成，viewchange消息中包含了prepared消息（即达成了第一阶段投票的消息）。</p>
+<p>hotStuff: 三阶段投票，每个view有超时，采用阈值签名减小消息复杂度。liveness与safety解耦为两个部分</p>
+</li>
+</ul>
+</li>
+</ul>
 <h4 id="纠删码技术"><a href="#纠删码技术" class="headerlink" title="纠删码技术"></a>纠删码技术</h4><h5 id="分组码："><a href="#分组码：" class="headerlink" title="分组码："></a>分组码：</h5><p>分为不同块，针对每一块独立编码。用（k，n）表示，原始数据块包括k个信息码元，添加r&#x3D;n-k个冗余的监督码元。</p>
 <p>XOR编码，RS编码</p>
 <h5 id="卷积码："><a href="#卷积码：" class="headerlink" title="卷积码："></a>卷积码：</h5><p>有记忆，且于原始数据库相关，与之前的编码块也相关</p>
