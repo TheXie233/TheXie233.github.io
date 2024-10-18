@@ -374,7 +374,7 @@
 <p>Prepare：普通节点收到信息后与Pre-prepare消息验证，并将请求的信息广播给其他普通节点。每个节点继续接受Prepare消息并进行合法性验证（包括签名、视图编号正确性等）</p>
 <p>Commit：当某个节点接收到验证通过的2f条消息时，该节点将进入提交阶段，，并广播Commit消息给其他节点。每个进入提交阶段的节点继续接收Commit消息并进行合法性验证，(为什么不是2f+1：这个1是Pre-prepare阶段主节点发送的Pre-prepare消息)</p>
 <p>Reply：当接收并验证2f+1个节点时。这些达成共识的节点执行request，然后进入回复阶段并发送Reply消息给客户端；当客户端接收f+1条Reply消息时，表示回复成功，达成共识。</p>
- <img src="/2023/09/12/%E5%8C%BA%E5%9D%97%E9%93%BE/Users\the xie\Desktop\v2-451165a9d6de89d6b6f0e7468b71049b_720w.png" alt="v2-451165a9d6de89d6b6f0e7468b71049b_720w" style="zoom:50%;">
+ <img src="/2023/09/12/%E5%8C%BA%E5%9D%97%E9%93%BE/Users/the xie\Desktop\v2-451165a9d6de89d6b6f0e7468b71049b_720w.png" alt="v2-451165a9d6de89d6b6f0e7468b71049b_720w" style="zoom:50%;">
 
 <h6 id="视图切换算法（大于F个诚实节点没收到或收到错误消息，则发起视图更换）："><a href="#视图切换算法（大于F个诚实节点没收到或收到错误消息，则发起视图更换）：" class="headerlink" title="视图切换算法（大于F个诚实节点没收到或收到错误消息，则发起视图更换）："></a>视图切换算法（大于F个诚实节点没收到或收到错误消息，则发起视图更换）：</h6><p>1.若其他节点认为主节点有问题，则广播视图切换请求view-change，其中P包括了prepared（m,v,n,i）&#x3D;true的信息（那些已经准备好的节点）。</p>
 <p>2.p&#x3D;v+1（下一个新选的主节点）若收到其他（不含自己）的2f个view-change，则作为主节点发起视图切换，广播new-view，消息内容O为view-change中P中所有的request创建一个新的pre-prepare消息（这些request虽然处于不同view，但分配编号仍然不变），若没有准备好的，则创建一个null request的pre-prepare消息。</p>
