@@ -330,7 +330,7 @@
 <p>Replica收到了commit消息，验证成功后，表示第二轮投票达成。此时Replica回复给Leader，并且保存precommitQC到lockedQC。</p>
 <h5 id="4-Decide阶段："><a href="#4-Decide阶段：" class="headerlink" title="4.Decide阶段："></a>4.Decide阶段：</h5><p>当Leader收到了（n-f）个commit-vote投票，将他们组合成commitQC，广播DECIDE消息。</p>
 <p>Replica收到DECIDE消息中的commitQC后，认为当前proposal是一个确定的消息，然后执行已经确定的分支上的交易。View-Number加1，开始新的阶段。</p>
-<p><img src="D:/past/实验室/笔记/共识.assets/$IZ8X05UI@1LO6YLACT_$B.png" alt="$IZ8X05UI@1LO6YLACT_$B"></p>
+<p><img src="/2023/12/19/%E5%85%B1%E8%AF%86%EF%BC%8C%E5%85%AC%E9%92%A5%E4%B8%8E%E7%A7%81%E9%92%A5/past/实验室/笔记/共识.assets/$IZ8X05UI@1LO6YLACT_$B.png" alt="$IZ8X05UI@1LO6YLACT_$B"></p>
 <h4 id="PBFT过程："><a href="#PBFT过程：" class="headerlink" title="PBFT过程："></a>PBFT过程：</h4><p>![img](C:\Users\the xie\Pictures\0GGLEB000HO6WN9B8</p>
 
         </div>

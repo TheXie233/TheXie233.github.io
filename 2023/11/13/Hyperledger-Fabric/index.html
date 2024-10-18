@@ -428,9 +428,9 @@
 <p>最后，理解网络和通道配置是如何在物理上来实现的是非常重要的。我们能够看到网络和通道的配置在逻辑上是独立的，网络会有一个配置，每个通道也会有一个配置。这一点非常重要，任何访问网络或者通道的组件必须对不同组织的授权有共同的理解。</p>
 <p>尽管在逻辑上是独立的配置，实际上它会被复制到组成网络或者通道的每个节点，并保持一致。比如，在我们的网络中，节点 P1 和 P2 都有通道配置 CC1 的副本，在这个网络完成的时候，节点 P2 和 P3 也会有通道配置 CC2 的副本。类似的，排序服务节点 O4 有网络配置的副本，但是在<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/network/network.html#the-ordering-service">多节点配置</a>中，每个排序服务节点都会有他们自己的关于网络配置的副本。</p>
 <p>网络和通道的配置使用了和用户交易所使用的相同的区块链技术来保持一致，只是被叫做<strong>配置</strong>的交易。想要改变网络或者通道的配置，管理员必须要提交一个配置交易来改变网络或者通道的配置。该交易必须被对应策略中指定的组织签名，这些组织负责配置的改变。这个策略被称为<strong>mod_policy</strong> 我们<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/network/network.html#changing-policy">稍后讨论</a>。</p>
-<p>实际上，排序服务节点运行着一个小型的区块链，通过我们前边提到过的<strong>系统通道</strong>连接。使用系统通道排序服务节点分发网络配置交易。这些交易被用来维护每个排序服务节点间网络配置副本的一致性。类似的，<strong>应用程序通道</strong>中的 Peer 节点分发通道配置交易。同样，这些交易被用来维护每个 Peer 节点通道配置的一致性。<img src="/Hyperledger-Fabric.assets/X%60X%5DAWUD5BROZIM536Z1QRR.png" alt="img"></p>
+<p>实际上，排序服务节点运行着一个小型的区块链，通过我们前边提到过的<strong>系统通道</strong>连接。使用系统通道排序服务节点分发网络配置交易。这些交易被用来维护每个排序服务节点间网络配置副本的一致性。类似的，<strong>应用程序通道</strong>中的 Peer 节点分发通道配置交易。同样，这些交易被用来维护每个 Peer 节点通道配置的一致性。<img src="/2023/11/13/Hyperledger-Fabric/X%60X%5DAWUD5BROZIM536Z1QRR.png" alt="img"></p>
 <p><em>这个图展示了在网络 N 中关于通道 C1 和 C2 的以下内容：客户端应用程序 A1 和 A2 可以使用通道 C1 来同节点 P1 和 P2，以及排序服务 O4 进行通信。客户端应用程序 A3 能够使用 C2 同节点 P3 和排序服务 O4 进行通信。排序服务 O4 可以使用通道 C1 和 C2 的通信服务。通道配置 CC1 应用到了通道 C1 上，CC2 应用到了通道 C2 上。</em></p>
-<p>(9)把一个Peer节点添加到多个通道中<img src="/Hyperledger-Fabric.assets/AJA9ED2DPVBDALAYIVTUNHE.png" alt="img"></p>
+<p>(9)把一个Peer节点添加到多个通道中<img src="/2023/11/13/Hyperledger-Fabric/AJA9ED2DPVBDALAYIVTUNHE.png" alt="img"></p>
 <p><em>这个图展示了在网络 N 中关于通道 C1 和 C2 的以下内容：客户端应用程序 A1 能够使用通道 C1 与节点 P1 和 P2 以及排序服务 O4 进行通信。客户端应用程序 A2 可以使用通道 C1 与节点 P1 和 P2 进行通信，以及使用通道 C2 与节点 P2 和 P3 以及排序服务 O4 进行通信。客户端应用程序 A3 能够使用通道 C2 与节点 P3 和 P2 和排序服务 O4 进行通信。排序服务 O4 能够使用通道 C1 和 C2 的通信服务。通道配置 CC1 应用在了通道 C1 中，CC2 应用在了通道 C2 中。</em></p>
 <p>注意，节点 P2 将智能合约 S5 安装在通道 C1 中，将智能合约 S6 安装在通道 C2 中。节点 P2 同时是两个通道的成员，并且通过不同的智能合约来处理不同的账本。在不同通道上交易时 Peer 节点 P2 的行为受到不同的约束。特别地，在通道配置 CC1 中包含的策略决定了 P2 在通道 C1 中进行交易的时候的操作，这也是通道配置 CC2 中的策略对 P2 在通道 C2 中的控制。</p>
 <h4 id="策略"><a href="#策略" class="headerlink" title="策略"></a>策略</h4><h5 id="Fabric是如何实现策略的"><a href="#Fabric是如何实现策略的" class="headerlink" title="Fabric是如何实现策略的"></a>Fabric是如何实现策略的</h5><p>策略实现在 Fabric 网络的不同层次。每个策略域都管理着网络操作的不同方面。</p>
@@ -453,11 +453,11 @@
 <p>如果在批准阶段没有明确指明背书策略，就默认使用 <code>Endorsement</code> 策略 <code>&quot;MAJORITY Endorsement&quot;</code>，意味着要想使交易生效就需要大多数不同通道成员（组织）的执行并验证交易。默认策略允许加入通道的组织自动加入链码背书策略。如果你不想使用默认背书策略，你可以使用签名策略格式来指定更复杂的背书策略（这样就需要链码先被通道中的一个组织签名，然后让其他组织签名）。</p>
 <p>签名策略也允许你包含<code>主角（principals）</code>，这是匹配角色和身份的一种简单方式。</p>
 <p>主角被描述为 ‘MSP.ROLE’，<code>MSP</code> 表示需要的 MSP ID（组织），<code>ROLE</code> 表示一下四种可接受的角色之一：Member、 Admin、 Client 和 Peer。</p>
-<h4 id="Peer节点"><a href="#Peer节点" class="headerlink" title="Peer节点"></a>Peer节点</h4><h5 id="应用程序和-Peer-节点"><a href="#应用程序和-Peer-节点" class="headerlink" title="应用程序和 Peer 节点"></a>应用程序和 Peer 节点</h5><p><img src="/Hyperledger-Fabric.assets/5%60KCXE7T9%5DU33Z9XYIJ221.png" alt="img"></p>
+<h4 id="Peer节点"><a href="#Peer节点" class="headerlink" title="Peer节点"></a>Peer节点</h4><h5 id="应用程序和-Peer-节点"><a href="#应用程序和-Peer-节点" class="headerlink" title="应用程序和 Peer 节点"></a>应用程序和 Peer 节点</h5><p><img src="/2023/11/13/Hyperledger-Fabric/5%60KCXE7T9%5DU33Z9XYIJ221.png" alt="img"></p>
 <p><em>在这个例子中，应用程序 A 连接到了 P1 并且调用了链码 S1 来查询或者更新账本 L1。P1 调用了链码 S1 来生成提案响应，这个响应包含了查询结果或者账本更新的提案。应用程序 A 接收到了提案的响应，对于查询来说，流程到这里就结束了。对于更新来说，应用程序 A 会从所有的响应中创建一笔交易，它会把这笔交易发送给排序节点 O1 进行排序。O1 会搜集网络中的交易并打包到区块中，然后将这些区块分发到所有 Peer 节点上，包括 P1。P1 在把交易提交到账本 L1 之前对交易进行验证。当 L1 被更新之后，P1 会生成一个事件，该事件会被 A 接收到，来标识这个过程结束了。</em></p>
 <h5 id="Peer-节点和身份"><a href="#Peer-节点和身份" class="headerlink" title="Peer 节点和身份"></a>Peer 节点和身份</h5><p>Peer 节点会有一个身份信息被分给他们，这是通过一个特定的证书认证机构颁发的数字证书来实现的。</p>
 <p>姑且把数字证书看成是能够为 Peer 节点提供可验证信息的身份证。<em>在网络中的每个 Peer 节点都会被所属组织的管理员分配一个数字证书</em>。</p>
-<p><em>当 Peer 节点连接到一个通道的时候，它的数字证书会通过通道 MSP 来识别它的所属组织。<img src="/Hyperledger-Fabric.assets/U@G@4%5BZ18Z1D%5BKB%7DUCP_1Q1.png" alt="img"></em></p>
+<p><em>当 Peer 节点连接到一个通道的时候，它的数字证书会通过通道 MSP 来识别它的所属组织。<img src="/2023/11/13/Hyperledger-Fabric/U@G@4%5BZ18Z1D%5BKB%7DUCP_1Q1.png" alt="img"></em></p>
 <p><em>在这个例子中，P1 和 P2 具有由 CA1 颁发的身份信息。通道 C 通过在它的通道配置中的策略来决定来自 CA1 的身份信息应该使用 ORG1.MSP 被关联到 Org1。类似的，P3 和 P4 由 ORG2.MSP 识别为 Org2 的一部分。</em></p>
 <h5 id="Peer-节点和排序节点"><a href="#Peer-节点和排序节点" class="headerlink" title="Peer 节点和排序节点"></a>Peer 节点和排序节点</h5><p>想要更新账本的应用程序会被引入到一个三阶段的流程，这确保了在一个区块链网络中所有的 Peer 节点都彼此保持着一致的账本。</p>
 <ul>
@@ -465,9 +465,9 @@
 <li>在第二个阶段，这些分散的背书会被搜集到一起当做交易被打包进区块中。</li>
 <li>在最后一个阶段，这些区块会被分发回每个 Peer 节点，在这些 Peer 节点上每笔交易在被应用到 Peer 节点的账本副本之前会被验证</li>
 </ul>
-<h6 id="第一阶段：提案"><a href="#第一阶段：提案" class="headerlink" title="第一阶段：提案"></a>第一阶段：提案<img src="/Hyperledger-Fabric.assets/7H%7B9%5B%5D%25%7B2ZJ5YI%60$N6X%7B5EN.png" alt="img"></h6><p><em>交易提案会被 Peer 节点独立地执行，Peer 节点会返回经过背书的提案响应。在这个例子中，应用程序 A1 生成了交易 T1 和提案 P，应用程序会将交易及提案发送给通道 C 上的 Peer 节点 P1 和 Peer 节点 P2。P1 使用交易 T1 和 提案 P 来执行链码 S1，这会生成对交易 T1 的响应 R1，它会提供背书 E1。P2 使用交易 T1 提案 P 执行了链码 S1，这会生成对于交易 T1 的响应 R2，它会提供背书 E2。应用程序 A1 对于交易 T1 接收到了两个背书响应，称为 E1 和 E2。</em></p>
+<h6 id="第一阶段：提案"><a href="#第一阶段：提案" class="headerlink" title="第一阶段：提案"></a>第一阶段：提案<img src="/2023/11/13/Hyperledger-Fabric/7H%7B9%5B%5D%25%7B2ZJ5YI%60$N6X%7B5EN.png" alt="img"></h6><p><em>交易提案会被 Peer 节点独立地执行，Peer 节点会返回经过背书的提案响应。在这个例子中，应用程序 A1 生成了交易 T1 和提案 P，应用程序会将交易及提案发送给通道 C 上的 Peer 节点 P1 和 Peer 节点 P2。P1 使用交易 T1 和 提案 P 来执行链码 S1，这会生成对交易 T1 的响应 R1，它会提供背书 E1。P2 使用交易 T1 提案 P 执行了链码 S1，这会生成对于交易 T1 的响应 R2，它会提供背书 E2。应用程序 A1 对于交易 T1 接收到了两个背书响应，称为 E1 和 E2。</em></p>
 <h5 id="阶段2：排序和将交易打包到区块"><a href="#阶段2：排序和将交易打包到区块" class="headerlink" title="阶段2：排序和将交易打包到区块"></a>阶段2：排序和将交易打包到区块</h5><p>排序节点是这个过程的关键——它接收交易，这些交易中包含了来自很多个应用的已经背书过的交易提案，并且将交易排序并打包进区块。</p>
-<h5 id="阶段3：验证和提交"><a href="#阶段3：验证和提交" class="headerlink" title="阶段3：验证和提交"></a>阶段3：验证和提交</h5><p><img src="/Hyperledger-Fabric.assets/LAZ%7D7NOP74S2EJJNUEGE0Q.png" alt="img"></p>
+<h5 id="阶段3：验证和提交"><a href="#阶段3：验证和提交" class="headerlink" title="阶段3：验证和提交"></a>阶段3：验证和提交</h5><p><img src="/2023/11/13/Hyperledger-Fabric/LAZ%7D7NOP74S2EJJNUEGE0Q.png" alt="img"></p>
 <p><em>排序节点的第二个角色是将区块分发给 Peer 节点。在这个例子中，排序节点 O1 将区块 B2 分发给了 Peer 节点 P1 和 Peer 节点 P2。Peer P1 处理了区块 B2，产生了一个会被添加到 P1 的账本 L1 中的新区块。同时，peer P2 处理了区块 B2，产生了一个会被添加到 P2 的账本 L1 中的新区块。当这个过程结束之后，账本 L1 就会被一致地更新到了 Peer 节点 P1 和 P2 上，他们也可能会通知所连接的应用程序关于这笔交易已经被处理过的消息。</em></p>
 <p>阶段三是从排序节点将区块分发到所有与它连接的 Peer 节点开始的。Peer 节点会和通道中的排序节点相连，所有跟这个排序节点相连的 Peer 节点将会收到一个新的区块的副本。每个 Peer 节点会独立处理这个区块，但是会跟这个通道上的每一个其他 Peer 节点使用完全一致的方式处理。通过这种方式，我们会看到账本是会始终保持一致的。</p>
 <p>我们也注意到了第三阶段并没有要求执行链码——那只会在第一阶段执行，这是很重要的。这意味着链码仅仅需要在背书节点中有效，而不需要在区块链网络的所有部分都要有。这个通常是很有帮助的，因为这保持了链码逻辑的机密性只有背书组织了解。这个同链码的输出（交易提案的响应）恰恰相反，这个输出会被分享给通道中的所有 Peer 节点，不管这些 Peer 节点是否为这交易提供背书。这个关于背书节点的特殊性是被设计用来帮助扩展性和保密性的。</p>
@@ -508,7 +508,7 @@
 <p>首先，<strong>世界状态</strong>是一个数据库，它存储了一组账本状态的<strong>当前值</strong>。通过世界状态，程序可以直接访问一个账本状态的当前值，不需要遍历整个交易日志来计算当前值。默认情况下，账本状态是以<strong>键值</strong>对的方式来表示的，稍后我们将看到 Hyperledger Fabric 如何提供这一方面的灵活性。因为我们可以创建、更新和删除状态，所以世界状态能够频繁更改。</p>
 <p>其次，<strong>区块链</strong>是交易日志，它记录了促成当前世界状态的所有改变。交易被收集在附加到区块链的区块中，能帮助我们理解所有促成当前世界状态的改变的历史。区块链数据结构与世界状态相差甚远，因为一旦把数据写入区块链，就无法修改，它是<strong>不可篡改的</strong>。</p>
 <h6 id="世界状态"><a href="#世界状态" class="headerlink" title="世界状态"></a>世界状态</h6><p>世界状态被作为数据库来实现。这一点很有意义，因为数据库为有效存储和状态检索提供了充分的算子。稍后我们将看到，我们可以将 Hyperledger Fabric 配置为使用不同的世界状态数据库来满足以下需求：不同类型的状态值，应用程序所需的访问模式，例如，当遇到复杂查询的情况时。</p>
-<p>您还会注意到，每个状态都有一个版本号，版本号是供 Hyperledger Fabric 内部使用的，并且每次状态更改时版本号会发生递增。每当更新状态时，都会检查该状态的版本，以确保当前状态与背书时的版本相匹配。这就确保了世界状态是按照预期进行更新的，没有发生并发更新。<img src="/Hyperledger-Fabric.assets/%5D%7BMEQGWV6OCUQV04%7B%5BH%5DH55.png" alt="img"></p>
+<p>您还会注意到，每个状态都有一个版本号，版本号是供 Hyperledger Fabric 内部使用的，并且每次状态更改时版本号会发生递增。每当更新状态时，都会检查该状态的版本，以确保当前状态与背书时的版本相匹配。这就确保了世界状态是按照预期进行更新的，没有发生并发更新。<img src="/2023/11/13/Hyperledger-Fabric/%5D%7BMEQGWV6OCUQV04%7B%5BH%5DH55.png" alt="img"></p>
 <h6 id="区块链"><a href="#区块链" class="headerlink" title="区块链"></a>区块链</h6><p>区块链的结构是一群相互链接的区块的序列化日志，其中每个区块都包含一系列交易，各项交易代表了一个对世界状态进行的查询或更新操作。我们在<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/latest/peers/peers.html#peers-and-orderers">其他地方</a>讨论了排序交易的确切机制；其中重要的是区块排序以及区块内的交易排序，这一机制是在 Hyperledger Fabric 的<strong>排序服务</strong>组件首次创建区块时被建立起来的。</p>
 <p>区块由三个部分组成</p>
 <p><strong>区块头</strong></p>
@@ -665,7 +665,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ curl &quot;http://localhost:8000/query&quot;</span><br><span class="line">[&#123;&quot;balance&quot;:1000,&quot;name&quot;:&quot;A&quot;&#125;,&#123;&quot;balance&quot;:1000,&quot;name&quot;:&quot;B&quot;&#125;]</span><br><span class="line"></span><br><span class="line">$ curl &quot;http://localhost:8000/query?user=A&quot;</span><br><span class="line">[&#123;&quot;balance&quot;:1000,&quot;name&quot;:&quot;A&quot;&#125;]</span><br><span class="line"></span><br><span class="line">$ curl &quot;http://localhost:8000/query?user=B&quot;</span><br><span class="line">[&#123;&quot;balance&quot;:1000,&quot;name&quot;:&quot;B&quot;&#125;]</span><br><span class="line"></span><br><span class="line">$ curl -X POST &quot;http://localhost:8000/transfer?from=A&amp;to=B&amp;money=500&quot;</span><br><span class="line">&#123;&quot;msg&quot;:&quot;ok&quot;&#125;</span><br><span class="line"></span><br><span class="line">$ curl &quot;http://localhost:8000/query&quot;</span><br><span class="line">[&#123;&quot;balance&quot;:500,&quot;name&quot;:&quot;A&quot;&#125;,&#123;&quot;balance&quot;:1500,&quot;name&quot;:&quot;B&quot;&#125;]</span><br></pre></td></tr></table></figure>
 
 <p>到这里，我们就已经完整地实现了一个区块链应用了。你也可以继续为这个区块链应用实现前端页面。流程呢，和传统前后端分离架构也没什么区别。</p>
-<p><img src="/../../../../Pictures/60c8e8989b9342e49b6242ad6823f7db.png" alt="img"></p>
+<p><img src="/2023/11/13/Hyperledger-Fabric/../../../Pictures/60c8e8989b9342e49b6242ad6823f7db.png" alt="img"></p>
 
         </div>
 

@@ -415,27 +415,27 @@
 </ul>
 <p>2、利用改进的CRITIC权重法计算，包括：</p>
 <p>根据背书节点与四项评价指标，构成原始数据矩阵；</p>
-<p><img src="D:/past/实验室/笔记/背书策略：.assets/dae35740b5e749bea7bffe1c3ff6af8a.png" alt="img"></p>
+<p><img src="/2024/01/29/%E8%83%8C%E4%B9%A6%E7%AD%96%E7%95%A5/past/实验室/笔记/背书策略：.assets/dae35740b5e749bea7bffe1c3ff6af8a.png" alt="img"></p>
 <p>四项数据均为逆向指标，对其进行数据标准化；</p>
-<p><img src="D:/past/实验室/笔记/背书策略：.assets/9adadfe1ea554fba9c4746acb38c7aab.png" alt="img"></p>
+<p><img src="/2024/01/29/%E8%83%8C%E4%B9%A6%E7%AD%96%E7%95%A5/past/实验室/笔记/背书策略：.assets/9adadfe1ea554fba9c4746acb38c7aab.png" alt="img"></p>
 <p>计算信息承载量，包括其波动性，冲突性，指标熵值；</p>
-<p><img src="D:/past/实验室/笔记/背书策略：.assets/f437699c433e4778b40ae9ed1c84a608.png" alt="img"></p>
-<p><img src="D:/past/实验室/笔记/背书策略：.assets/98ffbcc5eb144a0c9d5929b1225b2136.png" alt="img"></p>
-<p><img src="D:/past/实验室/笔记/背书策略：.assets/8ade646022f7490587b2f827eab8dd6a.png" alt="img"></p>
-<p><img src="D:/past/实验室/笔记/背书策略：.assets/9720776d91e244aa92c1520a36a54fb1.png" alt="img"></p>
-<p>计算出CPU利用率、IO负载、内存利用率、网络负载在节点负载率中的权重。<img src="D:/past/实验室/笔记/背书策略：.assets/b8a7f5003c61408894cf1d00d9b1d4c5.png" alt="img"></p>
+<p><img src="/2024/01/29/%E8%83%8C%E4%B9%A6%E7%AD%96%E7%95%A5/past/实验室/笔记/背书策略：.assets/f437699c433e4778b40ae9ed1c84a608.png" alt="img"></p>
+<p><img src="/2024/01/29/%E8%83%8C%E4%B9%A6%E7%AD%96%E7%95%A5/past/实验室/笔记/背书策略：.assets/98ffbcc5eb144a0c9d5929b1225b2136.png" alt="img"></p>
+<p><img src="/2024/01/29/%E8%83%8C%E4%B9%A6%E7%AD%96%E7%95%A5/past/实验室/笔记/背书策略：.assets/8ade646022f7490587b2f827eab8dd6a.png" alt="img"></p>
+<p><img src="/2024/01/29/%E8%83%8C%E4%B9%A6%E7%AD%96%E7%95%A5/past/实验室/笔记/背书策略：.assets/9720776d91e244aa92c1520a36a54fb1.png" alt="img"></p>
+<p>计算出CPU利用率、IO负载、内存利用率、网络负载在节点负载率中的权重。<img src="/2024/01/29/%E8%83%8C%E4%B9%A6%E7%AD%96%E7%95%A5/past/实验室/笔记/背书策略：.assets/b8a7f5003c61408894cf1d00d9b1d4c5.png" alt="img"></p>
 <p>2、利用TOPSIS法进行综合评价并排序，包括：</p>
 <p>将原始数据矩阵正向化，将极小型指标转换为极大型指标；</p>
-<p><img src="D:/past/实验室/笔记/背书策略：.assets/01078bf49ad843a88f45f75099d26699.png" alt="img"></p>
+<p><img src="/2024/01/29/%E8%83%8C%E4%B9%A6%E7%AD%96%E7%95%A5/past/实验室/笔记/背书策略：.assets/01078bf49ad843a88f45f75099d26699.png" alt="img"></p>
 <p>将正向化后的矩阵标准化；</p>
-<p><img src="D:/past/实验室/笔记/背书策略：.assets/0390172044fd4073b8d0a1b759f0ac07.png" alt="img"></p>
+<p><img src="/2024/01/29/%E8%83%8C%E4%B9%A6%E7%AD%96%E7%95%A5/past/实验室/笔记/背书策略：.assets/0390172044fd4073b8d0a1b759f0ac07.png" alt="img"></p>
 <p>找到CPU利用率、IO负载、内存利用率、网络负载中的最大值，最小值，结合权重，计算得出每个节点与最大值的距离和与最小值的距离；</p>
-<p><img src="D:/past/实验室/笔记/背书策略：.assets/839bc2667db749359f3bd4f5dae81978.png" alt="img"></p>
-<p><img src="D:/past/实验室/笔记/背书策略：.assets/ad7656d5ea384ebfbe17f3483510028f.png" alt="img"></p>
+<p><img src="/2024/01/29/%E8%83%8C%E4%B9%A6%E7%AD%96%E7%95%A5/past/实验室/笔记/背书策略：.assets/839bc2667db749359f3bd4f5dae81978.png" alt="img"></p>
+<p><img src="/2024/01/29/%E8%83%8C%E4%B9%A6%E7%AD%96%E7%95%A5/past/实验室/笔记/背书策略：.assets/ad7656d5ea384ebfbe17f3483510028f.png" alt="img"></p>
 <p>通过上述两个距离，计算得出每个节点未归一化的得分；</p>
-<p><img src="D:/past/实验室/笔记/背书策略：.assets/a44c43ab5f304944b87f8a73df9973c7.png" alt="img"><img src="D:/past/实验室/笔记/背书策略：.assets/1370cbd780c246bbb0694f4cd7e9bb59.png" alt="img"></p>
+<p><img src="/2024/01/29/%E8%83%8C%E4%B9%A6%E7%AD%96%E7%95%A5/past/实验室/笔记/背书策略：.assets/a44c43ab5f304944b87f8a73df9973c7.png" alt="img"><img src="/2024/01/29/%E8%83%8C%E4%B9%A6%E7%AD%96%E7%95%A5/past/实验室/笔记/背书策略：.assets/1370cbd780c246bbb0694f4cd7e9bb59.png" alt="img"></p>
 <p>根据每个节点的得分进行排序。</p>
-<p><img src="/%E8%83%8C%E4%B9%A6%E7%AD%96%E7%95%A5%EF%BC%9A.assets/8f669818265547d9a24b5ea4471724a8.png" alt="img"></p>
+<p><img src="/2024/01/29/%E8%83%8C%E4%B9%A6%E7%AD%96%E7%95%A5/8f669818265547d9a24b5ea4471724a8.png" alt="img"></p>
 
         </div>
 

@@ -319,10 +319,10 @@
 <p>假设有私密输入x1，x2，…，xn，希望云端可以计算f（x1，x2，…，xn），加法同态加密可以实现把各项私密输入乘以一个常数，然后相加起来：</p>
 <p>f（x1，x2，…,xn）—-&gt;c1x1+c2x2+…cnxn</p>
 <p>常见加法同态加密算法是基于循环圈G的EIGamal加密算法（过程）：</p>
-<p><img src="D:/past/实验室/笔记/全同态加密：.assets/DOY$BH@9S6WG5AG0NL4AOK.png" alt="img"></p>
+<p><img src="/2024/03/11/%E5%85%A8%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86/past/实验室/笔记/全同态加密：.assets/DOY$BH@9S6WG5AG0NL4AOK.png" alt="img"></p>
 <p>g^m^应该直接明文M就行，不用log<del>g</del>（e&#x2F;w）,直接e&#x2F;w</p>
 <p>常见的乘法加密就是RSA加密：</p>
-<p><img src="D:/past/实验室/笔记/全同态加密：.assets/D4S22@_7_{PH2$7L[GLER7I.png" alt="img"></p>
+<p><img src="/2024/03/11/%E5%85%A8%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86/past/实验室/笔记/全同态加密：.assets/D4S22@_7_{PH2$7L[GLER7I.png" alt="img"></p>
 <p>^ϕ(N)&#x3D;(p-1)(q-1)</p>
 <p>该方法的正确性就在于（m^e^）^d^&#x3D;m mod N</p>
 <p>(m^e^)^d^&#x3D;m^e·d^&#x3D;m^k·ϕ(N)+1^&#x3D;m·（m^ϕ(N)^）^k^(mod N)</p>
@@ -337,7 +337,7 @@
 <p>但是之所以被称之为<strong>有限级数</strong>全同态的原因是，这个阶段的算法会引入一个新的复杂度上限 L的概念，<strong>这一复杂度上限约束了函数</strong> F的复杂度<strong>。如果我们可以把F 用二进制电路C 来表示的话，那么 C <strong>的深度和大小一定要在L</strong>的范围之内</strong>，即：</p>
 <p>我们可以了解一下这个复杂度的上限 � 是怎么来的。首先，我们可以想象一下，假如有一个全同态加密的算法，可以对密文进行任何的加法与乘法的运算。但是这个算法在加密的时候会在密文里面加入一定的<strong>随机噪音</strong>。</p>
 <p>当噪音早可控范围内的时候，那么解密算法就可以很<strong>容易从密文还原回原文</strong>。但是当我们<strong>叠加密文</strong>在一起进行同态计算的时候，每一个密文里面自带的<strong>噪音会被叠加扩大</strong>。如果我们只是对密文进行比较简单的逻辑，那么叠加起来的噪音还在一个可以接受的范围。但是如果我们过于复杂地堆叠密文在一起，那么一旦噪音的范围超过了临界值，那么就会彻底的覆盖掉原来的原文，从而导致<strong>解密会失败</strong>。</p>
-<h6 id="全同态加密（FHE）"><a href="#全同态加密（FHE）" class="headerlink" title="全同态加密（FHE）"></a>全同态加密（FHE）<img src="D:/past/实验室/笔记/全同态加密：.assets/P8FAW[%LOQV{WO63_R79O9Y.png" alt="img"></h6><h6 id="FHE与MPC的关系"><a href="#FHE与MPC的关系" class="headerlink" title="FHE与MPC的关系"></a>FHE与MPC的关系</h6><p>MPC即<strong>Secure Multi-Party Computation</strong>，就是可信多方计算。通常代表的是有多方拥有自己的私密输入，不想泄露给别人，但是他们想使用自己的输入一起计算一个函数 F 并分享计算的结果。</p>
+<h6 id="全同态加密（FHE）"><a href="#全同态加密（FHE）" class="headerlink" title="全同态加密（FHE）"></a>全同态加密（FHE）<img src="/2024/03/11/%E5%85%A8%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86/past/实验室/笔记/全同态加密：.assets/P8FAW[%LOQV{WO63_R79O9Y.png" alt="img"></h6><h6 id="FHE与MPC的关系"><a href="#FHE与MPC的关系" class="headerlink" title="FHE与MPC的关系"></a>FHE与MPC的关系</h6><p>MPC即<strong>Secure Multi-Party Computation</strong>，就是可信多方计算。通常代表的是有多方拥有自己的私密输入，不想泄露给别人，但是他们想使用自己的输入一起计算一个函数 F 并分享计算的结果。</p>
 <p>一个MPC协议可以完全代替一个FHE协议。我们只需要把用户和私密输入作为一个协议中的一个Party，再把远程的代理计算服务器作为另一个Party，就满足了MPC协议执行的条件，只需要通过一定的交互，就可以实现代理计算，并且服务器也看不到私密输入。</p>
 <p><strong>由于MPC是有交互性的，所以需要用户和服务器共同进行计算与交流才可以完成协议。</strong>这也就和FHE代理计算最根本的需求冲突了。</p>
 
