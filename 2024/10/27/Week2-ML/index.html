@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Zhen Xie">
+
+
+
+
+
+<title>Week2 ML | Hexo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+<script>
+    !
+    function() {
+    function n(n, e, t) {
+    return n.getAttribute(e) || t
+    }
+    function e(n) {
+    return document.getElementsByTagName(n)
+    }
+    function t() {
+    var t = e("script"),
+    o = t.length,
+    i = t[o - 1];
+    return {
+    l: o,
+    z: n(i, "zIndex", -1), //置于主页面背后
+    o: n(i, "opacity", .5), //线条透明度
+    c: n(i, "color", "0,0,0"), //线条颜色
+    n: n(i, "count", 100) //线条数量
+    }
+    }
+    function o() {
+    a = m.width = window.innerWidth ||
+    document.documentElement.clientWidth || document.body.clientWidth,
+    c = m.height = window.innerHeight ||
+    document.documentElement.clientHeight || document.body.clientHeight
+    }
+    function i() {
+    r.clearRect(0, 0, a, c);
+    var n, e, t, o, m, l;
+    s.forEach(function(i, x) {
+    for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 :
+    1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1,
+    1), e = x + 1; e < u.length; e++) n = u[e],
+    null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l
+    = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o,
+    i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t /
+    2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y),
+    r.lineTo(n.x, n.y), r.stroke()))
+    }),
+    x(i)
+    }
+    var a, c, u, m = document.createElement("canvas"),
+    d = t(),
+    l = "c_n" + d.l,
+    r = m.getContext("2d"),
+    x = window.requestAnimationFrame || window.webkitRequestAnimationFrame
+    || window.mozRequestAnimationFrame || window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function(n) {
+    window.setTimeout(n, 1e3 / 45)
+    },
+    w = Math.random,
+    y = {
+    x: null,
+    y: null,
+    max: 2e4
+    };
+    m.id = l,
+    m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z +
+    ";opacity:" + d.o,
+    e("body")[0].appendChild(m),
+    o(),
+    window.onresize = o,
+    window.onmousemove = function(n) {
+    n = n || window.event,
+    y.x = n.clientX,
+    y.y = n.clientY
+    },
+    window.onmouseout = function() {
+    y.x = null,
+    y.y = null
+    };
+    for (var s = [], f = 0; d.n > f; f++) {
+    var h = w() * a,
+    g = w() * c,
+    v = 2 * w() - 1,
+    p = 2 * w() - 1;
+    s.push({
+    x: h,
+    y: g,
+    xa: v,
+    ya: p,
+    max: 6e3
+    })
+    }
+    u = s.concat([y]),
+    setTimeout(function() {
+    i()
+    },
+    100)
+    } ();
+    </script>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">TheXie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">TheXie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Week2 ML</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Zhen Xie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 27, 2024&nbsp;&nbsp;15:19:28</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/basic/">basic</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="ML"><a href="#ML" class="headerlink" title="ML"></a>ML</h3><h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p><img src="/2024/10/27/Week2-ML/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E4%B8%8E%E9%9D%9E%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0.png"></p>
+<h5 id="1-监督学习"><a href="#1-监督学习" class="headerlink" title="1.监督学习"></a>1.监督学习</h5><p>学习输入输出或x到y的映射，训练得到一个最优的模型。（我把规律告诉你，你来进行预测）</p>
+<p>回归（连续）预测无限多个可能的数字中的任意一个（预测房价）</p>
+<p>分类（离散）只试图预测一小部分可能的输出或类别（肿瘤诊断）</p>
+<p>tips：输出类（classes）和输出类别（category）经常互换使用</p>
+<h5 id="2-非监督学习"><a href="#2-非监督学习" class="headerlink" title="2.非监督学习"></a>2.非监督学习</h5><p>数据仅有输入x而没有输出标签y（让算法去找规律）</p>
+<p>聚类算法：将未标记的数据放入不同的集群（goole news ）</p>
+<p>异常检测：</p>
+<p>降维：</p>
+<h4 id="线性回归"><a href="#线性回归" class="headerlink" title="线性回归"></a>线性回归</h4><p><img src="/2024/10/27/Week2-ML/image-20241021145058737.png"></p>
+<p>为什么用线性？为什么不能拟合更复杂的非线性函数（曲线）？</p>
+<p>线性函数相对简单且易于使用，可以以一条线为基础，最终帮助获得更复杂的非线性模型（特征工程）。</p>
+<h5 id="代价函数（损失函数）"><a href="#代价函数（损失函数）" class="headerlink" title="代价函数（损失函数）"></a>代价函数（损失函数）</h5><p>最常用的函数：平方误差损失函数</p>
+<p><img src="/2024/10/27/Week2-ML/image-20241021151516443.png"></p>
+<p>仅使用w的简化问题直观感受（最小二乘法）：</p>
+<p>![image-20241021153628171](C:\Users\the xie\Desktop\加法器\加法器\image-20241021153628171.png)</p>
+<p>损失函数实际为三维：</p>
+<p><img src="/2024/10/27/Week2-ML/image-20241021153921743.png"></p>
+<p>或者用等值线图也可以表示：</p>
+<p><img src="/2024/10/27/Week2-ML/image-20241021154313723.png"></p>
+<h5 id="梯度下降（用于尝试最小化任何函数的算法）"><a href="#梯度下降（用于尝试最小化任何函数的算法）" class="headerlink" title="梯度下降（用于尝试最小化任何函数的算法）"></a>梯度下降（用于尝试最小化任何函数的算法）</h5><p>​	<img src="/2024/10/27/Week2-ML/image-20241021155633819.png"></p>
+<p>（1）设初始值</p>
+<p>（2）变化参数，使得结果最小</p>
+<p>（3）直到找到最小值</p>
+<p><img src="/2024/10/27/Week2-ML/image-20241022150734500.png"></p>
+<p>α：学习率：通常是0到1之间的一个小正数，控制下坡的步幅，而偏导则相当于斜率，拿二维的举例，α控制每次下降变化量的x，乘以斜率过后，就得到每次梯度下降的总变化量，如果学习率过小，梯度下降速度会很慢，学习率较大，速度就会很快，但可能无法收敛，甚至可能发散（反复震荡找不到最小值）。总而言之，小了需要的算力大，时间长，但拟合效果更好。</p>
+<p>w和b的更新必须保持同时 ，当越接近局部最小值时，每次迭代的变化量会越来越小，学习率不变，但是偏导会越来越小。</p>
+<p><img src="/2024/10/27/Week2-ML/image-20241022151804063.png"></p>
+<p>线性回归中偏导的计算：</p>
+<p><img src="/2024/10/27/Week2-ML/image-20241022193721929.png"></p>
+<p>推导数学过程：</p>
+<p><img src="/2024/10/27/Week2-ML/image-20241022194259255.png"></p>
+<p>问题是随着初始值的变化，找到的最小值不一定相同，如何确保你所找到的最小值就真的是全局最小值而不是局部最小值呢？</p>
+<p>在凸函数（国内凹函数，反正像碗一样）时，具有单一的全局最小值。只要学习率恰当，总会收敛到全局最小值</p>
+<h6 id="（批量）梯度下降-“Batch”-gradient-descent："><a href="#（批量）梯度下降-“Batch”-gradient-descent：" class="headerlink" title="（批量）梯度下降 “Batch” gradient descent："></a>（批量）梯度下降 “Batch” gradient descent：</h6><p>每次迭代都基于所有的训练样本，计算损失函数的梯度，这样做得到的梯度方向会更准确，但缺点是基于所有样本，迭代非常慢，计算成本高。</p>
+<h6 id="随机梯度下降："><a href="#随机梯度下降：" class="headerlink" title="随机梯度下降："></a>随机梯度下降：</h6><p>随机选择一个样本来近似f（x）–所有样本的损失平均。这样只能大致保证变化方向是对的，但是每次迭代的梯度都是有噪声的，所以下降会走一点弯路。好处是迭代速度快，迭代具有震荡性，可以跳出局部最优解，但缺点是更新方向不稳定，可能永远不会真正收敛。</p>
+<h6 id="小批量随机梯度下降："><a href="#小批量随机梯度下降：" class="headerlink" title="小批量随机梯度下降："></a>小批量随机梯度下降：</h6><p>随机选择一个小批量计算梯度，二者的折中。较稳定，迭代速度也较快，可以跳出局部最优解</p>
+<h5 id="多类特征"><a href="#多类特征" class="headerlink" title="多类特征"></a>多类特征</h5><p>多元线性回归：将单变量拓展为多变量，利用矩阵来进行表示</p>
+<p><img src="/2024/10/27/Week2-ML/image-20241022200508942.png"></p>
+<p>多元线性回归的梯度下降法：</p>
+<p>也仅仅是将单变量拓展为向量，w<del>1</del>，w<del>2</del>……w<del>n</del>分开求。</p>
+<p><img src="/2024/10/27/Week2-ML/image-20241022202733842.png" alt="image-20241022202733842"></p>
+<h5 id="Normal-equation（正规方程）"><a href="#Normal-equation（正规方程）" class="headerlink" title="Normal equation（正规方程）"></a>Normal equation（正规方程）</h5><p>Θ&#x3D;(X^T^X)^−1^X^T^y</p>
+<p>1）只能用于线性回归</p>
+<p>2）可以解决拥有参数w，b的线性回归且不需要迭代</p>
+<p>缺点：</p>
+<p>1）不能用于其他机器学习算法</p>
+<p>2）当特征较多时比较慢</p>
+<p>线性模型解决的问题：如果给定某些确定的点，能否找到一个确定的线（hypothesis），把点连起来，使得这条线能过经过尽可能多的点。（以机器学习目标的角度来看，就是能否找到一个假设可以有更好的泛化性，对未知的x能预测出较为准确的y）如<strong>果这些点本来就在一条直线上呢？</strong> 那这个问题就和解多元线性方程组没有任何差别了，每一个点都是一个方程，我们很容易求解出一个X满足所有方程，而这个X 在一维上，就是我们题设里面要求直线（hypothesis）的两个参数w和 b，同时呢，如果扩展到多维上，也不过是X 变成多维向量，也一一对应着线性模型中的参数w<br><strong>问题是这些点不在一条直线上</strong></p>
+<p>假设我们要求解的直线为y &#x3D; b + wx它们所对应的线性方程组Ax &#x3D;b（注意这里的b对应直线里面的y）是：<br>b+w&#x3D;1</p>
+<p>b+2w&#x3D;2</p>
+<p>b+3w&#x3D;2</p>
+<p>很明显方程没有解，有两未知数，三个方程，b不在A的列向量空间。可以发现线性方程组可能由于<strong>样例过多而出现无解</strong>，所以这时候需要找到误差最小的线，<strong>对应线性代数，就是找到向量x，使得Ax&#x3D;p得到的p与b最接近</strong>。因为b不在A的列向量空间中，拿我们就找b<strong>在列向量空间上的投影p，此时最接近（垂直最短）</strong></p>
+<p><img src="/2024/10/27/Week2-ML/b17678da2436f45735e3588891f55c52.png" alt="在这里插入图片描述"></p>
+<p>假设p&#x3D;ma</p>
+<p>由于垂直：a^T^(b-ma)&#x3D;0 :ma^T^a&#x3D;a^T^b</p>
+<p>m&#x3D;a^T^b&#x2F;a^T^a : p&#x3D;(aa^T^&#x2F;a^T^a)b</p>
+<p>令aa^T^&#x2F;a^T^a&#x3D;P</p>
+<p>p&#x3D;Pb得到了p，也就能求出对应的x（也就是w，b的值）</p>
+<p>多维同样适用，以二维为例子A&#x3D;[a1,a2]，令p&#x3D;m1a1+m2a2</p>
+<p><img src="/2024/10/27/Week2-ML/9d85955d9a34511bc33d4872c3d24844.png" alt="在这里插入图片描述"></p>
+<p>b的分向量依然垂直于整个平面：</p>
+<p>a1（b-Ax）&#x3D;0</p>
+<p>a2（b-Ax）&#x3D;0</p>
+<p>写成矩阵形式就是：A^T^(b−Ax)&#x3D;0      A^T^Ax&#x3D;A^T^b</p>
+<p>x&#x3D;(A^T^A)^-1^A^T^b</p>
+<p>x是最接近原解的那一个，也就是机器学习里面我们常说的，损失函数最小的直线</p>
+<h5 id="特征缩放："><a href="#特征缩放：" class="headerlink" title="特征缩放："></a>特征缩放：</h5><h6 id="why？"><a href="#why？" class="headerlink" title="why？"></a>why？</h6><p>当特征的可能值很小时，其参数的合理值相对就比较大，以y&#x3D;w1x1+w2x2+b举例，x1可能值较大时，w1相对取得就较小</p>
+<p>这会导致特征的散点图非常接近一边，参数的等高图呈现椭圆状，这就可能会造成在梯度下降中找最小值时出现反复回弹</p>
+<p>所以需要当不同特征中取值范围差异过大时，需要特征缩放（归一化）</p>
+<p><img src="/2024/10/27/Week2-ML/image-20241023141805496.png"></p>
+<h6 id="how-？"><a href="#how-？" class="headerlink" title="how ？"></a>how ？</h6><p>1）除以最大值</p>
+<p><img src="/2024/10/27/Week2-ML/image-20241023142826143.png"></p>
+<p>2）均值归一化（mean normalization）</p>
+<p>需要知道平均值</p>
+<p>x&#x3D;x-x<del>average</del>&#x2F;x<del>max</del>-x<del>min</del></p>
+<p><img src="/2024/10/27/Week2-ML/image-20241023143203679.png" alt="image-20241023143203679"></p>
+<p>3)Z分数归一化</p>
+<p>需要知道平均值和标准差，当样本足够大时，呈现正态分布</p>
+<p><img src="/2024/10/27/Week2-ML/image-20241023143518376.png" alt="image-20241023143518376"></p>
+<h5 id="学习曲线（检查梯度下降是否收敛）"><a href="#学习曲线（检查梯度下降是否收敛）" class="headerlink" title="学习曲线（检查梯度下降是否收敛）"></a>学习曲线（检查梯度下降是否收敛）</h5><p>可以通过查看学习曲线，发现需要多少次迭代才会收敛，也可以设置一个阈值，当损失函数小于阈值时，便认为收敛</p>
+<p><img src="/2024/10/27/Week2-ML/image-20241023144642518.png" alt="image-20241023144642518"></p>
+<p>如何选择一个好的学习率α？</p>
+<p>总的原则：先将α设置得非常非常小，在小范围迭代，看损失函数是否持续下降，以检查代码中是否有BUG。然后每次扩大大概3倍，直到找到一个较大的α导致损失函数回弹，然后尝试这个最大合理价值稍微小一点的数值，以获得一个尽可能大的α</p>
+<h5 id="特征工程："><a href="#特征工程：" class="headerlink" title="特征工程："></a>特征工程：</h5><p>通过对问题的知识或直觉来设计新的特征，通常通过转换或结合原始特征实现例如预测房价，给出长x1和宽x2，可以通过长宽结合出新的特征面积x3&#x3D;x1x2</p>
+<p>通过这样，不仅可以适应关于x1，x2，x3的直线，还能适应关于x1，x2的曲线</p>
+<p><img src="/2024/10/27/Week2-ML/image-20241023150551522.png" alt="image-20241023150551522"></p>
+<p>对于多项式回归，就可以通过特征工程将x^2^之类转换为新的特征，最终通过解决线性回归问题来解决多项式回归问题。多项式回归时，数据归一化是非常有必要的。</p>
+<h5 id="线性回归整体编码一般过程："><a href="#线性回归整体编码一般过程：" class="headerlink" title="线性回归整体编码一般过程："></a>线性回归整体编码一般过程：</h5><p>（1）首先，如果是多项式回归，先将多项式利用特征工程转换为多元线性回归</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x = np.arange(0, 20, 1)</span><br><span class="line">y = x**2</span><br><span class="line"></span><br><span class="line"># engineer features .</span><br><span class="line">X = np.c_[x, x**2, x**3]   #&lt;-- added engineered feature</span><br></pre></td></tr></table></figure>
+
+<p>（2）如果特征的取值差异过大，则需要进行归一化（以Z分数归一化为例）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def zscore_normalize_features(X):</span><br><span class="line">    # find the mean of each column/feature</span><br><span class="line">    mu     = np.mean(X, axis=0)                 # mu will have shape (n,)</span><br><span class="line">    # find the standard deviation of each column/feature</span><br><span class="line">    sigma  = np.std(X, axis=0)                  # sigma will have shape (n,)</span><br><span class="line">    # element-wise, subtract mu for that column from each example, divide by std for that column</span><br><span class="line">    X_norm = (X - mu) / sigma      </span><br><span class="line"></span><br><span class="line">    return (X_norm, mu, sigma)</span><br></pre></td></tr></table></figure>
+
+<p>（3）计算损失函数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def compute_cost(X, y, w, b): </span><br><span class="line">    m = X.shape[0]</span><br><span class="line">    cost = 0.0</span><br><span class="line">    for i in range(m):                               </span><br><span class="line">        f_wb_i = np.dot(X[i], w) + b           #(n,)(n,) = scalar (see np.dot)</span><br><span class="line">        cost = cost + (f_wb_i - y[i])**2      #scalar</span><br><span class="line">    cost = cost / (2 * m)                     #scalar    </span><br><span class="line">    return cost</span><br></pre></td></tr></table></figure>
+
+<p>（4）计算梯度下降：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">def compute_gradient(X, y, w, b): </span><br><span class="line">    m,n = X.shape           #(number of examples, number of features)</span><br><span class="line">    dj_dw = np.zeros((n,))</span><br><span class="line">    dj_db = 0.</span><br><span class="line"></span><br><span class="line">    for i in range(m):                             </span><br><span class="line">        err = (np.dot(X[i], w) + b) - y[i]   </span><br><span class="line">        for j in range(n):                         </span><br><span class="line">            dj_dw[j] = dj_dw[j] + err * X[i, j]    </span><br><span class="line">        dj_db = dj_db + err                        </span><br><span class="line">    dj_dw = dj_dw / m                                </span><br><span class="line">    dj_db = dj_db / m                                    </span><br><span class="line">    return dj_db, dj_dw</span><br></pre></td></tr></table></figure>
+
+<p>（5）选择适当的学习率迭代梯度下降，找到最合适的w与b：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">def gradient_descent(X, y, w_in, b_in, cost_function, gradient_function, alpha, num_iters): </span><br><span class="line">    # An array to store cost J and w&#x27;s at each iteration primarily for graphing later</span><br><span class="line">    J_history = []</span><br><span class="line">    w = copy.deepcopy(w_in)  #avoid modifying global w within function</span><br><span class="line">    b = b_in</span><br><span class="line">    </span><br><span class="line">    for i in range(num_iters):</span><br><span class="line"></span><br><span class="line">        # Calculate the gradient and update the parameters</span><br><span class="line">        dj_db,dj_dw = gradient_function(X, y, w, b)   ##None</span><br><span class="line"></span><br><span class="line">        # Update Parameters using w, b, alpha and gradient</span><br><span class="line">        w = w - alpha * dj_dw               ##None</span><br><span class="line">        b = b - alpha * dj_db               ##None</span><br><span class="line">      </span><br><span class="line">        # Save cost J at each iteration</span><br><span class="line">        if i&lt;100000:      # prevent resource exhaustion </span><br><span class="line">            J_history.append( cost_function(X, y, w, b))</span><br><span class="line"></span><br><span class="line">        # Print cost every at intervals 10 times or as many iterations if &lt; 10</span><br><span class="line">        if i% math.ceil(num_iters / 10) == 0:</span><br><span class="line">            print(f&quot;Iteration &#123;i:4d&#125;: Cost &#123;J_history[-1]:8.2f&#125;   &quot;)</span><br><span class="line">        </span><br><span class="line">    return w, b, J_history #return final w,b and J history for graphing</span><br></pre></td></tr></table></figure>
+
+<p>使用scikit-learn调用实现线性回归：</p>
+<p>（1）首先，如果是多项式回归，先将多项式利用特征工程转换为多元线性回归</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x = np.arange(0, 20, 1)</span><br><span class="line">y = x**2</span><br><span class="line"></span><br><span class="line"># engineer features .</span><br><span class="line">X = np.c_[x, x**2, x**3]   #&lt;-- added engineered feature</span><br></pre></td></tr></table></figure>
+
+<p>（2）如果特征的取值差异过大，则需要进行归一化（以Z分数归一化为例）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scaler = StandardScaler()</span><br><span class="line">X_norm = scaler.fit_transform(X_train)</span><br></pre></td></tr></table></figure>
+
+<p>方法1：（3）计算损失函数：</p>
+<p>（4）计算梯度下降：</p>
+<p>（5）选择适当的学习率迭代梯度下降，找到最合适的w与b，并进行预测：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sgdr = SGDRegressor(learning_rate=&quot;constant&quot;, eta0=0.01,max_iter=1000)</span><br><span class="line">sgdr.fit(X_norm, y_train)</span><br><span class="line">print(sgdr)</span><br><span class="line">print(f&quot;number of iterations completed: &#123;sgdr.n_iter_&#125;, number of weight updates: &#123;sgdr.t_&#125;&quot;)</span><br><span class="line">b_norm = sgdr.intercept_</span><br><span class="line">w_norm = sgdr.coef_</span><br><span class="line">y_pred_sgd = sgdr.predict(X_norm)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>方法2：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">linear_model = LinearRegression()</span><br><span class="line">linear_model.fit(X_train, y_train) </span><br><span class="line">b = linear_model.intercept_</span><br><span class="line">w = linear_model.coef_</span><br><span class="line">print(f&quot;w = &#123;w:&#125;, b = &#123;b:0.2f&#125;&quot;)</span><br><span class="line">x_house = np.array([1200, 3,1, 40]).reshape(-1,4)</span><br><span class="line">x_house_predict = linear_model.predict(x_house)[0]</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="逻辑回归"><a href="#逻辑回归" class="headerlink" title="逻辑回归"></a>逻辑回归</h4><p>二分类问题（binary classification）</p>
+<p>  为什么要二分类问题，用线性回归，设个阈值不也可以实现分类吗？（针对分类问题，线性回归的抗干扰性不强，逻辑边界容易移动）</p>
+<p><img src="/2024/10/27/Week2-ML/image-20241023193828925.png" alt="image-20241023193828925"></p>
+<p>逻辑回归最终会拟合一条s型的曲线</p>
+<h5 id="sigmoid-function（常用于神经元中的激活函数）"><a href="#sigmoid-function（常用于神经元中的激活函数）" class="headerlink" title="sigmoid function（常用于神经元中的激活函数）"></a>sigmoid function（常用于神经元中的激活函数）</h5><p>g（z）&#x3D;1&#x2F;1+e^-z^</p>
+<p><img src="/2024/10/27/Week2-ML/image-20241023194747283.png" alt="image-20241023194747283"></p>
+<p>z是什么呢？</p>
+<p>z&#x3D;wx+b</p>
+<p>将线性回归的结果，通过sigmoid函数转换到0-1的范围，实现分类。</p>
+<p><img src="/2024/10/27/Week2-ML/image-20241023195131797.png" alt="image-20241023195131797"></p>
+<h5 id="决策边界："><a href="#决策边界：" class="headerlink" title="决策边界："></a>决策边界：</h5><p><img src="/2024/10/27/Week2-ML/image-20241023200725461.png" alt="image-20241023200725461"></p>
+<p>由图可知道，当f<del>w，b</del>（x）&gt;&#x3D;0时，y&#x3D;1，f<del>w，b</del>（x）&lt;0,y&#x3D;0,所以存在着曲线或线段表示f<del>w，b</del>（x），当其大于等于0时，在曲线或线段外侧，则y&#x3D;1，反之则为y&#x3D;0。这样的曲线或线段叫做决策边界</p>
+<h5 id="逻辑回归的损失函数："><a href="#逻辑回归的损失函数：" class="headerlink" title="逻辑回归的损失函数："></a>逻辑回归的损失函数：</h5><p><img src="/2024/10/27/Week2-ML/image-20241023204612492.png" alt="image-20241023204612492"></p>
+<p>可以简化为：</p>
+<p><img src="/2024/10/27/Week2-ML/image-20241023205352950.png" alt="image-20241023205352950"></p>
+<p>为什么不采用线性回归中的损失函数？</p>
+<p><img src="/2024/10/27/Week2-ML/image-20241023204841250.png" alt="image-20241023204841250"></p>
+<p><strong>这样定义出来的损失函数不是凸函数，不具备全局最小值。</strong>至于为什么？</p>
+<p>当y&#x3D;1时，L（y^ (预测值)）&#x3D;-log（y^）</p>
+<p>求一阶导为 -1&#x2F;y^</p>
+<p>求二阶导为1&#x2F;y^ ^2^</p>
+<p>当y&#x3D;0时，L（y^ ）&#x3D;-log（1-y^）</p>
+<p>求一阶导为1&#x2F;1-y^</p>
+<p>求二阶导为1&#x2F;（1-y^ ）^2^</p>
+<p>所以均为非负值，所以该函数为凸函数</p>
+<h5 id="逻辑回归中的梯度下降："><a href="#逻辑回归中的梯度下降：" class="headerlink" title="逻辑回归中的梯度下降："></a>逻辑回归中的梯度下降：</h5><p><img src="/2024/10/27/Week2-ML/image-20241024135351771.png" alt="image-20241024135351771"></p>
+<p>求导过后竟然长得和线性回归一样，但是注意f（x）的定义是不一样的。所以逻辑回归中的损失函数应该是为了得出相同偏导而构造出来的。</p>
+<h5 id="过拟合"><a href="#过拟合" class="headerlink" title="过拟合"></a>过拟合</h5><p>图1为欠拟合（高偏差）（学习能力太差），图2为泛化（理想状态），图3为过拟合（高方差：虽然对于训练集方差为0，但对于测试集来说就是高方差，对新数据预测能力差）（学习能力过强，导致泛化能力差）</p>
+<h6 id="线性回归："><a href="#线性回归：" class="headerlink" title="线性回归："></a>线性回归：</h6><p><img src="/2024/10/27/Week2-ML/image-20241024140547577.png" alt="image-20241024140547577"></p>
+<h6 id="逻辑回归："><a href="#逻辑回归：" class="headerlink" title="逻辑回归："></a>逻辑回归：</h6><p><img src="/2024/10/27/Week2-ML/image-20241024141414302.png" alt="image-20241024141414302"></p>
+<h6 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h6><p>（1）使用更大的训练集</p>
+<p>（2）特征选择：选择要使用的最合适的特性集而不是全用。虽然这会导致一些有用信息被丢弃，可以通过一些自动选择最合适的特性集算法来降低影响。</p>
+<p>（3）正则化：保留所有的功能（特征），鼓励学习算法收缩参数值，当参数值越小时，曲线会越平滑。</p>
+<p><img src="/2024/10/27/Week2-ML/image-20241024142748815.png" alt="image-20241024142748815"></p>
+<h5 id="正则化损失函数："><a href="#正则化损失函数：" class="headerlink" title="正则化损失函数："></a>正则化损失函数：</h5><p>λ是一个类似学习率一样需要调的参数，至于为什么要除以2m，选择相同的缩放倍数，即使训练样本变多了很多，λ也大概率可以继续使用。（从理论上分析，当样本数量增多时，在样本数较少的情形下得到的lambda也应同样适用，但是样本数量的增多会使得正则化项所占的权重降低）</p>
+<p><img src="/2024/10/27/Week2-ML/image-20241024144402324.png" alt="image-20241024144402324"></p>
+<h6 id="线性回归中的正则方式："><a href="#线性回归中的正则方式：" class="headerlink" title="线性回归中的正则方式："></a>线性回归中的正则方式：</h6><p><img src="/2024/10/27/Week2-ML/image-20241024150441869.png" alt="image-20241024150441869"></p>
+<h6 id="逻辑回归中的正则方式："><a href="#逻辑回归中的正则方式：" class="headerlink" title="逻辑回归中的正则方式："></a>逻辑回归中的正则方式：</h6><p><img src="/2024/10/27/Week2-ML/image-20241024151454279.png" alt="image-20241024151454279"></p>
+<p><img src="/2024/10/27/Week2-ML/image-20241024150830116.png" alt="image-20241024150830116"></p>
+<p>在每次迭代过程中，wj相比于没正则化时，每次都会乘（1-αλ&#x2F;m）进行缩小</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Zhen Xie</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://example.com/2024/10/27/Week2-ML/">http://example.com/2024/10/27/Week2-ML/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"># 机器学习</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2024/10/18/Week1%20python%E5%AD%A6%E4%B9%A0/">Week1 python学习</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Zhen Xie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
