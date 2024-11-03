@@ -384,11 +384,20 @@
 <p><img src="/2024/11/03/Week3-ML/image-20241029204810754.png" alt="image-20241029204810754"></p>
 <h6 id="损失函数的计算："><a href="#损失函数的计算：" class="headerlink" title="损失函数的计算："></a>损失函数的计算：</h6><p><img src="/2024/11/03/Week3-ML/image-20241029204941856.png" alt="image-20241029204941856"></p>
 <p>SparseCategoricalCrossentropy</p>
-<h6 id="Softmax的改进："><a href="#Softmax的改进：" class="headerlink" title="Softmax的改进："></a>Softmax的改进：</h6><p>由于会出现浮点数计算精度变化问题，所以可以采用合并的方法减少计算带来的误差：</p>
+<h6 id="Softmax的改进："><a href="#Softmax的改进：" class="headerlink" title="Softmax的改进："></a>Softmax的改进：</h6><p>（1）由于会出现浮点数计算精度变化问题，所以可以采用合并的方法减少计算带来的误差：</p>
 <p><img src="/2024/11/03/Week3-ML/image-20241030143836542.png" alt="image-20241030143836542"></p>
 <p>更好的调用方法：</p>
 <p><img src="/2024/11/03/Week3-ML/image-20241030144603227.png" alt="image-20241030144603227"></p>
-<h6 id="多标签与多分类的区别"><a href="#多标签与多分类的区别" class="headerlink" title="多标签与多分类的区别"></a>多标签与多分类的区别</h6><p>多个标签分类（mutilabel）：输出有多个种类</p>
+<p><strong>注意这里的输出预测不是概率，而是 logits!如果期望的输出是概率，输出应该由softmax处理。</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">logits = preferred_model.predict(X_test)</span><br><span class="line"></span><br><span class="line"># 转换为概率</span><br><span class="line">probabilities = tf.nn.softmax(logits)</span><br></pre></td></tr></table></figure>
+
+<p>（2）在计算softmax过程中，如果指数太大，操作将产生溢出。可以上下同时乘一个树，将指数减少。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">改进前</span><br><span class="line">def my_softmax(z):</span><br><span class="line">    ez = np.exp(z)              #element-wise exponenial</span><br><span class="line">    sm = ez/np.sum(ez)</span><br><span class="line">    return(sm)</span><br><span class="line">改进后</span><br><span class="line">def my_softmax_ns(z):</span><br><span class="line">    &quot;&quot;&quot;numerically stablility improved&quot;&quot;&quot;</span><br><span class="line">    bigz = np.max(z)</span><br><span class="line">    ez = np.exp(z-bigz)              # minimize exponent</span><br><span class="line">    sm = ez/np.sum(ez)</span><br><span class="line">    return(sm)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/11/03/Week3-ML/image-20241103210802148.png" alt="image-20241103210802148"></p>
+<p>同理损失函数计算时也可以进行同样的优化防止溢出：</p>
+<p><img src="/2024/11/03/Week3-ML/image-20241103211328235.png" alt="image-20241103211328235"></p>
+<h6 id><a href="#" class="headerlink" title></a></h6><h6 id="多标签与多分类的区别"><a href="#多标签与多分类的区别" class="headerlink" title="多标签与多分类的区别"></a>多标签与多分类的区别</h6><p>多个标签分类（mutilabel）：输出有多个种类</p>
 <p><img src="/2024/11/03/Week3-ML/image-20241030145400578.png" alt="image-20241030145400578"></p>
 <p>多分类（muticlass）：输出有多种情况，0，1，2……</p>
 <h5 id="优化方法："><a href="#优化方法：" class="headerlink" title="优化方法："></a>优化方法：</h5><p>Adam：可以自适应变化学习率，而不是固定学习率，当学习率过小时，增加学习率，当学习率过大时，减小学习率</p>
@@ -416,6 +425,8 @@
 <h6 id="交叉验证测试集："><a href="#交叉验证测试集：" class="headerlink" title="交叉验证测试集："></a>交叉验证测试集：</h6><p>训练集：</p>
 <p>交叉验证集：</p>
 <p>测试集：</p>
+<p>**<code>fit_transform()</code>**：用于训练数据，计算均值和标准差并进行标准化。</p>
+<p>**<code>transform()</code>**：用于测试或验证数据，使用已有的均值和标准差进行标准化。</p>
 <p><img src="/2024/11/03/Week3-ML/image-20241031151650090.png" alt="image-20241031151650090"></p>
 <p>train用来寻找<strong>最合适w和b</strong>，而cv用来找<strong>几阶多项式最合适</strong>，而test用来评价模型在数据集中的<strong>泛化性</strong>。（通过test和cv来做决定，而决定后用测试集评估）</p>
 <h5 id="偏差与方差"><a href="#偏差与方差" class="headerlink" title="偏差与方差"></a>偏差与方差</h5><p><img src="/2024/11/03/Week3-ML/image-20241031153205803.png" alt="image-20241031153205803"></p>
@@ -478,7 +489,9 @@
 <p><img src="/2024/11/03/Week3-ML/image-20241031212351079.png" alt="image-20241031212351079"></p>
 <p>Average&#x3D;P（精度）+R（召回率）</p>
 <p>F1 score&#x3D;2PR&#x2F;R+P(P和R的调和)</p>
-<h4 id="决策树（分类问题）："><a href="#决策树（分类问题）：" class="headerlink" title="决策树（分类问题）："></a>决策树（分类问题）：</h4><p><img src="/2024/11/03/Week3-ML/image-20241101131542357.png" alt="image-20241101131542357"></p>
+<h4 id="决策树（分类问题）："><a href="#决策树（分类问题）：" class="headerlink" title="决策树（分类问题）："></a>决策树（分类问题）：</h4><p>树的最大树深度影响着准确率。当允许深度较小时，树无法进行足够的分割来区分正误（存在欠拟合问题），但当允许深度过高（&gt;&#x3D; 5）时，树会变得过于专注于训练集，从而降低测试数据集的准确性（存在过拟合问题）。</p>
+<p>每个节点的最小样本数也会影响准确率。增加 最小样本数会降低过拟合的程度，反之如果最小样本数过小，会过拟合。</p>
+<p><img src="/2024/11/03/Week3-ML/image-20241101131542357.png" alt="image-20241101131542357"></p>
 <p>分为根节点，决策节点，叶子节点。（实际就是一个if-else结构）</p>
 <h5 id="Q1：该选择什么特征来进行区分每个节点呢？"><a href="#Q1：该选择什么特征来进行区分每个节点呢？" class="headerlink" title="Q1：该选择什么特征来进行区分每个节点呢？"></a>Q1：该选择什么特征来进行区分每个节点呢？</h5><p>应满足最大纯度（一个特征能最大程度得到你所想得到的分类，比如通过NDA分类猫狗）</p>
 <h5 id="Q2：什么时候停止分叉？"><a href="#Q2：什么时候停止分叉？" class="headerlink" title="Q2：什么时候停止分叉？"></a>Q2：什么时候停止分叉？</h5><p>当一个节点纯度达到100%</p>
