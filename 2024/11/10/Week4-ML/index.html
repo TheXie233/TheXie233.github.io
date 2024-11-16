@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Zhen Xie">
+
+
+
+
+
+<title>Week4 ML | Hexo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+<script>
+    !
+    function() {
+    function n(n, e, t) {
+    return n.getAttribute(e) || t
+    }
+    function e(n) {
+    return document.getElementsByTagName(n)
+    }
+    function t() {
+    var t = e("script"),
+    o = t.length,
+    i = t[o - 1];
+    return {
+    l: o,
+    z: n(i, "zIndex", -1), //置于主页面背后
+    o: n(i, "opacity", .5), //线条透明度
+    c: n(i, "color", "0,0,0"), //线条颜色
+    n: n(i, "count", 100) //线条数量
+    }
+    }
+    function o() {
+    a = m.width = window.innerWidth ||
+    document.documentElement.clientWidth || document.body.clientWidth,
+    c = m.height = window.innerHeight ||
+    document.documentElement.clientHeight || document.body.clientHeight
+    }
+    function i() {
+    r.clearRect(0, 0, a, c);
+    var n, e, t, o, m, l;
+    s.forEach(function(i, x) {
+    for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 :
+    1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1,
+    1), e = x + 1; e < u.length; e++) n = u[e],
+    null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l
+    = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o,
+    i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t /
+    2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y),
+    r.lineTo(n.x, n.y), r.stroke()))
+    }),
+    x(i)
+    }
+    var a, c, u, m = document.createElement("canvas"),
+    d = t(),
+    l = "c_n" + d.l,
+    r = m.getContext("2d"),
+    x = window.requestAnimationFrame || window.webkitRequestAnimationFrame
+    || window.mozRequestAnimationFrame || window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function(n) {
+    window.setTimeout(n, 1e3 / 45)
+    },
+    w = Math.random,
+    y = {
+    x: null,
+    y: null,
+    max: 2e4
+    };
+    m.id = l,
+    m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z +
+    ";opacity:" + d.o,
+    e("body")[0].appendChild(m),
+    o(),
+    window.onresize = o,
+    window.onmousemove = function(n) {
+    n = n || window.event,
+    y.x = n.clientX,
+    y.y = n.clientY
+    },
+    window.onmouseout = function() {
+    y.x = null,
+    y.y = null
+    };
+    for (var s = [], f = 0; d.n > f; f++) {
+    var h = w() * a,
+    g = w() * c,
+    v = 2 * w() - 1,
+    p = 2 * w() - 1;
+    s.push({
+    x: h,
+    y: g,
+    xa: v,
+    ya: p,
+    max: 6e3
+    })
+    }
+    u = s.concat([y]),
+    setTimeout(function() {
+    i()
+    },
+    100)
+    } ();
+    </script>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">TheXie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">TheXie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Week4 ML</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Zhen Xie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">November 10, 2024&nbsp;&nbsp;19:42:39</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/basic/">basic</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="无监督学习"><a href="#无监督学习" class="headerlink" title="无监督学习"></a>无监督学习</h2><h3 id="聚类（Clustering）"><a href="#聚类（Clustering）" class="headerlink" title="聚类（Clustering）"></a>聚类（Clustering）</h3><h4 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h4><p>一是将点分配给聚类中心</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241104154306606.png" alt="image-20241104154306606"></p>
+<p>二是移动聚类中心</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241104154355834.png" alt="image-20241104154355834"></p>
+<p>依次递归下去，当点颜色与质心位置不变。</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241104155830511.png" alt="image-20241104155830511"></p>
+<p>Q：但是我怎么知道有两个聚类中心呢？</p>
+<p>需要他提取几个特征，就输入几个，聚类中心由自己定。</p>
+<p>Q：如果一个聚类中心分配到的点为零怎么办？</p>
+<p>A1：直接去掉这个聚类中心，将分类从k变为k-1</p>
+<p>A2：如果需要K类的话，则重新初始化该质心，让他至少得到一些分数</p>
+<p>损失函数（该类点到中心的平均平方距离）：</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241104161025609.png" alt="image-20241104161025609"></p>
+<h4 id="如何选择？"><a href="#如何选择？" class="headerlink" title="如何选择？"></a>如何选择？</h4><p><img src="/2024/11/10/Week4-ML/image-20241104162326543.png" alt="image-20241104162326543"></p>
+<p>选择K个随机点，令这K个随机点为聚类中心。</p>
+<h4 id="初始点选的不好可能会造成局部最优解："><a href="#初始点选的不好可能会造成局部最优解：" class="headerlink" title="初始点选的不好可能会造成局部最优解："></a>初始点选的不好可能会造成局部最优解：</h4><p><img src="/2024/11/10/Week4-ML/image-20241104162519073.png" alt="image-20241104162519073"></p>
+<p>解决方法：以量取胜，多次随机取点，最终取损失函数最小的一种分类方法</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241104162859447.png" alt="image-20241104162859447"></p>
+<h4 id="聚类算法的评估方法（选择聚类数量）：肘部法（elbow-method）"><a href="#聚类算法的评估方法（选择聚类数量）：肘部法（elbow-method）" class="headerlink" title="聚类算法的评估方法（选择聚类数量）：肘部法（elbow method）"></a>聚类算法的评估方法（选择聚类数量）：肘部法（elbow method）</h4><p>选择斜率变化最大的点作为肘部，但是在很多模型中，损失函数变化是相对平滑的，所以肘部法并不适用于所有情况，</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241105161432062.png" alt="image-20241105161432062"></p>
+<p>或者更具业务要求选择聚类数量</p>
+<h3 id="异常检测（Anomaly-detection）"><a href="#异常检测（Anomaly-detection）" class="headerlink" title="异常检测（Anomaly detection）"></a>异常检测（Anomaly detection）</h3><p>有点类似于逻辑回归，但没有相应的标签。</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241105162230025.png" alt="image-20241105162230025"></p>
+<h4 id="正态分布："><a href="#正态分布：" class="headerlink" title="正态分布："></a>正态分布：</h4><p><img src="/2024/11/10/Week4-ML/image-20241105162810264.png" alt="image-20241105162810264"></p>
+<p>σ决定高度，u绝对初始水平位置</p>
+<h4 id="异常检测算法："><a href="#异常检测算法：" class="headerlink" title="异常检测算法："></a>异常检测算法：</h4><p>1）选择需要检测n个特征参数</p>
+<p>2）计算n个特征对应的σ和u。</p>
+<p>3）给一个新的例子，计算p（x）进行预测，比较他与阈值ε的大小</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241105163738980.png" alt="image-20241105163738980"></p>
+<p><img src="/2024/11/10/Week4-ML/image-20241105163340089.png" alt="image-20241105163340089"></p>
+<p>可以通过Training set构建模型，然后在CV set中进行验证，通过检测后的结果与实际相比较（也可以用Precision和Recall、F1-score这些进行评价），调整ε使两者尽量相同，然后在test set中验证。注意这也是无监督学习，因为训练集中没有标签。</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241105165006254.png" alt="image-20241105165006254"></p>
+<h4 id="异常检测（反向排除）和监督学习（正向学习）区别："><a href="#异常检测（反向排除）和监督学习（正向学习）区别：" class="headerlink" title="异常检测（反向排除）和监督学习（正向学习）区别："></a>异常检测（反向排除）和监督学习（正向学习）区别：</h4><p>异常检测是根据你正确例子进行建模，而如果出现没出现过的错误例子，也会被排除在外，而监督学习要求错误例子与测试集中的类似才能检测出来。</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241105170739837.png" alt="image-20241105170739837"></p>
+<h4 id="对于特征的处理："><a href="#对于特征的处理：" class="headerlink" title="对于特征的处理："></a>对于特征的处理：</h4><p>1）如果你的特征曲线分布不符合高斯分布，可以做相应的转换使之符合高斯分布</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241105171633679.png" alt="image-20241105171633679"></p>
+<p>2）当交叉验证集中，发现一个异常的例子的概率和正常的例子的概率差不多，说明我们的算法提取的特征不足，需要提取新的特征。</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241105172528057.png" alt="image-20241105172528057"></p>
+<p>3）也可以用特征工程来创建新的特征</p>
+<p>比如CPU和网络负载可能同时很大或同时很小，异常情况是一个很大，一个很小，所以需要引入新的特征。</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241105172830426.png" alt="image-20241105172830426"></p>
+<h3 id="推荐系统"><a href="#推荐系统" class="headerlink" title="推荐系统"></a>推荐系统</h3><p><img src="/2024/11/10/Week4-ML/image-20241105173614022.png" alt="image-20241105173614022"></p>
+<p>单个用户的：</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241105192249698.png" alt="image-20241105192249698"></p>
+<p>全部用户的（单个用户只要是最小的，全部用户求和后也是最小的）：</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241105192319313.png" alt="image-20241105192319313"></p>
+<p>如果不知道特征x怎么办？</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241105193236345.png" alt="image-20241105193236345"></p>
+<h4 id="协同过滤"><a href="#协同过滤" class="headerlink" title="协同过滤"></a>协同过滤</h4><h5 id="损失函数："><a href="#损失函数：" class="headerlink" title="损失函数："></a>损失函数：</h5><p>（1）对于每个用户确定损失函数后相加</p>
+<p>（2）对于每个电影确定损失函数后相加</p>
+<p>（3）本质上两者第一项求和结果相同，可以合并写</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241105194042388.png" alt="image-20241105194042388"></p>
+<h5 id="对应的梯度下降也采用偏导的形式："><a href="#对应的梯度下降也采用偏导的形式：" class="headerlink" title="对应的梯度下降也采用偏导的形式："></a>对应的梯度下降也采用偏导的形式：</h5><p><img src="/2024/11/10/Week4-ML/image-20241105194302271.png" alt="image-20241105194302271"></p>
+<h5 id="二进制标签（协同过滤算法从回归泛化到二分类问题）："><a href="#二进制标签（协同过滤算法从回归泛化到二分类问题）：" class="headerlink" title="二进制标签（协同过滤算法从回归泛化到二分类问题）："></a>二进制标签（协同过滤算法从回归泛化到二分类问题）：</h5><p><img src="/2024/11/10/Week4-ML/image-20241105202755043.png" alt="image-20241105202755043"> </p>
+<p>​    <img src="/2024/11/10/Week4-ML/image-20241105202738823.png" alt="image-20241105202738823"></p>
+<h5 id="均值归一化（数值采用每个评级减去它给出的平均评级）："><a href="#均值归一化（数值采用每个评级减去它给出的平均评级）：" class="headerlink" title="均值归一化（数值采用每个评级减去它给出的平均评级）："></a>均值归一化（数值采用每个评级减去它给出的平均评级）：</h5><p><img src="/2024/11/10/Week4-ML/image-20241105203851413.png" alt="image-20241105203851413"></p>
+<p>为什么不直接令新用户为平均值？</p>
+<p>令新用户为平均值，这样做新老用户算法需要分开处理，而均值归一化的话就不需要分开处理，而且均值归一化后计算速度还要稍微快一点</p>
+<h5 id="通过TensorFlow实现协同过滤："><a href="#通过TensorFlow实现协同过滤：" class="headerlink" title="通过TensorFlow实现协同过滤："></a>通过TensorFlow实现协同过滤：</h5><p>Auto Diff（自动算出导数项）</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241105204907855.png" alt="image-20241105204907855"></p>
+<p><img src="/2024/11/10/Week4-ML/image-20241105205221262.png" alt="image-20241105205221262"></p>
+<h5 id="如何寻找类似产品（相关特征）？"><a href="#如何寻找类似产品（相关特征）？" class="headerlink" title="如何寻找类似产品（相关特征）？"></a>如何寻找类似产品（相关特征）？</h5><p><img src="/2024/11/10/Week4-ML/image-20241105205656667.png" alt="image-20241105205656667"></p>
+<h5 id="协同过滤的缺点与局限："><a href="#协同过滤的缺点与局限：" class="headerlink" title="协同过滤的缺点与局限："></a>协同过滤的缺点与局限：</h5><p>（1）冷启动问题</p>
+<p>（2）不给使用有关项目或用户的附加信息</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241105210237694.png" alt="image-20241105210237694"></p>
+<h4 id="基于内容的过滤算法"><a href="#基于内容的过滤算法" class="headerlink" title="基于内容的过滤算法"></a>基于内容的过滤算法</h4><h5 id="区别："><a href="#区别：" class="headerlink" title="区别："></a>区别：</h5><p>（1）协同过滤有很多用户对不同的项目的评分，以及自己对不同项目有很多评分，根据用户对不同的项目的评分，归结出项目的特征，而根据自己项目的评分归结出自己的喜好，协同推荐。</p>
+<p>（2）基于内容根据将用户的特征与物品的特征来尝试良好匹配推荐</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241105210618660.png" alt="image-20241105210618660"></p>
+<p>用X<del>u</del>^j^表示用户的特征，X<del>m</del>^i^表示物品的特征，这两个的大小可能不相同，需要将X<del>u</del>^j^转换为V<del>u</del>^j^，X<del>m</del>^i^转换为V<del>m</del>^i^，这两的大小必须相同，因为要做点积，怎么转换呢？</p>
+<h5 id="神经网络转换特征"><a href="#神经网络转换特征" class="headerlink" title="神经网络转换特征"></a>神经网络转换特征</h5><p><img src="/2024/11/10/Week4-ML/image-20241105213853752.png" alt="image-20241105213853752"></p>
+<p>其中隐藏层大小不一定要相同，但输出层必须大小相同，预测为Vu *Vm，这里是预测电影评分，如果预测是否喜欢的话，即二分类问题时，预测应该再加个sigmoid函数。</p>
+<h5 id="损失函数的计算如下："><a href="#损失函数的计算如下：" class="headerlink" title="损失函数的计算如下："></a>损失函数的计算如下：</h5><p><img src="/2024/11/10/Week4-ML/image-20241105214123823.png" alt="image-20241105214123823"></p>
+<p><strong>为什么这里只用管输出层的数据？而不是像之前那样精确到w和b</strong></p>
+<p>只要知道输出层的梯度，就可以一直向前推，反向传播</p>
+<h5 id="寻找相似产品："><a href="#寻找相似产品：" class="headerlink" title="寻找相似产品："></a>寻找相似产品：</h5><p><img src="/2024/11/10/Week4-ML/image-20241105214427077.png" alt="image-20241105214427077"></p>
+<p>（1）检索（确保广泛的覆盖范围）：1）通过找用户最近看的相似电影 2）通过用户最常看类型的top电影 3）所在国家的top电影。最后删除重复项和一些可能以及购买或者用户不想再看的。<img src="/2024/11/10/Week4-ML/image-20241106191440855.png" alt="image-20241106191440855"></p>
+<p>（2）排名（通过基于内容的过滤算法）</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241106191805517.png" alt="image-20241106191805517"></p>
+<p>TensorFlow实现：</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241106194349363.png" alt="image-20241106194349363"></p>
+<p>注意要将结果向量归一化处理</p>
+<p>这里的归一化感觉和之前的归一化不太一样，一个是对每个特征的数据进行归一化，这个是对整体向量进行归一化。数据归一化目的主要是为了使得<strong>不同特征的数据值在同一个尺度下</strong>，以便模型能够更<strong>稳定地处理数据</strong>，尤其在梯度更新时能够避免某些特征因为数值较大而主导了模型学习的方向。向量归一化的目的是<strong>消除向量模的影响</strong>，专注于向量的方向性。</p>
+<h3 id="PCA：减少特征数量"><a href="#PCA：减少特征数量" class="headerlink" title="PCA：减少特征数量"></a>PCA：减少特征数量</h3><h4 id="PCA和线性回归的区别："><a href="#PCA和线性回归的区别：" class="headerlink" title="PCA和线性回归的区别："></a>PCA和线性回归的区别：</h4><p>线性回归以x预测y，总是试图测量拟合线和Y之间的距离，而PCA是获取大量特征并平等对待它们以减少表示数据所需的轴数，主要关注点是投影，即最小化点到直线距离</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241106201341150.png" alt="image-20241106201341150"></p>
+<h4 id="步骤："><a href="#步骤：" class="headerlink" title="步骤："></a>步骤：</h4><p>（1）数据归一化</p>
+<p>（2）运行拟合函数，选择要拟合成二维还是三维</p>
+<p>（3）查看每个新轴或每个新主成分再多大程度上解释了数据差异。</p>
+<p>（4）进行变换，即将数据投影到新轴上</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241106203159358.png" alt="image-20241106203159358"></p>
+<p><img src="/2024/11/10/Week4-ML/image-20241106203455858.png" alt="image-20241106203455858"></p>
+<h3 id="SVM（支持向量机）"><a href="#SVM（支持向量机）" class="headerlink" title="SVM（支持向量机）"></a>SVM（支持向量机）</h3><h5 id="1-超平面"><a href="#1-超平面" class="headerlink" title="1.超平面"></a>1.超平面</h5><p>设计一个维度为M-1的超平面来区分两类维度数据</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241107202034623.png" alt="image-20241107202034623"></p>
+<h5 id="2-求出两边正负超平面的表达式："><a href="#2-求出两边正负超平面的表达式：" class="headerlink" title="2.求出两边正负超平面的表达式："></a>2.求出两边正负超平面的表达式：</h5><p>通过支持向量，得到三个超平面方程式，正超平面，决策超平面，负超平面</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241107202459705.png" alt="image-20241107202459705"></p>
+<p>软间隔与硬间隔：</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241107202711384.png" alt="image-20241107202711384"></p>
+<p>硬间隔时L的表达式：<br><img src="/2024/11/10/Week4-ML/image-20241107213024770.png" alt="image-20241107213024770"></p>
+<h5 id="3-求出约束条件并转换为拉格朗日方程式"><a href="#3-求出约束条件并转换为拉格朗日方程式" class="headerlink" title="3.求出约束条件并转换为拉格朗日方程式"></a>3.求出约束条件并转换为拉格朗日方程式</h5><p>我们要让L最大，即间隔最大，所以我们需要最小化w，有下述约束条件，将其转换成拉格朗日方程式：</p>
+<p><img src="/2024/11/10/Week4-ML/0811792ec7c98b0c802ec7c190e60473.png" alt="在这里插入图片描述"></p>
+<p>首先，必须是凸函数才行，很显然平方函数为凸函数。</p>
+<p>通常我们需要求解的最优化问题有如下几类:</p>
+<p>无约束优化问题，可以写为：</p>
+<p><img src="/2024/11/10/Week4-ML/c03920cc99e8108d48c95a0a9d7a2d6a.png" alt="在这里插入图片描述"></p>
+<p>有等式约束的优化问题，可以写为：</p>
+<p><img src="/2024/11/10/Week4-ML/f044e6aa72bad4bed991d6bd3b77ef33.png" alt="在这里插入图片描述"></p>
+<p>有不等式约束的优化问题，可以写为：</p>
+<p><img src="/2024/11/10/Week4-ML/f3e6522ce6dc8e4a78757598afe10057.png" alt="在这里插入图片描述"></p>
+<p>对于第(a)类的优化问题，尝试使用的方法就是费马大定理(Fermat)，即使用求取函数f(x)的导数，然后令其为零，可以求得候选最优值，再在这些候选值中验证；如果是凸函数，可以保证是最优解。这也就是我们高中经常使用的求函数的极值的方法。</p>
+<p>对于第(b)类的优化问题，常常使用的方法就是拉格朗日乘子法（Lagrange Multiplier) ，即把等式约束h_i(x)用一个系数与f(x)写为一个式子，称为拉格朗日函数，而系数称为拉格朗日乘子。通过拉格朗日函数对各个变量求导，令其为零，可以求得候选值集合，然后验证求得最优值。</p>
+<p>对于第©类的优化问题，常常使用的方法就是KKT条件。同样地，我们把所有的等式、不等式约束与f(x)写为一个式子，也叫拉格朗日函数，系数也称拉格朗日乘子，通过一些条件，可以求出最优值的必要条件，这个条件称为KKT条件。</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241107213251449.png" alt="image-20241107213251449"></p>
+<h5 id="4-求解KKT条件"><a href="#4-求解KKT条件" class="headerlink" title="4.求解KKT条件"></a>4.求解KKT条件</h5><p>对其各个参数求偏导：</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241107213354226.png" alt="image-20241107213354226"></p>
+<p>引入拉格朗日乘子实际上是为了达到梯度共线：</p>
+<p>∇<em>f</em>(<em>x</em>)-∑<strong>λ</strong><del>k</del>∇<em>h<del>k</del></em>(<em>x</em>)&#x3D;0,<em>x</em>为极值点 求导后为0即为极值点</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241107215044185.png" alt="image-20241107215044185"></p>
+<p>推出λ大于等于零</p>
+<p>求得KKT条件</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241110170545402.png" alt="image-20241110170545402"></p>
+<p><img src="/2024/11/10/Week4-ML/image-20241107215613172.png" alt="image-20241107215613172"></p>
+<h5 id="5-利用SVM对偶性转换问题："><a href="#5-利用SVM对偶性转换问题：" class="headerlink" title="5.利用SVM对偶性转换问题："></a>5.利用SVM对偶性转换问题：</h5><p><img src="/2024/11/10/Week4-ML/image-20241107215857033.png" alt="image-20241107215857033"></p>
+<p><img src="/2024/11/10/Week4-ML/image-20241107220022409.png" alt="image-20241107220022409"></p>
+<p>简答的一个对偶问题的示例：</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241107220106343.png" alt="image-20241107220106343"></p>
+<p>回到式子中：</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241107220454999.png" alt="image-20241107220454999"></p>
+<p>可以将问题转换为：</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241107220656459.png" alt="image-20241107220656459"></p>
+<h5 id="6-利用SMO求解："><a href="#6-利用SMO求解：" class="headerlink" title="6.利用SMO求解："></a>6.利用SMO求解：</h5><p>注意这是一个迭代算法，有初始值的。</p>
+<p>序列最小优化算法。算法的核心思想是由于我们需要寻找的是一系列的α值使得(1)取极值，但问题是<strong>这一系列的值我们很难同时优化</strong>。所以SMO算法想出了一个非常天才的办法，把这一系列的α中的两个看成是变量，其它的全部固定看成是常数。</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241110174336422.png" alt="image-20241110174336422"></p>
+<p>分情况讨论：<br>首先我们讨论y1和y2不同号时，无非两种，第一种情况是α1−α2&#x3D;k，也就是α2&#x3D;α1−k，我们假设此时k &gt; 0，第二种情况是α2&#x3D;α1+k，我们假设此时k &lt; 0。我们很容易发现对于第一种情况，如果 k &lt; 0，其实就是第二种情况，同样对于第二种情况，如果k &gt; 0其实就是第一种情况。这变成了一个<strong>线性规划问题</strong>，我们把图画出来就非常清晰了。</p>
+<p>针对第一种情况，我们可以看出来α2的范围是(0,C−α2+α1)，第二种情况的范围是(α2−α1,C)。这里我们把k又表示回了α1,α2，由于我们要通过迭代的方法来优化α1,α2的取值，所以我们令上一轮的α1,α2分别是α1o,α2o。这里的o指的是old的意思，我们把刚才求到的结论综合一下，就可以得到α2下一轮的下界L是max(0,α2o−α1o)，上界H是min(C+α2o−α1o,C)。</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241110175815604.png" alt="image-20241110175815604"></p>
+<p>同理，我们画出α1,α2同号时的情况，也有k &gt; 0 和 k &lt; 0两种<img src="/2024/11/10/Week4-ML/image-20241110175912271.png" alt="image-20241110175912271"></p>
+<p>第一种情况是y1&#x3D;y2&#x3D;1，这时α1+α2&#x3D;k，此时 k &gt; 0，对应的α2的取值是(0,α1o+α2o)。当k &gt; C的时候，这时候也就是右上角1’的情况，此时过了中间的虚线，α2的范围是(α1o+α2o−C,C)。</p>
+<p>第二种情况是y1&#x3D;y2&#x3D;−1，此时α1+α2&#x3D;k，此时k &lt; 0，由于这个时候是不符合约束条件0≤α1,α2≤C的，所以此时没有解。这两种情况综合一下，可以得到下界L是max(0,α1o+α2o−C)，上届H是min(α1o+α2o,C)。</p>
+<p>我们假设我们通过迭代之后得到的下一轮α2是α2<del>new,unc</del>，这里的<strong>unc是未经过约束的意思</strong>。那么我们加上刚才的约束，可以得到：</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241110175959541.png" alt="image-20241110175959541"></p>
+<p>这里的α2<del>new,unc</del>是我们利用求导得到取极值时的α2，但问题是由于存在约束，这个值并不一定能取到。所以上述的一系列操作就是为了探讨约束存在下我们能够取到的极值情况。</p>
+<p><strong>代入消元</strong></p>
+<p>我们现在已经得到了下一轮迭代之后得到的新的α2的取值范围，接下来要做的就是像梯度下降一样，求解出使得损失函数最小的α1和α2的值，由于α1+α2的值已经确定，所以我们求解出其中一个即可。</p>
+<p>我们令α1y1+α2y2&#x3D;ξ，那么我们可以代入得到α1&#x3D;y1(ξ−α2y2)</p>
+<p>我们把这个式子代入原式，得到的式子当中可以消去α1，这样我们得到的就是<strong>只包含α2的式子</strong>。我们可以把它看成是一个关于α2的函数，为了进一步简化，我们令</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241110180210444.png" alt="image-20241110180210444"></p>
+<p>这里的Ei表示的是第i个样本真实值与预测值之间的差，我们把上面两个式子代入原式，化简可以得到：</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241110180308358.png" alt="image-20241110180308358"></p>
+<p>接下来就是对这个式子进行<strong>求导求极值</strong></p>
+<p><img src="/2024/11/10/Week4-ML/image-20241110180334017.png" alt="image-20241110180334017"></p>
+<p>详细求解过程：</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241110184416274.png" alt="image-20241110184416274"></p>
+<p>我们根据这个式子就可以求出α2下一轮迭代之后的值，求出值之后，我们在和约束的上下界比较一下，就可以得到在满足约束的情况下可以取到的最好的值。最后，我们把α2代入式子求解一下α1。这样我们就<strong>同时优化了一对α参数</strong>，SMO算法其实就是<strong>重复使用上面的优化方法不停地选择两个参数进行优化</strong>，直到达到迭代次数，或者是不能再带来新的提升为止。</p>
+<h5 id="7-利用核函数升维使计算简便"><a href="#7-利用核函数升维使计算简便" class="headerlink" title="7.利用核函数升维使计算简便"></a>7.利用核函数升维使计算简便</h5><p>之前都是线性svm：f（x）&#x3D;w^T^ x+b</p>
+<p>非线性SVM-&gt;线性（低维-&gt;高维）：把一个数据集xi映射到无限维一定可以线性可分</p>
+<p>找出对应核函数：（高维-&gt;低维）</p>
+<p>将x<del>i</del>与x<del>j</del>升维：</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241107220912930.png" alt="image-20241107220912930"></p>
+<h4 id="为什么要用核函数升维呢？"><a href="#为什么要用核函数升维呢？" class="headerlink" title="为什么要用核函数升维呢？"></a>为什么要用核函数升维呢？</h4><p><img src="/2024/11/10/Week4-ML/image-20241107221103168.png" alt="image-20241107221103168"></p>
+<p>直观感受：</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241107221155393.png" alt="image-20241107221155393"></p>
+<p>而高斯核函数可以实现二维转无限维，所以经常拿来被使用</p>
+<h4 id="软间隔数学思想："><a href="#软间隔数学思想：" class="headerlink" title="软间隔数学思想："></a>软间隔数学思想：</h4><p><img src="/2024/11/10/Week4-ML/image-20241107221549817.png" alt="image-20241107221549817"></p>
+<p>可以类比硬间隔最优化问题求解软间隔最优化问题：</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241107221713521.png" alt="image-20241107221713521"></p>
+<p>主要思想是以直代曲，以减少计算量（铰链损失）</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241106210650983.png" alt="image-20241106210650983"></p>
+<p><img src="/2024/11/10/Week4-ML/image-20241106210608698.png" alt="image-20241106210608698"></p>
+<p>与逻辑回归相比，逻辑回归输出概率，而SVM直接分好类了</p>
+<p>如何理解损失函数？</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241106212243641.png" alt="image-20241106212243641"></p>
+<p>如上图，我们不仅仅是要做到恰好能正确分类，不能是略大于0就行。而是比0大很多，比如比1大，比-1小，而这就是SVM中的安全间距。直观感受下安全间距：</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241106212553416.png" alt="image-20241106212553416"></p>
+<p>SVM中也会存在过拟合，需要选择合适的C（或者λ）大小</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241106212619641.png" alt="image-20241106212619641"></p>
+<p>SVM的数学原理：</p>
+<p>想让θ越小，同时让θ^T^x尽可能的小（让x在θ上的投影尽可能的大）</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241107151846109.png" alt="image-20241107151846109"></p>
+<p>为什么决策边界和θ垂直呢？在决策边界上的所有点和θ点积都为零，而两边的点点积为正数或负数。p则为间距，需要让θ更小，就让让间距更大。当θ<del>0</del>不等于0.即不过原点时，也可以进行相同的推导</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241107152157089.png" alt="image-20241107152157089"></p>
+<p>核函数：</p>
+<p>这些函数的输入是样本x，输出是一个映射到更高维度的样本xt</p>
+<p>主要思想是升维</p>
+<h4 id="低维映射到高维解决线性不可分问题"><a href="#低维映射到高维解决线性不可分问题" class="headerlink" title="低维映射到高维解决线性不可分问题"></a>低维映射到高维解决线性不可分问题</h4><p>可以通过多项式回归结合逻辑回归的方式得到想要的结果：</p>
+<p>比如一维的数据</p>
+<p><img src="/2024/11/10/Week4-ML/v2-643fbcda91b78c5ec48771127f3a7091_r.jpg" alt="img"></p>
+<p>如果原来的数据是 x ，我们给它增加一个维度 x^2^，从一维变成二维，数据就变成了这样：<img src="/2024/11/10/Week4-ML/v2-256988ae04ab9e34b866396fc2e4b3f8_1440w.jpg" alt="img"></p>
+<p>回到一维中，其实就是这样的一条曲线 x^2^ - x &#x3D; 0：</p>
+<p><img src="/2024/11/10/Week4-ML/v2-f798b10b39fac1075f3c15263eb898bb_1440w.jpg" alt="img"></p>
+<p>不过使用多项式回归，随着维度的增加，会存在一个问题，那就是计算量会以几何级数增加。</p>
+<p>而核函数能解决这一个问题</p>
+<h4 id="最常用的高斯核函数："><a href="#最常用的高斯核函数：" class="headerlink" title="最常用的高斯核函数："></a>最常用的高斯核函数：</h4><p><img src="/2024/11/10/Week4-ML/image-20241107185530794.png" alt="image-20241107185530794"></p>
+<p>化曲为直：在更高的维度上观察</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241107185658968.png" alt="image-20241107185658968"></p>
+<p>σ越大，区分度下降，欠拟合，σ越小，区分度上升，过拟合</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241110193940620.png" alt="image-20241110193940620"></p>
+<h4 id="步骤：-1"><a href="#步骤：-1" class="headerlink" title="步骤："></a>步骤：</h4><p>选点，一般有多少个样例就选多少个标记点（每个样例就是一个标记点）</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241107185948538.png" alt="image-20241107185948538"></p>
+<p>选择合适的C和合适的核函数以及核函数对应参数（注意数据标准化）</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241107190156736.png" alt="image-20241107190156736"></p>
+<p>一些其他常用的核函数：（多项式核函数，字符串核函数，卡方核函数，直方相交核函数）（多分类也可以用svm解决）</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241107190355969.png" alt="image-20241107190355969"></p>
+<p><img src="/2024/11/10/Week4-ML/image-20241107190101104.png" alt="image-20241107190101104"></p>
+<h4 id="逻辑回归和SVM区别："><a href="#逻辑回归和SVM区别：" class="headerlink" title="逻辑回归和SVM区别："></a>逻辑回归和SVM区别：</h4><p>当特征很多，用逻辑回归或线性核函数的SVM</p>
+<p>当特征很少，数据集适中，用高斯核函数的SVM</p>
+<p>当特征很少，数据集很多，尝试加特征，用逻辑回归或线性核函数的SVM</p>
+<p><img src="/2024/11/10/Week4-ML/image-20241107190605021.png" alt="image-20241107190605021"></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Zhen Xie</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://example.com/2024/11/10/Week4-ML/">http://example.com/2024/11/10/Week4-ML/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"># 机器学习</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2024/11/03/Week3-ML/">Week3 ML</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Zhen Xie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
