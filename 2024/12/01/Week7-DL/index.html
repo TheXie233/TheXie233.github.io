@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Zhen Xie">
+
+
+
+
+
+<title>Week7 DL | Hexo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+<script>
+    !
+    function() {
+    function n(n, e, t) {
+    return n.getAttribute(e) || t
+    }
+    function e(n) {
+    return document.getElementsByTagName(n)
+    }
+    function t() {
+    var t = e("script"),
+    o = t.length,
+    i = t[o - 1];
+    return {
+    l: o,
+    z: n(i, "zIndex", -1), //置于主页面背后
+    o: n(i, "opacity", .5), //线条透明度
+    c: n(i, "color", "0,0,0"), //线条颜色
+    n: n(i, "count", 100) //线条数量
+    }
+    }
+    function o() {
+    a = m.width = window.innerWidth ||
+    document.documentElement.clientWidth || document.body.clientWidth,
+    c = m.height = window.innerHeight ||
+    document.documentElement.clientHeight || document.body.clientHeight
+    }
+    function i() {
+    r.clearRect(0, 0, a, c);
+    var n, e, t, o, m, l;
+    s.forEach(function(i, x) {
+    for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 :
+    1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1,
+    1), e = x + 1; e < u.length; e++) n = u[e],
+    null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l
+    = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o,
+    i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t /
+    2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y),
+    r.lineTo(n.x, n.y), r.stroke()))
+    }),
+    x(i)
+    }
+    var a, c, u, m = document.createElement("canvas"),
+    d = t(),
+    l = "c_n" + d.l,
+    r = m.getContext("2d"),
+    x = window.requestAnimationFrame || window.webkitRequestAnimationFrame
+    || window.mozRequestAnimationFrame || window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function(n) {
+    window.setTimeout(n, 1e3 / 45)
+    },
+    w = Math.random,
+    y = {
+    x: null,
+    y: null,
+    max: 2e4
+    };
+    m.id = l,
+    m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z +
+    ";opacity:" + d.o,
+    e("body")[0].appendChild(m),
+    o(),
+    window.onresize = o,
+    window.onmousemove = function(n) {
+    n = n || window.event,
+    y.x = n.clientX,
+    y.y = n.clientY
+    },
+    window.onmouseout = function() {
+    y.x = null,
+    y.y = null
+    };
+    for (var s = [], f = 0; d.n > f; f++) {
+    var h = w() * a,
+    g = w() * c,
+    v = 2 * w() - 1,
+    p = 2 * w() - 1;
+    s.push({
+    x: h,
+    y: g,
+    xa: v,
+    ya: p,
+    max: 6e3
+    })
+    }
+    u = s.concat([y]),
+    setTimeout(function() {
+    i()
+    },
+    100)
+    } ();
+    </script>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">TheXie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">TheXie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Week7 DL</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Zhen Xie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">December 1, 2024&nbsp;&nbsp;16:57:58</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/basic/">basic</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="PyTorch"><a href="#PyTorch" class="headerlink" title="PyTorch"></a>PyTorch</h2><h4 id="Load-Data（数据加载）"><a href="#Load-Data（数据加载）" class="headerlink" title="Load Data（数据加载）"></a>Load Data（数据加载）</h4><p>定义MyDataset类：</p>
+<p><img src="/2024/12/01/Week7-DL/image-20241126154705919.png" alt="image-20241126154705919"></p>
+<p>使用dataset：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dataset=MyDataset(file)</span><br><span class="line"></span><br><span class="line">dataloader=DataLoader(dataset,batch_size,shuffle=True(Training:True,Testing:False))</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/12/01/Week7-DL/image-20241126154830583.png" alt="image-20241126154830583"></p>
+<h4 id="Creating-Tensors（创建tensor）"><a href="#Creating-Tensors（创建tensor）" class="headerlink" title="Creating Tensors（创建tensor）"></a>Creating Tensors（创建tensor）</h4><p><img src="/2024/12/01/Week7-DL/image-20241126155156849.png" alt="image-20241126155156849"></p>
+<h4 id="Tensors-Operations（计算操作）"><a href="#Tensors-Operations（计算操作）" class="headerlink" title="Tensors Operations（计算操作）"></a>Tensors Operations（计算操作）</h4><p><img src="/2024/12/01/Week7-DL/image-20241126155328057.png" alt="image-20241126155328057"></p>
+<p>互换维度：</p>
+<p><img src="/2024/12/01/Week7-DL/image-20241126155420468.png" alt="image-20241126155420468"></p>
+<p>降维：</p>
+<p><img src="/2024/12/01/Week7-DL/image-20241126155550705.png" alt="image-20241126155550705"></p>
+<p>升维：</p>
+<p><img src="/2024/12/01/Week7-DL/image-20241126155615471.png" alt="image-20241126155615471"></p>
+<p>合并：</p>
+<p><img src="/2024/12/01/Week7-DL/image-20241126155648602.png" alt="image-20241126155648602"></p>
+<p>using GPU or CPU：</p>
+<p>CPU： x&#x3D;x.to(‘cpu’)</p>
+<p>GPU：x&#x3D;x.to(‘cuda’)</p>
+<p>计算梯度：</p>
+<p><img src="/2024/12/01/Week7-DL/image-20241126160325937.png" alt="image-20241126160325937"></p>
+<h4 id="Training-Testing-Neural-Networks（训练-测试神经网络）"><a href="#Training-Testing-Neural-Networks（训练-测试神经网络）" class="headerlink" title="Training&#x2F;Testing Neural Networks（训练&#x2F;测试神经网络）"></a>Training&#x2F;Testing Neural Networks（训练&#x2F;测试神经网络）</h4><h5 id="Define-Neural-Network（定义神经网络）"><a href="#Define-Neural-Network（定义神经网络）" class="headerlink" title="Define Neural Network（定义神经网络）"></a>Define Neural Network（定义神经网络）</h5><p><strong>Linear Layer（Fully-connected Layer）</strong></p>
+<p><img src="/2024/12/01/Week7-DL/image-20241126160558959.png" alt="image-20241126160558959"></p>
+<p><strong>w</strong>：layer.weight.shape</p>
+<p><strong>b</strong>：layer.bias.shape</p>
+<p><strong>Sigmoid Activation</strong></p>
+<p>nn.Sigmoid()</p>
+<p><strong>ReLU Activation</strong></p>
+<p>nn.ReLU()</p>
+<p><strong>定义模型（MyModel）:</strong></p>
+<p><img src="/2024/12/01/Week7-DL/image-20241126160907766.png" alt="image-20241126160907766"></p>
+<p>也可以这样写：</p>
+<p><img src="/2024/12/01/Week7-DL/image-20241126161103448.png" alt="image-20241126161103448"></p>
+<h5 id="Loss-Function"><a href="#Loss-Function" class="headerlink" title="Loss Function"></a>Loss Function</h5><p><img src="/2024/12/01/Week7-DL/image-20241126161326005.png" alt="image-20241126161326005"></p>
+<h5 id="Optimization-Algorithm"><a href="#Optimization-Algorithm" class="headerlink" title="Optimization Algorithm"></a>Optimization Algorithm</h5><p><img src="/2024/12/01/Week7-DL/image-20241126162934441.png" alt="image-20241126162934441"></p>
+<h5 id="整体流程："><a href="#整体流程：" class="headerlink" title="整体流程："></a>整体流程：</h5><p>定义：</p>
+<p><img src="/2024/12/01/Week7-DL/image-20241126163127143.png" alt="image-20241126163127143"></p>
+<p>训练：</p>
+<p><img src="/2024/12/01/Week7-DL/image-20241126164031963.png" alt="image-20241126164031963"></p>
+<p>验证：</p>
+<p><img src="/2024/12/01/Week7-DL/image-20241126164122902.png" alt="image-20241126164122902"></p>
+<p>测试：</p>
+<p><img src="/2024/12/01/Week7-DL/image-20241126164251954.png" alt="image-20241126164251954"></p>
+<p>存档&#x2F;读档</p>
+<p><img src="/2024/12/01/Week7-DL/image-20241126164500326.png" alt="image-20241126164500326"></p>
+<h2 id="transformer实操："><a href="#transformer实操：" class="headerlink" title="transformer实操："></a>transformer实操：</h2><h4 id="一、数据准备"><a href="#一、数据准备" class="headerlink" title="一、数据准备"></a>一、数据准备</h4><h4 id="二、参数设置"><a href="#二、参数设置" class="headerlink" title="二、参数设置"></a>二、参数设置</h4><h4 id="三、定义位置信息"><a href="#三、定义位置信息" class="headerlink" title="三、定义位置信息"></a>三、定义位置信息</h4><p>然后把<strong>字向量加上位置信息得到Encoder的输入</strong> a 矩阵<strong>。</strong>其实位置信息Positional Encoding是固定公式计算出来的，值不会改变，每次有数据来了直接加上Positional Encoding矩阵就行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">class PositionalEncoding(nn.Module):</span><br><span class="line">    def __init__(self, d_model, dropout=0.1, max_len=5000):</span><br><span class="line">        super(PositionalEncoding, self).__init__()</span><br><span class="line">        self.dropout = nn.Dropout(p=dropout) </span><br><span class="line">        pos_table = np.array([</span><br><span class="line">        [pos / np.power(10000, 2 * i / d_model) for i in range(d_model)]</span><br><span class="line">        if pos != 0 else np.zeros(d_model) for pos in range(max_len)])</span><br><span class="line">        pos_table[1:, 0::2] = np.sin(pos_table[1:, 0::2])                  # 字嵌入维度为偶数时</span><br><span class="line">        pos_table[1:, 1::2] = np.cos(pos_table[1:, 1::2])                  # 字嵌入维度为奇数时</span><br><span class="line">        self.pos_table = torch.FloatTensor(pos_table).cuda()               # enc_inputs: [seq_len, d_model]</span><br><span class="line"></span><br><span class="line">    def forward(self, enc_inputs):                                         # enc_inputs: [batch_size, seq_len, d_model]</span><br><span class="line">        enc_inputs += self.pos_table[:enc_inputs.size(1), :]</span><br><span class="line">        return self.dropout(enc_inputs.cuda())</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/12/01/Week7-DL/image-20241125174124532.png" alt="image-20241125174124532"></p>
+<p><img src="/2024/12/01/Week7-DL/image-20241125174143148.png" alt="image-20241125174143148"></p>
+<h4 id="四、Mask掉停用词"><a href="#四、Mask掉停用词" class="headerlink" title="四、Mask掉停用词"></a>四、Mask掉停用词</h4><p>Mask句子中没有实际意义的占位符，例如’我 是 学 生 P’ ，P对应句子没有实际意义，所以需要被Mask，Encoder_input 和Decoder_input占位符都需要被Mask。</p>
+<h4 id="五、Decoder输入Mask"><a href="#五、Decoder输入Mask" class="headerlink" title="五、Decoder输入Mask"></a>五、Decoder输入Mask</h4><p>参考masked-attention，实际做法是通过一个<strong>上三角矩阵</strong>实现。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def get_attn_subsequence_mask(seq):                               # seq: [batch_size, tgt_len]</span><br><span class="line">    attn_shape = [seq.size(0), seq.size(1), seq.size(1)]</span><br><span class="line">    subsequence_mask = np.triu(np.ones(attn_shape), k=1)          # 生成上三角矩阵,[batch_size, tgt_len, tgt_len]</span><br><span class="line">    subsequence_mask = torch.from_numpy(subsequence_mask).byte()  #  [batch_size, tgt_len, tgt_len]</span><br><span class="line">    return subsequence_mask </span><br></pre></td></tr></table></figure>
+
+<h4 id="六、计算注意力信息、残差和归一化"><a href="#六、计算注意力信息、残差和归一化" class="headerlink" title="六、计算注意力信息、残差和归一化"></a>六、计算注意力信息、残差和归一化</h4><p>注意每个向量的维度</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">class ScaledDotProductAttention(nn.Module):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(ScaledDotProductAttention, self).__init__()</span><br><span class="line"></span><br><span class="line">    def forward(self, Q, K, V, attn_mask):                             # Q: [batch_size, n_heads, len_q, d_k]</span><br><span class="line">                                                                       # K: [batch_size, n_heads, len_k, d_k]</span><br><span class="line">                                                                       # V: [batch_size, n_heads, len_v(=len_k), d_v]</span><br><span class="line">                                                                       # attn_mask: [batch_size, n_heads, seq_len, seq_len]</span><br><span class="line">        scores = torch.matmul(Q, K.transpose(-1, -2)) / np.sqrt(d_k)   # scores : [batch_size, n_heads, len_q, len_k]计算 Q 和 K 的点积（也就是相似度），通过 K.transpose(-1, -2) 实现最后两个维度的转置，然后，通过除以 sqrt(d_k) 来进行缩放，这有助于防止数值过大导致梯度爆炸。</span><br><span class="line">        scores.masked_fill_(attn_mask, -1e9)                           # 如果时停用词P就等于 0 </span><br><span class="line">        attn = nn.Softmax(dim=-1)(scores)</span><br><span class="line">        context = torch.matmul(attn, V)                                # [batch_size, n_heads, len_q, d_v]</span><br><span class="line">        return context, attn</span><br><span class="line">class MultiHeadAttention(nn.Module):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(MultiHeadAttention, self).__init__()</span><br><span class="line">        self.W_Q = nn.Linear(d_model, d_k * n_heads, bias=False)</span><br><span class="line">        self.W_K = nn.Linear(d_model, d_k * n_heads, bias=False)</span><br><span class="line">        self.W_V = nn.Linear(d_model, d_v * n_heads, bias=False)</span><br><span class="line">        self.fc = nn.Linear(n_heads * d_v, d_model, bias=False)</span><br><span class="line">        </span><br><span class="line">    def forward(self, input_Q, input_K, input_V, attn_mask):    # input_Q: [batch_size, len_q, d_model]</span><br><span class="line">                                                                # input_K: [batch_size, len_k, d_model]</span><br><span class="line">                                                                # input_V: [batch_size, len_v(=len_k), d_model]</span><br><span class="line">                                                                # attn_mask: [batch_size, seq_len, seq_len]</span><br><span class="line">        residual, batch_size = input_Q, input_Q.size(0)</span><br><span class="line">        Q = self.W_Q(input_Q).view(batch_size, -1, n_heads, d_k).transpose(1,2)  # Q: [batch_size, n_heads, len_q, d_k]</span><br><span class="line">        K = self.W_K(input_K).view(batch_size, -1, n_heads, d_k).transpose(1,2)  # K: [batch_size, n_heads, len_k, d_k]</span><br><span class="line">        V = self.W_V(input_V).view(batch_size, -1, n_heads, d_v).transpose(1,2)  # V: [batch_size, n_heads, len_v(=len_k), d_v]</span><br><span class="line">        attn_mask = attn_mask.unsqueeze(1).repeat(1, n_heads, 1, 1)              # attn_mask : [batch_size, n_heads, seq_len, seq_len]</span><br><span class="line">        context, attn = ScaledDotProductAttention()(Q, K, V, attn_mask)          # context: [batch_size, n_heads, len_q, d_v]</span><br><span class="line">                                                                                 # attn: [batch_size, n_heads, len_q, len_k]</span><br><span class="line">        context = context.transpose(1, 2).reshape(batch_size, -1, n_heads * d_v) # context: [batch_size, len_q, n_heads * d_v]</span><br><span class="line">        output = self.fc(context)                                                # [batch_size, len_q, d_model]</span><br><span class="line">        return nn.LayerNorm(d_model).cuda()(output + residual), attn</span><br></pre></td></tr></table></figure>
+
+<p>ScaledDotProductAttention：通过点积计算查询（Q）、键（K）和值（V）之间的关系，并根据注意力权重生成加权求和的输出。</p>
+<p>MultiHeadAttention: 将多个注意力头的计算结果拼接，并通过一个线性层映射回原始维度，同时进行残差连接和层归一化</p>
+<h4 id="七、前馈神经网络"><a href="#七、前馈神经网络" class="headerlink" title="七、前馈神经网络"></a>七、前馈神经网络</h4><h4 id="八、单个encoder"><a href="#八、单个encoder" class="headerlink" title="八、单个encoder"></a>八、单个encoder</h4><p>多头自注意力机制加上全连接层</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class EncoderLayer(nn.Module):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(EncoderLayer, self).__init__()</span><br><span class="line">        self.enc_self_attn = MultiHeadAttention()                                     # 多头注意力机制</span><br><span class="line">        self.pos_ffn = PoswiseFeedForwardNet()                                        # 前馈神经网络</span><br><span class="line"></span><br><span class="line">    def forward(self, enc_inputs, enc_self_attn_mask):                                # enc_inputs: [batch_size, src_len, d_model]</span><br><span class="line">        #输入3个enc_inputs分别与W_q、W_k、W_v相乘得到Q、K、V                          # enc_self_attn_mask: [batch_size, src_len, src_len]</span><br><span class="line">        enc_outputs, attn = self.enc_self_attn(enc_inputs, enc_inputs, enc_inputs,    # enc_outputs: [batch_size, src_len, d_model], </span><br><span class="line">                                               enc_self_attn_mask)                    # attn: [batch_size, n_heads, src_len, src_len]                                                                   </span><br><span class="line">        enc_outputs = self.pos_ffn(enc_outputs)                                       # enc_outputs: [batch_size, src_len, d_model]</span><br><span class="line">        return enc_outputs, attn</span><br></pre></td></tr></table></figure>
+
+<h4 id="九、整个encoder"><a href="#九、整个encoder" class="headerlink" title="九、整个encoder"></a>九、整个encoder</h4><p>嵌入层加上位置编码再加上多层encoder</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Encoder(nn.Module):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(Encoder, self).__init__()</span><br><span class="line">        self.src_emb = nn.Embedding(src_vocab_size, d_model)                     # 把字转换字向量 </span><br><span class="line">        self.pos_emb = PositionalEncoding(d_model)                               # 加入位置信息</span><br><span class="line">        self.layers = nn.ModuleList([EncoderLayer() for _ in range(n_layers)])</span><br><span class="line"></span><br><span class="line">    def forward(self, enc_inputs):                                               # enc_inputs: [batch_size, src_len]</span><br><span class="line">        enc_outputs = self.src_emb(enc_inputs)                                   # enc_outputs: [batch_size, src_len, d_model]</span><br><span class="line">        enc_outputs = self.pos_emb(enc_outputs)                                  # enc_outputs: [batch_size, src_len, d_model]   </span><br><span class="line">        enc_self_attn_mask = get_attn_pad_mask(enc_inputs, enc_inputs)           # enc_self_attn_mask: [batch_size, src_len, src_len]</span><br><span class="line">        enc_self_attns = []</span><br><span class="line">        for layer in self.layers:</span><br><span class="line">            enc_outputs, enc_self_attn = layer(enc_outputs, enc_self_attn_mask)  # enc_outputs :   [batch_size, src_len, d_model], </span><br><span class="line">                                                                                 # enc_self_attn : [batch_size, n_heads, src_len, src_len]</span><br><span class="line">            enc_self_attns.append(enc_self_attn)</span><br><span class="line">        return enc_outputs, enc_self_attns</span><br></pre></td></tr></table></figure>
+
+<p>第一步，中文字索引进行Embedding，转换成512维度的字向量。第二步，在子向量上面加上位置信息。第三步，Mask掉句子中的占位符号。第四步，通过6层的encoder（上一层的输出作为下一层的输入）。</p>
+<h4 id="十、单个decoder"><a href="#十、单个decoder" class="headerlink" title="十、单个decoder"></a>十、单个decoder</h4><p>多头自注意机制加上多头交叉注意机制再加上全连接层</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class DecoderLayer(nn.Module):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(DecoderLayer, self).__init__()</span><br><span class="line">        self.dec_self_attn = MultiHeadAttention()</span><br><span class="line">        self.dec_enc_attn = MultiHeadAttention()</span><br><span class="line">        self.pos_ffn = PoswiseFeedForwardNet()</span><br><span class="line"></span><br><span class="line">    def forward(self, dec_inputs, enc_outputs, dec_self_attn_mask, dec_enc_attn_mask): # dec_inputs: [batch_size, tgt_len, d_model]</span><br><span class="line">                                                                                       # enc_outputs: [batch_size, src_len, d_model]</span><br><span class="line">                                                                                       # dec_self_attn_mask: [batch_size, tgt_len, tgt_len]</span><br><span class="line">                                                                                       # dec_enc_attn_mask: [batch_size, tgt_len, src_len]</span><br><span class="line">        dec_outputs, dec_self_attn = self.dec_self_attn(dec_inputs, dec_inputs, </span><br><span class="line">                                                 dec_inputs, dec_self_attn_mask)   # dec_outputs: [batch_size, tgt_len, d_model]</span><br><span class="line">                                                                                   # dec_self_attn: [batch_size, n_heads, tgt_len, tgt_len]</span><br><span class="line">        dec_outputs, dec_enc_attn = self.dec_enc_attn(dec_outputs, enc_outputs, </span><br><span class="line">                                                enc_outputs, dec_enc_attn_mask)    # dec_outputs: [batch_size, tgt_len, d_model]</span><br><span class="line">                                                                                   # dec_enc_attn: [batch_size, h_heads, tgt_len, src_len]</span><br><span class="line">        dec_outputs = self.pos_ffn(dec_outputs)                                    # dec_outputs: [batch_size, tgt_len, d_model]</span><br><span class="line">        return dec_outputs, dec_self_attn, dec_enc_attn</span><br></pre></td></tr></table></figure>
+
+<p>decoder两次调用MultiHeadAttention时，第一次调用传入的 Q，K，V 的值是相同的，都等于dec_inputs，第二次调用 Q 矩阵是来自Decoder的输入。K，V 两个矩阵是来自Encoder的输出，等于enc_outputs。</p>
+<h4 id="十一、整个decoder"><a href="#十一、整个decoder" class="headerlink" title="十一、整个decoder"></a>十一、整个decoder</h4><p>嵌入层加上位置编码再加上多层decoder</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">class Decoder(nn.Module):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(Decoder, self).__init__()</span><br><span class="line">        self.tgt_emb = nn.Embedding(tgt_vocab_size, d_model)</span><br><span class="line">        self.pos_emb = PositionalEncoding(d_model)</span><br><span class="line">        self.layers = nn.ModuleList([DecoderLayer() for _ in range(n_layers)])</span><br><span class="line"></span><br><span class="line">    def forward(self, dec_inputs, enc_inputs, enc_outputs):                               # dec_inputs: [batch_size, tgt_len]</span><br><span class="line">                                                                                          # enc_intpus: [batch_size, src_len]</span><br><span class="line">                                                                                          # enc_outputs: [batsh_size, src_len, d_model]</span><br><span class="line">        dec_outputs = self.tgt_emb(dec_inputs)                                            # [batch_size, tgt_len, d_model]       </span><br><span class="line">        dec_outputs = self.pos_emb(dec_outputs).cuda()                                    # [batch_size, tgt_len, d_model]</span><br><span class="line">        dec_self_attn_pad_mask = get_attn_pad_mask(dec_inputs, dec_inputs).cuda()         # [batch_size, tgt_len, tgt_len]</span><br><span class="line">        dec_self_attn_subsequence_mask = get_attn_subsequence_mask(dec_inputs).cuda()     # [batch_size, tgt_len, tgt_len]</span><br><span class="line">        dec_self_attn_mask = torch.gt((dec_self_attn_pad_mask + </span><br><span class="line">                                       dec_self_attn_subsequence_mask), 0).cuda()         # [batch_size, tgt_len, tgt_len]</span><br><span class="line">        dec_enc_attn_mask = get_attn_pad_mask(dec_inputs, enc_inputs)                     # [batc_size, tgt_len, src_len]</span><br><span class="line">        dec_self_attns, dec_enc_attns = [], []</span><br><span class="line">        for layer in self.layers:                             # dec_outputs: [batch_size, tgt_len, d_model]</span><br><span class="line">                                                              # dec_self_attn: [batch_size, n_heads, tgt_len, tgt_len]</span><br><span class="line">                                                              # dec_enc_attn: [batch_size, h_heads, tgt_len, src_len]</span><br><span class="line">            dec_outputs, dec_self_attn, dec_enc_attn = layer(dec_outputs, enc_outputs, dec_self_attn_mask, dec_enc_attn_mask)</span><br><span class="line">            dec_self_attns.append(dec_self_attn)</span><br><span class="line">            dec_enc_attns.append(dec_enc_attn)</span><br><span class="line">        return dec_outputs, dec_self_attns, dec_enc_attns</span><br></pre></td></tr></table></figure>
+
+<p>第一步，英文字索引进行Embedding，转换成512维度的字向量。第二步，在子向量上面加上位置信息。第三步，Mask掉句子中的占位符号和输出顺序。第四步，通过6层的decoder（上一层的输出作为下一层的输入）。</p>
+<h4 id="十二、transformer"><a href="#十二、transformer" class="headerlink" title="十二、transformer"></a>十二、transformer</h4><p>encoder加上decoder再加上linear层做分类</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class Transformer(nn.Module):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(Transformer, self).__init__()</span><br><span class="line">        self.Encoder = Encoder().cuda()</span><br><span class="line">        self.Decoder = Decoder().cuda()</span><br><span class="line">        self.projection = nn.Linear(d_model, tgt_vocab_size, bias=False).cuda()</span><br><span class="line">    def forward(self, enc_inputs, dec_inputs):                         # enc_inputs: [batch_size, src_len]  </span><br><span class="line">                                                                       # dec_inputs: [batch_size, tgt_len]</span><br><span class="line">        enc_outputs, enc_self_attns = self.Encoder(enc_inputs)         # enc_outputs: [batch_size, src_len, d_model], </span><br><span class="line">                                                                       # enc_self_attns: [n_layers, batch_size, n_heads, src_len, src_len]</span><br><span class="line">        dec_outputs, dec_self_attns, dec_enc_attns = self.Decoder(</span><br><span class="line">            dec_inputs, enc_inputs, enc_outputs)                       # dec_outpus    : [batch_size, tgt_len, d_model], </span><br><span class="line">                                                                       # dec_self_attns: [n_layers, batch_size, n_heads, tgt_len, tgt_len], </span><br><span class="line">                                                                       # dec_enc_attn  : [n_layers, batch_size, tgt_len, src_len]</span><br><span class="line">        dec_logits = self.projection(dec_outputs)                      # dec_logits: [batch_size, tgt_len, tgt_vocab_size]</span><br><span class="line">        return dec_logits.view(-1, dec_logits.size(-1)), enc_self_attns, dec_self_attns, dec_enc_attns</span><br></pre></td></tr></table></figure>
+
+<p>Trasformer的整体结构，输入数据先通过Encoder，再同个Decoder，最后把输出进行多分类，分类数为英文字典长度，也就是判断每一个字的概率。</p>
+<h4 id="十三、定义网络"><a href="#十三、定义网络" class="headerlink" title="十三、定义网络"></a>十三、定义网络</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">model = Transformer().cuda()</span><br><span class="line">criterion = nn.CrossEntropyLoss(ignore_index=0)     #忽略 占位符 索引为0.</span><br><span class="line">optimizer = optim.SGD(model.parameters(), lr=1e-3, momentum=0.99)</span><br></pre></td></tr></table></figure>
+
+<h4 id="十四、训练"><a href="#十四、训练" class="headerlink" title="十四、训练"></a>十四、训练</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">for epoch in range(50):</span><br><span class="line">    for enc_inputs, dec_inputs, dec_outputs in loader:         # enc_inputs : [batch_size, src_len]</span><br><span class="line">                                                               # dec_inputs : [batch_size, tgt_len]</span><br><span class="line">                                                               # dec_outputs: [batch_size, tgt_len]</span><br><span class="line">      </span><br><span class="line">      enc_inputs, dec_inputs, dec_outputs = enc_inputs.cuda(), dec_inputs.cuda(), dec_outputs.cuda()                                                             </span><br><span class="line">      outputs, enc_self_attns, dec_self_attns, dec_enc_attns = model(enc_inputs, dec_inputs)</span><br><span class="line">                                                               # outputs: [batch_size * tgt_len, tgt_vocab_size]</span><br><span class="line">      loss = criterion(outputs, dec_outputs.view(-1))</span><br><span class="line">      print(&#x27;Epoch:&#x27;, &#x27;%04d&#x27; % (epoch + 1), &#x27;loss =&#x27;, &#x27;&#123;:.6f&#125;&#x27;.format(loss))</span><br><span class="line">      optimizer.zero_grad()</span><br><span class="line">      loss.backward()</span><br><span class="line">      optimizer.step()</span><br></pre></td></tr></table></figure>
+
+<p>具体步骤包括：</p>
+<ol>
+<li>模型接受输入序列和目标序列。</li>
+<li>模型计算预测结果。</li>
+<li>计算损失值，并根据损失更新模型参数。</li>
+<li>重复以上步骤，经过多个epoch，模型逐渐学习如何更好地将输入序列映射到目标序列。</li>
+</ol>
+<p>**<code>optimizer.zero_grad()</code>**：清空优化器中所有参数的梯度，防止梯度在多个batch中累积。</p>
+<p>**<code>loss.backward()</code>**：进行反向传播，计算损失相对于模型参数的梯度。</p>
+<p>**<code>optimizer.step()</code>**：根据计算出来的梯度，更新模型的参数。</p>
+<h4 id="十五、测试"><a href="#十五、测试" class="headerlink" title="十五、测试"></a>十五、测试</h4><h2 id="用transformer进行seq2seq转换（翻译）中一些tips："><a href="#用transformer进行seq2seq转换（翻译）中一些tips：" class="headerlink" title="用transformer进行seq2seq转换（翻译）中一些tips："></a>用transformer进行seq2seq转换（翻译）中一些tips：</h2><p><strong>1、文本处理过程中可能需要将全角字符转换成半角字符，其具体步骤是通过 ASCII 进行加减。对于一些不必要的符号进行删除如空格、破折号（—），给匹配的标点符号两侧加上空格</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s = re.sub(&#x27;([。,;!?()\&quot;~「」])&#x27;, r&#x27; \1 &#x27;, s) #加空格</span><br></pre></td></tr></table></figure>
+
+<p><strong>2、对于英文，我们常见的做法是将它分割为subword units 作为断词单位，这样不仅更有利于读取长单词，对于未学习到过的生僻单词可以通过subword units 尝试拼出。</strong></p>
+<p>可以通过调用<strong>sentencepiece</strong>包，来训练一个分词模型，模型选择用 <strong>unigram</strong> 或 <strong>byte-pair encoding (BPE)</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">spm.SentencePieceTrainer.train(</span><br><span class="line">        input=&#x27;,&#x27;.join([f&#x27;&#123;prefix&#125;/train.clean.&#123;src_lang&#125;&#x27;,</span><br><span class="line">                        f&#x27;&#123;prefix&#125;/valid.clean.&#123;src_lang&#125;&#x27;,</span><br><span class="line">                        f&#x27;&#123;prefix&#125;/train.clean.&#123;tgt_lang&#125;&#x27;,</span><br><span class="line">                        f&#x27;&#123;prefix&#125;/valid.clean.&#123;tgt_lang&#125;&#x27;]),</span><br><span class="line">        model_prefix=prefix/f&#x27;spm&#123;vocab_size&#125;&#x27;,#文件前缀</span><br><span class="line">        vocab_size=vocab_size,#词汇表大小</span><br><span class="line">        character_coverage=1,#字符覆盖率，值为 1 表示考虑所有字符字符覆盖率，值为 1 表示考虑所有字符，适用于多种语言（包括中文）。</span><br><span class="line">        model_type=&#x27;unigram&#x27;, # &#x27;bpe&#x27; 也可</span><br><span class="line">        input_sentence_size=1e6,#输入语句的数量，一百万</span><br><span class="line">        shuffle_input_sentence=True,#是否对输入句子进行随机打乱</span><br><span class="line">        normalization_rule_name=&#x27;nmt_nfkc_cf&#x27;,#它是针对神经机器翻译的文本规范化规则，通常会做一些常见字符的规范化，比如统一编码等。</span><br><span class="line">    )</span><br><span class="line">    spm_model = spm.SentencePieceProcessor(model_file=str(prefix/f&#x27;spm&#123;vocab_size&#125;.model&#x27;))</span><br></pre></td></tr></table></figure>
+
+<p><strong>3、fairseq preprocess 会将原始的文本数据（如 <code>.txt</code> 文件）转换为适合快速加载和高效处理的二进制格式（例如 <code>.bin</code> 文件）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">!python -m fairseq_cli.preprocess \</span><br><span class="line">    --source-lang &#123;src_lang&#125;\</span><br><span class="line">    --target-lang &#123;tgt_lang&#125;\</span><br><span class="line">    --trainpref &#123;prefix/&#x27;train&#x27;&#125;\</span><br><span class="line">    --validpref &#123;prefix/&#x27;valid&#x27;&#125;\</span><br><span class="line">    --testpref &#123;prefix/&#x27;test&#x27;&#125;\</span><br><span class="line">    --destdir &#123;binpath&#125;\</span><br><span class="line">    --joined-dictionary\</span><br><span class="line">    --workers 2</span><br></pre></td></tr></table></figure>
+
+<p>可以通过fairseq的<strong>TranslationTask</strong>进行模型搭建</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">task = TranslationTask.setup_task(task_cfg)</span><br></pre></td></tr></table></figure>
+
+<p><strong>4、迭代过程中需要注意的tips：</strong></p>
+<p>（1）通过调整每个 batch 的大小（如<strong>限制最大 token 数</strong>），可以更好地利用 GPU 内存。</p>
+<p>（2）每次训练时对训练数据<strong>进行不同的打乱</strong>，这样可以<strong>提高训练的多样性</strong>，防止模型依赖数据的顺序。</p>
+<p>（3）通常会对训练数据进行<strong>过滤</strong>，<strong>去掉那些长度超过最大限制</strong>的句子，避免过长的序列占用过多的计算资源。</p>
+<p>（4）将每个 batch 中的句子<strong>填充（padding）成相同长度</strong>，确保在进行<strong>并行</strong>计算时，不会因为不同长度的句子导致 GPU 计算资源的浪费。</p>
+<p>（5） <strong>teacher forcing</strong>：解码器在每一步生成下一个词时，不会使用它自己上一步的生成结果，而是使用目标序列中对应位置的实际词（即“真实的词”）</p>
+<p><strong>5、定义模型可以直接传参数，都不需要定义层数</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">class Seq2Seq(FairseqEncoderDecoderModel):</span><br><span class="line">    def __init__(self, args, encoder, decoder):</span><br><span class="line">        super().__init__(encoder, decoder)</span><br><span class="line">        self.args = args</span><br><span class="line"></span><br><span class="line">    def forward(</span><br><span class="line">        self,</span><br><span class="line">        src_tokens,</span><br><span class="line">        src_lengths,</span><br><span class="line">        prev_output_tokens,</span><br><span class="line">        return_all_hiddens: bool = True,</span><br><span class="line">    ):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        Run the forward pass for an encoder-decoder model.</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        encoder_out = self.encoder(</span><br><span class="line">            src_tokens, src_lengths=src_lengths, return_all_hiddens=return_all_hiddens</span><br><span class="line">        )</span><br><span class="line">        logits, extra = self.decoder(</span><br><span class="line">            prev_output_tokens,</span><br><span class="line">            encoder_out=encoder_out,</span><br><span class="line">            src_lengths=src_lengths,</span><br><span class="line">            return_all_hiddens=return_all_hiddens,</span><br><span class="line">        )</span><br><span class="line">        return logits, extra</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">from fairseq.models.transformer import (</span><br><span class="line">     TransformerEncoder,</span><br><span class="line">     TransformerDecoder,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">def build_model(args, task):</span><br><span class="line">    &quot;&quot;&quot; 按照參數設定建置模型 &quot;&quot;&quot;</span><br><span class="line">    src_dict, tgt_dict = task.source_dictionary, task.target_dictionary</span><br><span class="line"></span><br><span class="line">    # 詞嵌入</span><br><span class="line">    encoder_embed_tokens = nn.Embedding(len(src_dict), args.encoder_embed_dim, src_dict.pad())</span><br><span class="line">    decoder_embed_tokens = nn.Embedding(len(tgt_dict), args.decoder_embed_dim, tgt_dict.pad())</span><br><span class="line"></span><br><span class="line">    # 編碼器與解碼器</span><br><span class="line"></span><br><span class="line">    encoder = TransformerEncoder(args, src_dict, encoder_embed_tokens)</span><br><span class="line">    decoder = TransformerDecoder(args, tgt_dict, decoder_embed_tokens)</span><br><span class="line"></span><br><span class="line">    # 序列到序列模型</span><br><span class="line">    model = Seq2Seq(args, encoder, decoder)</span><br><span class="line">from fairseq.models.transformer import base_architecture</span><br><span class="line">base_architecture(arch_args)#基本参数like encoder_embed_dim,encoder_ffn_embed_dim</span><br><span class="line">model = build_model(arch_args, task)</span><br></pre></td></tr></table></figure>
+
+<p><strong>6、 标签平滑 (label smoothing)</strong> </p>
+<p>标签平滑的核心思想是让目标标签的概率不再是严格的 one-hot 向量，而是对目标类别的概率进行平滑处理，使得<strong>一些概率分配给其他类别</strong>，从而降低模型在训练时对单一标签的<strong>过度自信</strong>，帮助模型更好地<strong>泛化</strong>。例如，如果原本的目标是类别 3，标准的 one-hot 编码可能是：[0, 0, 1, 0]，而如果我们应用了标签平滑（smoothing&#x3D;0.1），则目标变成：[0.025, 0.025, 0.9, 0.025]，这对防止过拟合非常有帮助。</p>
+<p>eps_i &#x3D; self.smoothing &#x2F; lprobs.size(-1)  #总平滑值除以总数</p>
+<p> loss &#x3D; (1.0 - self.smoothing) * nll_loss + eps_i * smooth_loss #nll_loss标准的交叉熵损失。smooth_loss是总的平滑的部分损失</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">criterion = LabelSmoothedCrossEntropyCriterion(</span><br><span class="line">    smoothing=0.1,</span><br><span class="line">    ignore_index=task.target_dictionary.pad(),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><strong>7、 Adam + lr scheduling（like NoamOpt）</strong></p>
+<p>它会在训练的初始阶段<strong>线性地增加学习率</strong>，然后在达到某个点后，开始按照步骤的<strong>逆平方根进行衰减</strong></p>
+<p>lr &#x3D; scale_factor * (model_dim ** -0.5) * min(step_num ** -0.5, step_num * warmup_steps ** -1.5)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">optimizer = NoamOpt(</span><br><span class="line">    model_size=arch_args.encoder_embed_dim,</span><br><span class="line">    factor=config.lr_factor,</span><br><span class="line">    warmup=config.lr_warmup,</span><br><span class="line">    optimizer=torch.optim.AdamW(model.parameters(), lr=0, betas=(0.9, 0.98), eps=1e-9, weight_decay=0.0001))</span><br></pre></td></tr></table></figure>
+
+<p><strong>8、训练过程：</strong></p>
+<p>（1）<strong>梯度累积</strong>：<code>GroupedIterator</code> 用于梯度累积。梯度累积的目的是通过在多次前向传播后再进行一次反向传播来减少显存消耗，尤其适用于批量大小很大的情况下。如果 <code>accum_steps = 4</code>，则每四个样本（批次）累积一次梯度，再进行一次参数更新。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">itr = iterators.GroupedIterator(itr, accum_steps)</span><br></pre></td></tr></table></figure>
+
+<p>（2）<strong>混合精度训练</strong>：<code>GradScaler</code> 和 <code>autocast</code> 是 PyTorch 提供的用于混合精度训练的工具。混合精度训练（AMP）通过使用较<strong>低精度（如16位浮点数）来加速训练过程</strong>，同时减少显存使用。<code>scaler</code> 用于<strong>动态调整梯度缩放</strong>，以保持数值稳定性。</p>
+<p>大部分操作以 <strong>float16</strong> 精度执行，但某些数值敏感的运算（如 softmax、loss 计算）会自动切换为 <strong>float32</strong>，通过 <code>torch.cuda.amp.GradScaler</code> 动态调整梯度的缩放因子，确保梯度值在适当范围内。使用 <code>GradScaler.scale(loss)</code> 对<strong>损失进行缩放</strong>，然后调用 <code>.backward()</code> 计算梯度，缩放梯度的目的是避免梯度过小（因为 <strong>float16</strong> 表示的最小值范围有限），导致更新无效。在调用优化器前，使用 <code>scaler.unscale_()</code> 将梯度<strong>缩放回正常范围</strong>。然后调用 <code>scaler.step(optimizer)</code> <strong>使用缩放后的梯度更新模型参数</strong>。最后调用 <code>scaler.update()</code> <strong>动态调整梯度缩放因子</strong>，以适应训练过程中的梯度范围。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> scaler = GradScaler() # 混和精度訓練 automatic mixed precision (amp)</span><br><span class="line"># 混和精度訓練</span><br><span class="line">        with autocast():</span><br><span class="line">            net_output = model.forward(**sample[&quot;net_input&quot;])</span><br><span class="line">            lprobs = F.log_softmax(net_output[0], -1)</span><br><span class="line">            loss = criterion(lprobs.view(-1, lprobs.size(-1)), target.view(-1))</span><br><span class="line"></span><br><span class="line">            # logging</span><br><span class="line">            accum_loss += loss.item()</span><br><span class="line">            # back-prop</span><br><span class="line">            scaler.scale(loss).backward()</span><br><span class="line"></span><br><span class="line">    scaler.unscale_(optimizer)</span><br><span class="line">    optimizer.multiply_grads(1 / (sample_size or 1.0)) # (sample_size or 1.0) handles the case of a zero gradient</span><br></pre></td></tr></table></figure>
+
+<p>（3）<strong>梯度裁剪</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gnorm = nn.utils.clip_grad_norm_(model.parameters(), config.clip_norm) # 梯度裁剪 防止梯度爆炸</span><br></pre></td></tr></table></figure>
+
+<h2 id="手搓神经网络"><a href="#手搓神经网络" class="headerlink" title="手搓神经网络"></a>手搓神经网络</h2><p>1、定义激活函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def softmax(x):</span><br><span class="line">    if x.ndim == 2:</span><br><span class="line">        x = x.T</span><br><span class="line">        x = x - np.max(x, axis=0)</span><br><span class="line">        y = np.exp(x) / np.sum(np.exp(x), axis=0)</span><br><span class="line">        return y.T</span><br><span class="line"></span><br><span class="line">    x = x - np.max(x)  # 溢出对策</span><br><span class="line">    return np.exp(x) / np.sum(np.exp(x))</span><br></pre></td></tr></table></figure>
+
+<p>2、定义损失函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">def cross_entropy_error(y, t):</span><br><span class="line">    if y.ndim == 1:</span><br><span class="line">        t = t.reshape(1, t.size)</span><br><span class="line">        y = y.reshape(1, y.size)</span><br><span class="line"></span><br><span class="line">    # 监督数据是one-hot-vector的情况下，转换为正确解标签的索引</span><br><span class="line">    if t.size == y.size:</span><br><span class="line">        t = t.argmax(axis=1)</span><br><span class="line"></span><br><span class="line">    batch_size = y.shape[0]</span><br><span class="line">    return -np.sum(np.log(y[np.arange(batch_size), t] + 1e-7)) / batch_size</span><br><span class="line">def softmax_loss(X, t):</span><br><span class="line">    y = softmax(X)</span><br><span class="line">    return cross_entropy_error(y, t)</span><br></pre></td></tr></table></figure>
+
+<p>3、梯度计算方法（不通过求导，通过有限差分（f（x+h）-f（x-h））&#x2F;2h：更简单，更通用，但计算速度慢，复杂度高）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">def numerical_gradient(f, x):</span><br><span class="line">    h = 1e-4  # 0.0001</span><br><span class="line">    grad = np.zeros_like(x)</span><br><span class="line"></span><br><span class="line">    it = np.nditer(x, flags=[&#x27;multi_index&#x27;], op_flags=[&#x27;readwrite&#x27;])</span><br><span class="line">    while not it.finished:</span><br><span class="line">        idx = it.multi_index</span><br><span class="line">        tmp_val = x[idx]</span><br><span class="line">        x[idx] = float(tmp_val) + h</span><br><span class="line">        fxh1 = f(x)  # f(x+h)</span><br><span class="line"></span><br><span class="line">        x[idx] = tmp_val - h</span><br><span class="line">        fxh2 = f(x)  # f(x-h)</span><br><span class="line">        grad[idx] = (fxh1 - fxh2) / (2 * h)</span><br><span class="line"></span><br><span class="line">        x[idx] = tmp_val  # 还原值</span><br><span class="line">        it.iternext()</span><br><span class="line"></span><br><span class="line">    return grad</span><br></pre></td></tr></table></figure>
+
+<p>4、定义网络</p>
+<p>（1）初始化权重（w正态分布随机生成）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def __init__(self, input_size, hidden_size, output_size, weight_init_std=0.01):</span><br><span class="line">    # 初始化权重</span><br><span class="line">    self.params = &#123;&#125;</span><br><span class="line">    self.params[&#x27;W1&#x27;] = weight_init_std * np.random.randn(input_size, hidden_size)</span><br><span class="line">    self.params[&#x27;b1&#x27;] = np.zeros(hidden_size)</span><br><span class="line">    self.params[&#x27;W2&#x27;] = weight_init_std * np.random.randn(hidden_size, output_size)</span><br><span class="line">    self.params[&#x27;b2&#x27;] = np.zeros(output_size)</span><br></pre></td></tr></table></figure>
+
+<p>（2）前向传播</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">def predict(self, x):</span><br><span class="line">    W1, W2 = self.params[&#x27;W1&#x27;], self.params[&#x27;W2&#x27;]</span><br><span class="line">    b1, b2 = self.params[&#x27;b1&#x27;], self.params[&#x27;b2&#x27;]</span><br><span class="line"></span><br><span class="line">    a1 = np.dot(x, W1) + b1</span><br><span class="line">    #z1 = sigmoid(a1)</span><br><span class="line">    z1 = relu(a1)</span><br><span class="line">    a2 = np.dot(z1, W2) + b2</span><br><span class="line">    y = softmax(a2)</span><br><span class="line"></span><br><span class="line">    return y</span><br></pre></td></tr></table></figure>
+
+<p>（3）计算loss</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def loss(self, x, t):</span><br><span class="line">    y = self.predict(x)</span><br><span class="line"></span><br><span class="line">    return cross_entropy_error(y, t)</span><br></pre></td></tr></table></figure>
+
+<p>（4）数值梯度计算（有限差分）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">def numerical_gradient(self, x, t):</span><br><span class="line">    loss_W = lambda W: self.loss(x, t)</span><br><span class="line"></span><br><span class="line">    grads = &#123;&#125;</span><br><span class="line">    grads[&#x27;W1&#x27;] = numerical_gradient(loss_W, self.params[&#x27;W1&#x27;])</span><br><span class="line">    grads[&#x27;b1&#x27;] = numerical_gradient(loss_W, self.params[&#x27;b1&#x27;])</span><br><span class="line">    grads[&#x27;W2&#x27;] = numerical_gradient(loss_W, self.params[&#x27;W2&#x27;])</span><br><span class="line">    grads[&#x27;b2&#x27;] = numerical_gradient(loss_W, self.params[&#x27;b2&#x27;])</span><br><span class="line"></span><br><span class="line">    return grads</span><br></pre></td></tr></table></figure>
+
+<p>（5）基于反向传播梯度计算</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">def gradient(self, x, t):</span><br><span class="line">    W1, W2 = self.params[&#x27;W1&#x27;], self.params[&#x27;W2&#x27;]</span><br><span class="line">    b1, b2 = self.params[&#x27;b1&#x27;], self.params[&#x27;b2&#x27;]</span><br><span class="line">    grads = &#123;&#125;</span><br><span class="line"></span><br><span class="line">    batch_num = x.shape[0]</span><br><span class="line"></span><br><span class="line">    # forward</span><br><span class="line">    a1 = np.dot(x, W1) + b1</span><br><span class="line">    #z1 = sigmoid(a1)</span><br><span class="line">    z1 = relu(a1)</span><br><span class="line">    a2 = np.dot(z1, W2) + b2</span><br><span class="line">    y = softmax(a2)</span><br><span class="line"></span><br><span class="line">    # backward</span><br><span class="line">    dy = (y - t) / batch_num</span><br><span class="line">    grads[&#x27;W2&#x27;] = np.dot(z1.T, dy)</span><br><span class="line">    grads[&#x27;b2&#x27;] = np.sum(dy, axis=0)</span><br><span class="line"></span><br><span class="line">    da1 = np.dot(dy, W2.T)</span><br><span class="line">    #dz1 = sigmoid_grad(a1) * da1</span><br><span class="line">    dz1 = relu_grad(a1) * da1</span><br><span class="line">    grads[&#x27;W1&#x27;] = np.dot(x.T, dz1)</span><br><span class="line">    grads[&#x27;b1&#x27;] = np.sum(dz1, axis=0)</span><br><span class="line"></span><br><span class="line">    return grads</span><br></pre></td></tr></table></figure>
+
+<p>（6）预测</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def accuracy(self, x, t):</span><br><span class="line">    y = self.predict(x)</span><br><span class="line">    y = np.argmax(y, axis=1)</span><br><span class="line">    t = np.argmax(t, axis=1)</span><br><span class="line"></span><br><span class="line">    accuracy = np.sum(y == t) / float(x.shape[0])</span><br><span class="line">    return accuracy</span><br></pre></td></tr></table></figure>
+
+<p>5、设置参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">network = TwoLayerNet(input_size=784, hidden_size=50, output_size=10)</span><br><span class="line">iters_num = 10000</span><br><span class="line">train_size = x_train.shape[0]</span><br><span class="line">batch_size = 512</span><br><span class="line">learning_rate = 0.05</span><br></pre></td></tr></table></figure>
+
+<p>6、训练</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">for i in range(iters_num):</span><br><span class="line">	#随机选取</span><br><span class="line">    batch_mask = np.random.choice(train_size, batch_size)</span><br><span class="line">    x_batch = x_train[batch_mask]</span><br><span class="line">    y_batch = y_train[batch_mask]</span><br><span class="line"></span><br><span class="line">    # 计算梯度</span><br><span class="line">    grad = network.gradient(x_batch, y_batch)</span><br><span class="line"></span><br><span class="line">    # 更新</span><br><span class="line">    for key in (&#x27;W1&#x27;, &#x27;b1&#x27;, &#x27;W2&#x27;, &#x27;b2&#x27;):</span><br><span class="line">        network.params[key] -= learning_rate * grad[key]</span><br><span class="line"></span><br><span class="line">    loss = network.loss(x_batch, y_batch)</span><br><span class="line">    train_loss_list.append(loss)</span><br></pre></td></tr></table></figure>
+
+<p>7、测试</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test_acc = network.accuracy(x_test, y_test)</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Zhen Xie</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://example.com/2024/12/01/Week7-DL/">http://example.com/2024/12/01/Week7-DL/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"># 深度学习</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2024/11/25/Week6-DL/">Week6 DL</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Zhen Xie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

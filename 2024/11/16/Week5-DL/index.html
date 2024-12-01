@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Zhen Xie">
+
+
+
+
+
+<title>Week5-DL | Hexo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+<script>
+    !
+    function() {
+    function n(n, e, t) {
+    return n.getAttribute(e) || t
+    }
+    function e(n) {
+    return document.getElementsByTagName(n)
+    }
+    function t() {
+    var t = e("script"),
+    o = t.length,
+    i = t[o - 1];
+    return {
+    l: o,
+    z: n(i, "zIndex", -1), //置于主页面背后
+    o: n(i, "opacity", .5), //线条透明度
+    c: n(i, "color", "0,0,0"), //线条颜色
+    n: n(i, "count", 100) //线条数量
+    }
+    }
+    function o() {
+    a = m.width = window.innerWidth ||
+    document.documentElement.clientWidth || document.body.clientWidth,
+    c = m.height = window.innerHeight ||
+    document.documentElement.clientHeight || document.body.clientHeight
+    }
+    function i() {
+    r.clearRect(0, 0, a, c);
+    var n, e, t, o, m, l;
+    s.forEach(function(i, x) {
+    for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 :
+    1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1,
+    1), e = x + 1; e < u.length; e++) n = u[e],
+    null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l
+    = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o,
+    i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t /
+    2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y),
+    r.lineTo(n.x, n.y), r.stroke()))
+    }),
+    x(i)
+    }
+    var a, c, u, m = document.createElement("canvas"),
+    d = t(),
+    l = "c_n" + d.l,
+    r = m.getContext("2d"),
+    x = window.requestAnimationFrame || window.webkitRequestAnimationFrame
+    || window.mozRequestAnimationFrame || window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function(n) {
+    window.setTimeout(n, 1e3 / 45)
+    },
+    w = Math.random,
+    y = {
+    x: null,
+    y: null,
+    max: 2e4
+    };
+    m.id = l,
+    m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z +
+    ";opacity:" + d.o,
+    e("body")[0].appendChild(m),
+    o(),
+    window.onresize = o,
+    window.onmousemove = function(n) {
+    n = n || window.event,
+    y.x = n.clientX,
+    y.y = n.clientY
+    },
+    window.onmouseout = function() {
+    y.x = null,
+    y.y = null
+    };
+    for (var s = [], f = 0; d.n > f; f++) {
+    var h = w() * a,
+    g = w() * c,
+    v = 2 * w() - 1,
+    p = 2 * w() - 1;
+    s.push({
+    x: h,
+    y: g,
+    xa: v,
+    ya: p,
+    max: 6e3
+    })
+    }
+    u = s.concat([y]),
+    setTimeout(function() {
+    i()
+    },
+    100)
+    } ();
+    </script>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">TheXie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">TheXie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Week5-DL</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Zhen Xie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">November 16, 2024&nbsp;&nbsp;10:55:59</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/basic/">basic</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="强化学习："><a href="#强化学习：" class="headerlink" title="强化学习："></a>强化学习：</h2><p>告诉它该做什么而不是如何去做</p>
+<p>折扣因子：考虑获得奖励的成本</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241112155405443.png" alt="image-20241112155405443"></p>
+<p>为什么不用均值表示呢？扩大增加步数带来的折扣，让每一步对奖励的影响不一样，距离越远影响越小。（可以通过现金存银行的利率来理解折扣因子，现在的一块钱与以后的一块钱因为利率，价值是不同的）</p>
+<p>policy（策略）Π</p>
+<p>state–&gt;<del>Π</del> atcion</p>
+<h3 id="马尔可夫决策过程（MDP）"><a href="#马尔可夫决策过程（MDP）" class="headerlink" title="马尔可夫决策过程（MDP）"></a>马尔可夫决策过程（MDP）</h3><p>未来只取决于你现在在哪里，不是关于你是怎么到这里的。</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241112161642403.png" alt="image-20241112161642403"></p>
+<h3 id="状态-动作价值函数："><a href="#状态-动作价值函数：" class="headerlink" title="状态-动作价值函数："></a>状态-动作价值函数：</h3><p>Q（s，a）：</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241112162226792.png" alt="image-20241112162226792"></p>
+<h3 id="贝尔曼方程："><a href="#贝尔曼方程：" class="headerlink" title="贝尔曼方程："></a>贝尔曼方程：</h3><p>每一个状态的决策都取决于下一个状态的结果（感觉很类型动态方程，但是递归而不是递推）</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241112165153897.png" alt="image-20241112165153897"></p>
+<p>如果处于随机环境中，即随机马尔可夫模型（比如Q（4，-&gt;）有可能到不了5，而是有小概率到3），则需要通过重复求平均值来获得预期</p>
+<p>对于连续状态空间应用：如小车，飞行器等，状态s很可能不是一个离散的数，是一个连续的数值，甚至是个向量（比如x，y轴位置下x，y轴速度）</p>
+<h3 id="DQN："><a href="#DQN：" class="headerlink" title="DQN："></a>DQN：</h3><p>从各种Q（s，a）通过神经网络中选择一个最大的Q（s，a）</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241116110802257.png" alt="image-20241116110802257.png"></p>
+<p>通过不同状态下采取不同行动，通过贝尔曼方程获得对应Q（s，a），分为将状态和动作作为参数x，Q（s，a）作为标签y，不断生成数据集</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241116110824751.png" alt="image-20241116110824751"></p>
+<p>把Q这个函数当成之前的系数w，b用神经网络拟合。但是Q函数是随机的，那y也是随机生成的，你交给神经网络去训练能训练出好结果吗？</p>
+<p>交个神经网络训练的参数y中一部分是随机初始化神经网络生成的，但还有一部分是包含了当前状态信息的，当训练次数增多，外部输入信息逐步冲刷调初始化的随机信息</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241116110841578.png" alt="image-20241116110841578"></p>
+<h4 id="改进一（softmax）："><a href="#改进一（softmax）：" class="headerlink" title="改进一（softmax）："></a>改进一（softmax）：</h4><p>将输入输出层改变，输入只需要输入状态s，得到不同的四种策略的Q（s，a）这样可以将四次计算简化为一次。</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241116111151280.png" alt="image-20241116111151280"></p>
+<h4 id="改进二（ε贪婪策略）："><a href="#改进二（ε贪婪策略）：" class="headerlink" title="改进二（ε贪婪策略）："></a>改进二（ε贪婪策略）：</h4><p>生成数据集时，大概率选择最大化Q（s，a）的策略，小概率选择随机策略。这样可以跳出局部最优解，或者说不至于在一条路上焊死。而在刚开始生成数据集时，ε会很高，之后逐渐降低</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241116111212369.png" alt="image-20241116111212369"></p>
+<h4 id="改进三（小批量）："><a href="#改进三（小批量）：" class="headerlink" title="改进三（小批量）："></a>改进三（小批量）：</h4><p><img src="/2024/11/16/Week5-DL/image-20241116111245322.png" alt="image-20241116111245322"></p>
+<p>小批量可能会导致Q<del>new</del>训练得不如原来的Q，软更新可以防止Q进行更差的更新。软更新总而言之就是将新参数和旧参数以一定权重赋值到新参数里面，至于赋多少，根据结果而定</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241116111300688.png" alt="image-20241116111300688"></p>
+<h2 id="CNN卷积神经网络"><a href="#CNN卷积神经网络" class="headerlink" title="CNN卷积神经网络"></a>CNN卷积神经网络</h2><h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><p>我们希望一个物体不管在画面左侧还是右侧，都会被识别为同一物体，这一特点就是不变性。</p>
+<p>为了实现平移不变性，卷积神经网络（CNN）等深度学习模型在卷积层中使用了卷积操作，这个操作可以捕捉到图像中的局部特征而不受其位置的影响。</p>
+<h4 id="什么是卷积"><a href="#什么是卷积" class="headerlink" title="什么是卷积"></a>什么是卷积</h4><p>卷积操作是指将一个<strong>可移动的小窗口</strong>与图像进行逐<strong>元素相乘然后相加的操作</strong>。这个小窗口其实是一组固定的权重，它可以被看作是一个特定的滤波器或<strong>卷积核</strong>。简而言之，卷积操作就是用一个可移动的小窗口来提取图像中的特征。</p>
+<p><img src="/2024/11/16/Week5-DL/7b8af7c9507e7652df6ff7e3c14f8a1f.png" alt="img"></p>
+<p>a.<strong>步长stride</strong>：每次滑动的位置步长。</p>
+<p>b. <strong>卷积核的个数</strong>：决定输出的depth厚度。同时代表卷积核的个数。</p>
+<p>c. <strong>填充值zero-padding</strong>：在外围边缘补充若干圈0，方便从初始位置以步长为单位可以刚好滑倒末尾位置，通俗地讲就是为了总长能被步长整除。</p>
+<p>填充的作用：假设有一个大小为 4x4 的输入图像我们要应用一个 3x3 的卷积核进行卷积操作，步幅为 1，且要使用填充为 1。如果不使用填充，卷积核的<strong>中心将无法对齐到输入图像的边缘</strong>，导致输出<strong>特征图尺寸变小</strong>。在不使用填充的情况下，输出特征图的尺寸将是 2x2。</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241113171618829.png" alt="image-20241113171618829"></p>
+<p>如图，降维过后的图像可以看出竖值特征被很好的提取，但水平特征却没有被很好的提取</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241113171808184.png" alt="image-20241113171808184"></p>
+<h4 id="卷积神经网络的构造"><a href="#卷积神经网络的构造" class="headerlink" title="卷积神经网络的构造"></a>卷积神经网络的构造</h4><p><img src="/2024/11/16/Week5-DL/image-20241114103602572.png" alt="image-20241114103602572"></p>
+<h5 id="1-输入层"><a href="#1-输入层" class="headerlink" title="1 输入层"></a>1 输入层</h5><p>输入层接收原始图像数据。图像通常由三个颜色通道（红、绿、蓝）组成，形成一个二维矩阵，表示像素的强度值。</p>
+<h5 id="2-卷积和激活"><a href="#2-卷积和激活" class="headerlink" title="2 卷积和激活"></a>2 卷积和激活</h5><p>卷积层将输入图像与卷积核进行卷积操作。然后，通过应用激活函数（如ReLU）来引入非线性。这一步使网络能够学习复杂的特征。</p>
+<h5 id="非线性激活层-Relu"><a href="#非线性激活层-Relu" class="headerlink" title="非线性激活层 Relu"></a>非线性激活层 Relu</h5><p>f(x)&#x3D;max(0,x)</p>
+<p>非线性激活层即保留大于0的值，即保留特征比较好的值，将特征小于0的值舍去</p>
+<h5 id="3-池化层"><a href="#3-池化层" class="headerlink" title="3 池化层"></a>3 池化层</h5><p>池化层通过减小特征图的大小来减少计算复杂性。它通过选择池化窗口内的最大值或平均值来实现。这有助于提取最重要的特征。压缩图片。反应特征图中最突出的特点</p>
+<p>池化又叫下采样(Dwon sampling), 与之相对的是上采样(Up sampling). 卷积得到的特征图一般需要一个池化层以降低数据量.</p>
+<p><img src="/2024/11/16/Week5-DL/a6f4dc6f955de34538fe9961f73d11e4.png" alt="在这里插入图片描述"></p>
+<p>和卷积一样, 池化也有一个滑动的核, 可以称之为滑动窗口, 每滑动到一个区域, 则取最大值作为输出, 这样的操作称为 Max Pooling. 还可以采用输出均值的方式, 称为 Mean Pooling.</p>
+<h5 id="4-多层堆叠"><a href="#4-多层堆叠" class="headerlink" title="4 多层堆叠"></a>4 多层堆叠</h5><p>CNN通常由多个卷积和池化层的堆叠组成，以逐渐提取更高级别的特征。深层次的特征可以表示更复杂的模式。</p>
+<h5 id="5-全连接和输出"><a href="#5-全连接和输出" class="headerlink" title="5 全连接和输出"></a>5 全连接和输出</h5><p>最后，全连接层将提取的特征映射转化为网络的最终输出。这可以是一个分类标签、回归值或其他任务的结果。</p>
+<h4 id="卷积的作用："><a href="#卷积的作用：" class="headerlink" title="卷积的作用："></a>卷积的作用：</h4><p>与人眼观看事物原理相似，卷积神经网络可以看到事物的轮廓</p>
+<p><img src="/2024/11/16/Week5-DL/34501738b7bedc58964269aef8305ee3.png" alt="img"></p>
+<p>误差计算（反向传播）：</p>
+<p>全连接层：传统的BP算法，不断求偏导即可。</p>
+<p>卷积层：</p>
+<p>卷积层误差的计算：</p>
+<p>以一个L-1层的神经元为例子：</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241114100426851.png" alt="image-20241114100426851"></p>
+<p><img src="/2024/11/16/Week5-DL/image-20241114100248284.png" alt="image-20241114100248284"></p>
+<p><img src="/2024/11/16/Week5-DL/image-20241114100300680.png" alt="image-20241114100300680"></p>
+<p>卷积层偏置参数求导：偏置参数的求导过程的关键点是偏置参数b在cnn是共享的</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241114100830700.png" alt="image-20241114100830700"></p>
+<p>卷积层权重参数的求导：</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241114101235445.png" alt="image-20241114101235445"></p>
+<p>池化层的误差反向传播：</p>
+<p>以最大池化为例子：<strong>池化层没有参数需要学习。</strong>池化是一个固定的操作，对于最大池化来说，就是选取区域内的最大值，这里不像全连接网络或者卷积层，没有权重和偏置参数需要学习。<strong>因此在反向传播过程中，只要把误差传回到上一层（从池化层传回到卷积层）即可，不需要计算参数的梯度</strong>。</p>
+<p>误差计算过程：</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241114102725880.png" alt="image-20241114102725880"></p>
+<p>可以将计算看成左边的上采样与第L-1层的每个神经元的激活函数的导数</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241114102917951.png" alt="image-20241114102917951"></p>
+<h3 id="VGG：（连续小卷积核代替大卷积核）"><a href="#VGG：（连续小卷积核代替大卷积核）" class="headerlink" title="VGG：（连续小卷积核代替大卷积核）"></a>VGG：（连续小卷积核代替大卷积核）</h3><p><img src="/2024/11/16/Week5-DL/352973199b2041c82039909f95d46e13.png" alt="img"></p>
+<p><strong>采用连续的几个3x3的卷积核代替AlexNet中的较大卷积核（11x11，7x7，5x5）</strong>，对于给定的感受野（与输出有关的输入图片的局部大小），采用堆积的小卷积核是优于采用大的卷积核，因为多层非线性层可以增加网络深度来保证学习更复杂的模式，而且代价还比较小（参数更少）。</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241114105104116.png" alt="image-20241114105104116"></p>
+<p>- VGG16包含了16个隐藏层（13个卷积层和3个全连接层），如图中的D列所示</p>
+<p>- VGG19包含了19个隐藏层（16个卷积层和3个全连接层），如图中的E列所示</p>
+<p><img src="/2024/11/16/Week5-DL/v2-ea924e733676e0da534f677a97c98653_1440w.jpg" alt="img"></p>
+<p><strong>VGG优点</strong></p>
+<ul>
+<li>VGGNet的结构非常简洁，整个网络都使用了同样大小的卷积核尺寸（3x3）和最大池化尺寸（2x2）。</li>
+<li>几个小滤波器（3x3）卷积层的组合比一个大滤波器（5x5或7x7）卷积层好：</li>
+<li>验证了通过不断加深网络结构可以提升性能。</li>
+</ul>
+<p><strong>VGG缺点</strong></p>
+<ul>
+<li>VGG耗费更多计算资源，并且使用了更多的参数（这里不是3x3卷积的锅），导致更多的内存占用（140M）。其中绝大多数的参数都是来自于第一个全连接层。</li>
+</ul>
+<h4 id="VGG16："><a href="#VGG16：" class="headerlink" title="VGG16："></a>VGG16：</h4><h5 id="对于图像进行一个预处理："><a href="#对于图像进行一个预处理：" class="headerlink" title="对于图像进行一个预处理："></a>对于图像进行一个预处理：</h5><p>将图像转换成RGB形式又通过减去VGG_MEAN转换成BGR形式，这样做是为了匹配 VGG 模型的训练规范</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">start_time = time.time()</span><br><span class="line">print(&quot;build model started&quot;)</span><br><span class="line">rgb_scaled = rgb * 255.0</span><br><span class="line"></span><br><span class="line"># Convert RGB to BGR</span><br><span class="line">red, green, blue = tf.split(axis=3, num_or_size_splits=3, value=rgb_scaled)</span><br><span class="line">assert red.get_shape().as_list()[1:] == [224, 224, 1]</span><br><span class="line">assert green.get_shape().as_list()[1:] == [224, 224, 1]</span><br><span class="line">assert blue.get_shape().as_list()[1:] == [224, 224, 1]</span><br><span class="line">bgr = tf.concat(axis=3, values=[</span><br><span class="line">    blue - VGG_MEAN[0],</span><br><span class="line">    green - VGG_MEAN[1],</span><br><span class="line">    red - VGG_MEAN[2],</span><br><span class="line">])</span><br><span class="line">assert bgr.get_shape().as_list()[1:] == [224, 224, 3]</span><br></pre></td></tr></table></figure>
+
+<p><strong>VGG16的架构：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">self.conv1_1 = self.conv_layer(bgr, &quot;conv1_1&quot;)</span><br><span class="line">self.conv1_2 = self.conv_layer(self.conv1_1, &quot;conv1_2&quot;)</span><br><span class="line">self.pool1 = self.max_pool(self.conv1_2, &#x27;pool1&#x27;)</span><br><span class="line"></span><br><span class="line">self.conv2_1 = self.conv_layer(self.pool1, &quot;conv2_1&quot;)</span><br><span class="line">self.conv2_2 = self.conv_layer(self.conv2_1, &quot;conv2_2&quot;)</span><br><span class="line">self.pool2 = self.max_pool(self.conv2_2, &#x27;pool2&#x27;)</span><br><span class="line"></span><br><span class="line">self.conv3_1 = self.conv_layer(self.pool2, &quot;conv3_1&quot;)</span><br><span class="line">self.conv3_2 = self.conv_layer(self.conv3_1, &quot;conv3_2&quot;)</span><br><span class="line">self.conv3_3 = self.conv_layer(self.conv3_2, &quot;conv3_3&quot;)</span><br><span class="line">self.pool3 = self.max_pool(self.conv3_3, &#x27;pool3&#x27;)</span><br><span class="line"></span><br><span class="line">self.conv4_1 = self.conv_layer(self.pool3, &quot;conv4_1&quot;)</span><br><span class="line">self.conv4_2 = self.conv_layer(self.conv4_1, &quot;conv4_2&quot;)</span><br><span class="line">self.conv4_3 = self.conv_layer(self.conv4_2, &quot;conv4_3&quot;)</span><br><span class="line">self.pool4 = self.max_pool(self.conv4_3, &#x27;pool4&#x27;)</span><br><span class="line"></span><br><span class="line">self.conv5_1 = self.conv_layer(self.pool4, &quot;conv5_1&quot;)</span><br><span class="line">self.conv5_2 = self.conv_layer(self.conv5_1, &quot;conv5_2&quot;)</span><br><span class="line">self.conv5_3 = self.conv_layer(self.conv5_2, &quot;conv5_3&quot;)</span><br><span class="line">self.pool5 = self.max_pool(self.conv5_3, &#x27;pool5&#x27;)</span><br><span class="line"></span><br><span class="line">self.fc6 = self.fc_layer(self.pool5, &quot;fc6&quot;)</span><br><span class="line">assert self.fc6.get_shape().as_list()[1:] == [4096]</span><br><span class="line">self.relu6 = tf.nn.relu(self.fc6)</span><br><span class="line"></span><br><span class="line">self.fc7 = self.fc_layer(self.relu6, &quot;fc7&quot;)</span><br><span class="line">self.relu7 = tf.nn.relu(self.fc7)</span><br><span class="line"></span><br><span class="line">self.fc8 = self.fc_layer(self.relu7, &quot;fc8&quot;)</span><br><span class="line"></span><br><span class="line">self.prob = tf.nn.softmax(self.fc8, name=&quot;prob&quot;)</span><br></pre></td></tr></table></figure>
+
+<h5 id="其中卷积层的定义："><a href="#其中卷积层的定义：" class="headerlink" title="其中卷积层的定义："></a>其中卷积层的定义：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">def conv_layer(self, bottom, name):</span><br><span class="line">    with tf.compat.v1.variable_scope(name):  #创建一个变量作用域，使得所有的变量都带有指定的 name 前缀，有助于区分网络中的不同层</span><br><span class="line">        filt = self.get_conv_filter(name)   #获取名为 name 的卷积核参数</span><br><span class="line"></span><br><span class="line">        conv = tf.nn.conv2d(bottom, filt, [1, 1, 1, 1], padding=&#x27;SAME&#x27;)  #进行卷积操作</span><br><span class="line"></span><br><span class="line">        conv_biases = self.get_bias(name)   #获取名为 name 的偏置项</span><br><span class="line">        bias = tf.nn.bias_add(conv, conv_biases) #添加偏置项</span><br><span class="line"></span><br><span class="line">        relu = tf.nn.relu(bias)  #应用激活函数（ReLU）</span><br><span class="line">        return relu</span><br></pre></td></tr></table></figure>
+
+<h5 id="如果要训练模型的话："><a href="#如果要训练模型的话：" class="headerlink" title="如果要训练模型的话："></a>如果要训练模型的话：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#初始化VGG19网络</span><br><span class="line">vgg = vgg19.Vgg19(&#x27;./vgg19.npy&#x27;)</span><br><span class="line">vgg.build(images, train_mode)</span><br><span class="line"></span><br><span class="line"># print number of variables used: 143667240 variables, i.e. ideal size = 548MB</span><br><span class="line">print(vgg.get_var_count())</span><br><span class="line">#初始化变量参数，包括权重和偏置</span><br><span class="line">sess.run(tf.compat.v1.global_variables_initializer())</span><br><span class="line"></span><br><span class="line">#测试分类，因为train_mode为false，所以是推理模式，不进行参数更新。即进行图像识别</span><br><span class="line">prob = sess.run(vgg.prob, feed_dict=&#123;images: batch1, train_mode: False&#125;)</span><br><span class="line">utils.print_prob(prob[0], &#x27;./synset.txt&#x27;)</span><br><span class="line">#进行一次简单的训练，通过损失采用梯度下降得到train，并启用训练模式更新模型的权重 simple 1-step training</span><br><span class="line">cost = tf.reduce_sum((vgg.prob - true_out) ** 2)</span><br><span class="line">train = tf.compat.v1.train.GradientDescentOptimizer(0.0001).minimize(cost)</span><br><span class="line">sess.run(train, feed_dict=&#123;images: batch1, true_out: [img1_true_result], train_mode: True&#125;)</span><br><span class="line"></span><br><span class="line">#再次测试分类，预测的概率分布应更接近真实的标签</span><br><span class="line">prob = sess.run(vgg.prob, feed_dict=&#123;images: batch1, train_mode: False&#125;)</span><br><span class="line">utils.print_prob(prob[0], &#x27;./synset.txt&#x27;)</span><br><span class="line"></span><br><span class="line"># 保存模型，将模型的所有权重保存到指定路径</span><br><span class="line">vgg.save_npy(sess, &#x27;./test-save.npy&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>如果不进行参数更新的话，即只测试分类，在模型中可以直接使用constant从.npy中获取常量参数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def get_conv_filter(self, name):</span><br><span class="line">    return tf.constant(self.data_dict[name][0], name=&quot;filter&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>如果参与参数更新的话，使用variable更新数据，同时将其存入字典中。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if self.trainable:</span><br><span class="line">    var = tf.Variable(value, name=var_name)</span><br><span class="line">            self.var_dict[(name, idx)] = var</span><br></pre></td></tr></table></figure>
+
+<h3 id="GoogleNet"><a href="#GoogleNet" class="headerlink" title="GoogleNet"></a>GoogleNet</h3><p>传统结构都是通过增大网络的深度来获得更好的训练效果，但层数的增加会带来比如over fitting、梯度消失、梯度爆炸等，而GooleNet通过<strong>inception</strong>更高效的利用计算资源，使<strong>参数更少</strong>。即在增加网络深度和宽度的同时减少参数，为了减少参数，自然就想到将<strong>全连接</strong>变成<strong>稀疏连接</strong>。但是在实现上，全连接变成稀疏连接后实际计算量并不会有质的提升，因为大部分硬件是针对<strong>密集矩阵计算优化</strong>的，稀疏矩阵虽然<strong>数据量少</strong>，但是<strong>计算所消耗的时间却很难减少</strong>。而大量的文献表明可以将稀疏矩阵聚类为较为密集的子矩阵来提高计算性能</p>
+<h4 id="inception基本结构"><a href="#inception基本结构" class="headerlink" title="inception基本结构"></a>inception基本结构</h4><p><img src="/2024/11/16/Week5-DL/image-20241115115532575.png" alt="image-20241115115532575"></p>
+<p>该结构将 CNN 中常用的卷积（1x1，3x3，5x5）、池化操作（3x3）堆叠在一起（卷积、池化后的尺寸相同，将通道相加），一方面增加了网络的宽度，另一方面也增加了网络对尺度的适应性。在GoogLeNet之前的网络中，<strong>一层一般只使用一种操作（单个卷积或池化</strong>），一层只使用一个操作的弊端是提取出来的<strong>特征</strong>往往过于<strong>单调</strong>。</p>
+<p>1x1的卷积有什么用？</p>
+<p>不仅可以对通道数进行升降维，显著降低参数量，还可以实现信息的跨通道交互与整合。</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241115120333885.png" alt="image-20241115120333885"></p>
+<h4 id="inception-v1-结构"><a href="#inception-v1-结构" class="headerlink" title="inception v1 结构"></a>inception v1 结构</h4><p>引入1x1的卷积核（瓶颈层）对维度进行降低，进行信息压缩，然后再提取特征，这样可以降低计算量</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241115125401618.png" alt="image-20241115125401618"></p>
+<p><img src="/2024/11/16/Week5-DL/image-20241115125421094.png" alt="image-20241115125421094"></p>
+<h4 id="GoogleNet模型"><a href="#GoogleNet模型" class="headerlink" title="GoogleNet模型"></a>GoogleNet模型</h4><p><img src="/2024/11/16/Week5-DL/image-20241115125755980.png" alt="image-20241115125755980"></p>
+<p>一共使用了9个inception v1 module。而网络结构中有深层和浅层2个分类器，结构如下:</p>
+<p><img src="/2024/11/16/Week5-DL/284b4f2d3e03ca7ac6ef567945d7fc6c.png" alt="在这里插入图片描述"></p>
+<p>第一层是一个平均池化下采样层，池化核大小为5x5，stride&#x3D;3；第二层是卷积层，卷积核大小为1x1，stride&#x3D;1，卷积核个数是128；第三层是全连接层，节点个数是1024；第四层是全连接层，节点个数是1000</p>
+<p>在模型训练时的损失函数按照：</p>
+<p><img src="/2024/11/16/Week5-DL/1ae143ad314f070a487301109ac5fe56.png" alt="在这里插入图片描述"></p>
+<p>L0是最后的分类损失。在测试阶段则去掉辅助分类器，只记最终的分类损失。</p>
+<h4 id="特点："><a href="#特点：" class="headerlink" title="特点："></a>特点：</h4><p>（1）采用了模块化的结构（Inception 结构）</p>
+<p>（2）采用了 average pooling（平均池化）来代替全连接层，但是，实际在最后还是加了一个全连接层，主要是为了方便对输出进行灵活调整.</p>
+<p>（3）虽然移除了全连接，但是网络中依然使用了 Dropout </p>
+<p>（4）为了避免梯度消失，网络额外增加了 2 个辅助的 softmax 用于向前传导梯度（辅助分类器）。辅助分类器是将中间某一层的输出用作分类，并按一个较小的权重（0.3）加到最终分类结果中，这样相当于做了模型融合，同时给网络增加了反向传播的梯度信号，也提供了额外的正则化.</p>
+<h5 id="Dropout："><a href="#Dropout：" class="headerlink" title="Dropout："></a>Dropout：</h5><h6 id="为什么要用dropout？"><a href="#为什么要用dropout？" class="headerlink" title="为什么要用dropout？"></a>为什么要用dropout？</h6><p>深度神经网络包含多个非线性隐藏层，这使得它们有强大的表现力，可以学习输入和输出之间非常复杂的关系。但是在训练数据有限的情况下，深度神经网络很容易过度学习造成<strong>过拟合</strong>，过拟合是深度神经网络的一个非常严重的问题，此外，神经网络越大，训练速度越慢，Dropout可以通过在训练神经网络期间<strong>随机丢弃单元</strong>来<strong>防止过拟合</strong>，</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241115133130602.png" alt="image-20241115133130602"></p>
+<h6 id="dropout流程"><a href="#dropout流程" class="headerlink" title="dropout流程"></a>dropout流程</h6><p>(1)首先随机（临时）删掉网络中一半的隐藏神经元（以dropout rate为0.5为例），输入输出神经元保持不变。</p>
+<p>(2)然后把输入x 通过修改后的网络前向传播，然后把得到的损失结果通过修改的网络反向传播。一小批（这里的批次batch_size由自己设定）训练样本执行完这个过程后，在没有被删除的神经元上按照随机梯度下降法更新对应的参数（w，b）</p>
+<p>(3)恢复被删掉的神经元（此时被删除的神经元保持原样，而没有被删除的神经元已经有所更新），因此每一个mini- batch都在训练不同的网络。重复（1），（2）</p>
+<h4 id="inception-v2"><a href="#inception-v2" class="headerlink" title="inception v2"></a>inception v2</h4><p>在v1的基础上于卷积层与激活函数之间插入BN层：Conv-BN-ReLU，并将v1结构中的5×5卷积核替换为2个3×3卷积核（借鉴VGG）。</p>
+<h3 id="ResNet"><a href="#ResNet" class="headerlink" title="ResNet"></a>ResNet</h3><p><img src="/2024/11/16/Week5-DL/image-20241115153102616.png" alt="image-20241115153102616"></p>
+<p>传统的卷积神经网络都是通过将一系列卷积层与下采样层进行堆叠得到的。但是当堆叠到一定网络深度时，就会出现两个问题。</p>
+<p>（1）梯度消失或梯度爆炸</p>
+<p>（2）退化问题（随着网络层数的加深，效果会变差）</p>
+<h4 id="批量归一化（Batch-Normalization）"><a href="#批量归一化（Batch-Normalization）" class="headerlink" title="批量归一化（Batch Normalization）"></a>批量归一化（Batch Normalization）</h4><h5 id="为什么要再非线性激活前有BN层？"><a href="#为什么要再非线性激活前有BN层？" class="headerlink" title="为什么要再非线性激活前有BN层？"></a>为什么要再非线性激活前有BN层？</h5><p>BN层最重要的作用是让加速网络的收敛速度，BN让网络训练变得更容易；另外调参过程也简单多了，对于初始化要求没那么高，而且可以使用大的学习率等。</p>
+<p>BN层的作用就是让每个batch样本再每一层中都服从类似的分布</p>
+<h5 id="BN层计算过程："><a href="#BN层计算过程：" class="headerlink" title="BN层计算过程："></a>BN层计算过程：</h5><p><img src="/2024/11/16/Week5-DL/image-20241115142619143.png" alt="image-20241115142619143"></p>
+<p>1.计算样本均值。</p>
+<p>2.计算样本方差。</p>
+<p>3.样本数据标准化处理。</p>
+<p>4.平移和缩放处理，引入了这个可学习重构参数 γ 和β </p>
+<h5 id="为什么要引入-γ-和β-？"><a href="#为什么要引入-γ-和β-？" class="headerlink" title="为什么要引入 γ 和β ？"></a>为什么要引入 γ 和β ？</h5><p>以sigmod函数举例，在对输入做完标准化后，可能会出现以下情况：网络中间某一层学习到特征数据本身分布在sigmod激活函数的两侧，标准化会强制把输入的均值限制为0、标准差限制为1，这样就把数据变换成分布在sigmoid激活函数的中间部分，即破坏了网络中间某一层所学习到的特征分布。</p>
+<p>因此需要学习的参数为w，b，γ 和β ，但是在传统的全连接或卷积层中，偏置 b是用来调整激活输出的偏移的。但是在BN层中，<strong>偏移调整已经由 β 来完成</strong>。</p>
+<h5 id="测试过程："><a href="#测试过程：" class="headerlink" title="测试过程："></a>测试过程：</h5><p>因为训练集和测试集样本分布可能不一致，并且可能只使用一个样本进行测试，无法计算均值和标准差，需要保存并使用训练过程中的结果辅助运算</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241115144243686.png" alt="image-20241115144243686"></p>
+<h5 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h5><p>（1）使数据分布一致，加快网络的训练和收敛的速度，</p>
+<p>（2）使用BN层归一化后，网络的输出就不会很大，梯度就不会很小，控制梯度爆炸防止梯度消失</p>
+<p>（3）防止过拟合（存在争议），BN的使用使得一个minibatch中所有样本都被关联在了一起，因此网络不会从某一个训练样本中生成确定的结果，即同样一个样本的输出不再仅仅取决于样本的本身，也取决于跟这个样本同属一个batch的其他样本，一定程度上避免了过拟合。</p>
+<h4 id="residual结构（残差结构）"><a href="#residual结构（残差结构）" class="headerlink" title="residual结构（残差结构）"></a>residual结构（残差结构）</h4><p><img src="/2024/11/16/Week5-DL/image-20241115152608745.png" alt="image-20241115152608745"></p>
+<p>其中ResNet提出了两种mapping：一种是identity mapping，另一种residual mapping</p>
+<p>传统网络在前向传输过程中，随着层数的加深，包含图像信息会逐渐减少，而resnet的直接映射加入，保证l+1层的网络一定比l层包含更多的信息，信息传递过程中损失不是太多。</p>
+<p>一个残差块：</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241115150459409.png" alt="image-20241115150459409"></p>
+<p><img src="/2024/11/16/Week5-DL/image-20241115150525434.png" alt="image-20241115150525434"></p>
+<p>在卷积网络中， xl 可能和 xl+1 的Feature Map的数量不一样，这时候就需要使用 1×1 卷积进行升维或者降维</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">def res_block_v1(x, input_filter, output_filter):</span><br><span class="line">    res_x = Conv2D(kernel_size=(3,3), filters=output_filter, strides=1, padding=&#x27;same&#x27;)(x)</span><br><span class="line">    res_x = BatchNormalization()(res_x)</span><br><span class="line">    res_x = Activation(&#x27;relu&#x27;)(res_x)</span><br><span class="line">    res_x = Conv2D(kernel_size=(3,3), filters=output_filter, strides=1, padding=&#x27;same&#x27;)(res_x)</span><br><span class="line">    res_x = BatchNormalization()(res_x)</span><br><span class="line">    if input_filter == output_filter:</span><br><span class="line">        identity = x</span><br><span class="line">    else: #需要升维或者降维</span><br><span class="line">        identity = Conv2D(kernel_size=(1,1), filters=output_filter, strides=1, padding=&#x27;same&#x27;)(x)</span><br><span class="line">    x = keras.layers.add([identity, res_x])</span><br><span class="line">    output = Activation(&#x27;relu&#x27;)(x)</span><br><span class="line">    return output</span><br></pre></td></tr></table></figure>
+
+<h5 id="为什么残差学习更容易？"><a href="#为什么残差学习更容易？" class="headerlink" title="为什么残差学习更容易？"></a>为什么残差学习更容易？</h5><p><img src="/2024/11/16/Week5-DL/image-20241115152943946.png" alt="image-20241115152943946"></p>
+<p>式子的第一个因子表示的损失函数到达L的梯度，表示 L 层的梯度可以直接传递到任何一个比它浅的 l 层。小括号中的1表明短路机制可以无损地传播梯度，而另外一项残差梯度则需要经过带有weights的层，梯度不是直接传递过来的。残差梯度不会那么巧全为-1，而且就算其比较小，有1的存在也不会导致梯度消失。所以残差学习会更容易。</p>
+<h5 id="为什么是直接映射？"><a href="#为什么是直接映射？" class="headerlink" title="为什么是直接映射？"></a>为什么是直接映射？</h5><p><img src="/2024/11/16/Week5-DL/image-20241115153355591.png" alt="image-20241115153355591"></p>
+<h2 id="RNN循环神经网络"><a href="#RNN循环神经网络" class="headerlink" title="RNN循环神经网络"></a>RNN循环神经网络</h2><h4 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h4><p>将隐藏的输出缓存，与下一个输入相加</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241115155253812.png" alt="image-20241115155253812"></p>
+<p>即使输入相同，也会因为位置不同而导致输出不同。</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241115155434710.png" alt="image-20241115155434710"></p>
+<p>这样就可以做到与前一个输入相关联</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241115155659026.png" alt="image-20241115155659026"></p>
+<h4 id="主要类别"><a href="#主要类别" class="headerlink" title="主要类别"></a>主要类别</h4><p>Jordan 相比Elman理论上效果更好，因为y输出是有target的，而elman输出是无target的，你不知道输出的是啥。</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241115160022967.png" alt="image-20241115160022967"></p>
+<p>同时train两个神经网络，这样output看的范围更广。不仅正向，反向都有考虑</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241115210044956.png" alt="image-20241115210044956"></p>
+<h5 id="one-to-n："><a href="#one-to-n：" class="headerlink" title="one-to-n："></a>one-to-n：</h5><p>从图像生成文字；从类别生成语言或音乐</p>
+<h5 id="many-to-many（n-to-n）："><a href="#many-to-many（n-to-n）：" class="headerlink" title="many-to-many（n-to-n）："></a>many-to-many（n-to-n）：</h5><p>计算视频中每一帧的分类标签；输入为字符，输出为下一个字符的概率</p>
+<h5 id="many-to-one："><a href="#many-to-one：" class="headerlink" title="many-to-one："></a>many-to-one：</h5><p>输入一段文字判断所属类别，输入一个句子判断情感倾向</p>
+<h5 id="Encoder-Decoder（n-to-m）"><a href="#Encoder-Decoder（n-to-m）" class="headerlink" title="Encoder-Decoder（n-to-m）"></a>Encoder-Decoder（n-to-m）</h5><p><img src="/2024/11/16/Week5-DL/image-20241115213938107.png" alt="image-20241115213938107"></p>
+<p>仅仅将重复的输出拿掉，也无法将叠词识别</p>
+<p>connectionist temporal classification（CTC）：增加一个空符号</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241116101349280.png" alt="image-20241116101349280"></p>
+<p>那他的训练集的label是什么呢？也是好棒，但不会告诉你对应关系，需要穷举出所有情况</p>
+<p>Seq2Seq：常见的机器翻译</p>
+<p>先读所有的输入，然后输出，把上一个的输出当成下一个的输入。</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241116102058903.png" alt="image-20241116102058903"></p>
+<p>也可以应用到语言机器人：</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241116103351527.png" alt="image-20241116103351527"></p>
+<h4 id="Long-Short-term-Memory（LSTM）"><a href="#Long-Short-term-Memory（LSTM）" class="headerlink" title="Long Short-term Memory（LSTM）"></a>Long Short-term Memory（LSTM）</h4><p><img src="/2024/11/16/Week5-DL/image-20241115160539489.png" alt="image-20241115160539489"></p>
+<p>4个input，1个output，三个gate什么时候打开或关闭，由模型学习而来</p>
+<p>具体流程如下：</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241115161258052.png" alt="image-20241115161258052"></p>
+<p>多层LSTM：</p>
+<p>至少都要叠个六七层</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241115163514074.png" alt="image-20241115163514074"></p>
+<h4 id="RNN通过BPTT（时序反向传播算法）来训练"><a href="#RNN通过BPTT（时序反向传播算法）来训练" class="headerlink" title="RNN通过BPTT（时序反向传播算法）来训练"></a>RNN通过BPTT（时序反向传播算法）来训练</h4><p>但是RNN的error surface非常陡峭，所以很容易出现震荡的情况</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241115164904526.png" alt="image-20241115164904526"></p>
+<h5 id="为什么会出现震荡这种情况呢？"><a href="#为什么会出现震荡这种情况呢？" class="headerlink" title="为什么会出现震荡这种情况呢？"></a>为什么会出现震荡这种情况呢？</h5><p>BPTT推导可以解释。而更直观的解释如下（把同样的东西在时间转换的时候反复使用，感觉和梯度爆炸差不多）：</p>
+<p><img src="/2024/11/16/Week5-DL/image-20241115165950534.png" alt="image-20241115165950534"></p>
+<h5 id="如何解决呢？"><a href="#如何解决呢？" class="headerlink" title="如何解决呢？"></a>如何解决呢？</h5><p>clipping(裁剪):当你的gradient梯度过大时，让它等于一个阈值，比如你的梯度大于15了，就让它直接等于15，然后继续，这样就参数就不会更新过大</p>
+<h5 id="LSTM缓解梯度消失"><a href="#LSTM缓解梯度消失" class="headerlink" title="LSTM缓解梯度消失"></a>LSTM缓解梯度消失</h5><p>而LSTM能缓解梯度消失的问题，但不能解决梯度爆炸问题（可以用梯度裁剪解决），所以一般LSTM学习率都比较小。</p>
+<p>为什么呢？RNN的累乘会导致激活函数导数的累乘与权值的累乘因为引入了forget gate，前面传递下来的影响可以被抹去，LSTM中逻辑门的参数可以一定程度控制不同时间步梯度消失的程度。，所以它不会无止境的叠加。也有说法是因为加法有效抑制了梯度消失</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Zhen Xie</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://example.com/2024/11/16/Week5-DL/">http://example.com/2024/11/16/Week5-DL/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"># 深度学习</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2024/11/25/Week6-DL/">Week6 DL</a>
+            
+            
+            <a class="next" rel="next" href="/2024/11/10/Week4-ML/">Week4 ML</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Zhen Xie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

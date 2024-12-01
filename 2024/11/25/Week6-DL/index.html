@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Zhen Xie">
+
+
+
+
+
+<title>Week6 DL | Hexo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+<script>
+    !
+    function() {
+    function n(n, e, t) {
+    return n.getAttribute(e) || t
+    }
+    function e(n) {
+    return document.getElementsByTagName(n)
+    }
+    function t() {
+    var t = e("script"),
+    o = t.length,
+    i = t[o - 1];
+    return {
+    l: o,
+    z: n(i, "zIndex", -1), //置于主页面背后
+    o: n(i, "opacity", .5), //线条透明度
+    c: n(i, "color", "0,0,0"), //线条颜色
+    n: n(i, "count", 100) //线条数量
+    }
+    }
+    function o() {
+    a = m.width = window.innerWidth ||
+    document.documentElement.clientWidth || document.body.clientWidth,
+    c = m.height = window.innerHeight ||
+    document.documentElement.clientHeight || document.body.clientHeight
+    }
+    function i() {
+    r.clearRect(0, 0, a, c);
+    var n, e, t, o, m, l;
+    s.forEach(function(i, x) {
+    for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 :
+    1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1,
+    1), e = x + 1; e < u.length; e++) n = u[e],
+    null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l
+    = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o,
+    i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t /
+    2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y),
+    r.lineTo(n.x, n.y), r.stroke()))
+    }),
+    x(i)
+    }
+    var a, c, u, m = document.createElement("canvas"),
+    d = t(),
+    l = "c_n" + d.l,
+    r = m.getContext("2d"),
+    x = window.requestAnimationFrame || window.webkitRequestAnimationFrame
+    || window.mozRequestAnimationFrame || window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function(n) {
+    window.setTimeout(n, 1e3 / 45)
+    },
+    w = Math.random,
+    y = {
+    x: null,
+    y: null,
+    max: 2e4
+    };
+    m.id = l,
+    m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z +
+    ";opacity:" + d.o,
+    e("body")[0].appendChild(m),
+    o(),
+    window.onresize = o,
+    window.onmousemove = function(n) {
+    n = n || window.event,
+    y.x = n.clientX,
+    y.y = n.clientY
+    },
+    window.onmouseout = function() {
+    y.x = null,
+    y.y = null
+    };
+    for (var s = [], f = 0; d.n > f; f++) {
+    var h = w() * a,
+    g = w() * c,
+    v = 2 * w() - 1,
+    p = 2 * w() - 1;
+    s.push({
+    x: h,
+    y: g,
+    xa: v,
+    ya: p,
+    max: 6e3
+    })
+    }
+    u = s.concat([y]),
+    setTimeout(function() {
+    i()
+    },
+    100)
+    } ();
+    </script>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">TheXie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">TheXie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Week6 DL</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Zhen Xie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">November 25, 2024&nbsp;&nbsp;10:43:34</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/basic/">basic</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="GAN生成式对抗网络"><a href="#GAN生成式对抗网络" class="headerlink" title="GAN生成式对抗网络"></a>GAN生成式对抗网络</h2><p>输入不再仅仅是x，还有一个simple distribution（分布，可以是高斯分布也可以均值分布），经过神经网络，输出一个复杂的分布</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241119151640135.png" alt="image-20241119151640135"></p>
+<h5 id="为什么需要输入分布？"><a href="#为什么需要输入分布？" class="headerlink" title="为什么需要输入分布？"></a>为什么需要输入分布？</h5><p>如果是输出单一结果，以吃豆人游戏为例：</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241119152050113.png" alt="image-20241119152050113"></p>
+<p>你给的训练集中，给定一个输出，在一个拐角，它向左转是正确的，向右转也是正确的，这两者情况同时存在在训练集中，机器就很有可能两面讨好，学到同时向左向右转。</p>
+<p>通过添加一个几率的分布，让机器的输出是有几率的</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241119152519745.png" alt="image-20241119152519745"></p>
+<p>所以GAN适用于同样的输入有多种可能输出，而这些不同的输出都是对的：</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241119153008640.png" alt="image-20241119153008640"></p>
+<h3 id="unconditional-generation："><a href="#unconditional-generation：" class="headerlink" title="unconditional generation："></a>unconditional generation：</h3><p>只输入一个分布，没有x</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241119153633171.png" alt="image-20241119153633171"></p>
+<p>discriminator（辨别器）：</p>
+<p>需要一个辨别器（也是一个神经网络，可以由CNN，transformer生成）做到输入一张图片（以上面的例子举例），输出一个数字（数字越大，越像二次元人物的图像）</p>
+<h5 id="GAN的基本思路："><a href="#GAN的基本思路：" class="headerlink" title="GAN的基本思路："></a>GAN的基本思路：</h5><p>Generator和DIscriminator之间的对抗，Gennerator不断迭代来满足discriminator的要求，而discriminator也会不断得变得更严格</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241119154458992.png" alt="image-20241119154458992"></p>
+<h5 id="如何训练GAN："><a href="#如何训练GAN：" class="headerlink" title="如何训练GAN："></a>如何训练GAN：</h5><p>step1：固定generator，训练discriminator</p>
+<p>将database里面的示例数据与generator中生成的数据让discriminator做分类打分，分辨真实数据和生成数据的差异</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241119155227560.png" alt="image-20241119155227560"></p>
+<p>step2：固定discriminator，训练generator</p>
+<p>调整generator，使generator的输出作为discriminator的输入所得的评分越高，注意这里是让评分越大越好，用gradient ascent，或者也可以output评分加个负号，用gradient descent</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241119161458241.png" alt="image-20241119161458241"></p>
+<p>step3：反复step1，2</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241119161521754.png" alt="image-20241119161521754"></p>
+<p><img src="/2024/11/25/Week6-DL/image-20241119162220569.png" alt="image-20241119162220569"></p>
+<p>这个objective function所得的value和js divergence有关</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241119163008052.png" alt="image-20241119163008052"></p>
+<p><strong>直观感受maxV（D，G）与divergence的关系</strong>：</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241119164704495.png" alt="image-20241119164704495"></p>
+<p>对抗的过程实际上就是求一个<strong>最大</strong>，一个<strong>最小</strong>的问题</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241119164843469.png" alt="image-20241119164843469"></p>
+<p>一些常用的divergence：</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241119165054082.png" alt="image-20241119165054082"></p>
+<h5 id="GAN的训练小技巧："><a href="#GAN的训练小技巧：" class="headerlink" title="GAN的训练小技巧："></a>GAN的训练小技巧：</h5><p>（1）通常情况下Pg和Pdata很少重叠<img src="/2024/11/25/Week6-DL/image-20241119170458584.png" alt="image-20241119170458584"></p>
+<p>而JS divergence不重叠的总是算出来log2，所以就算有进步也看不出来，说白了就是太号分类了，正确率总是很高或者总是100.</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241119170738018.png" alt="image-20241119170738018"></p>
+<p>（2）Wasserstein distance</p>
+<p>像推土机一样将P推成Q的形状</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241119171848229.png" alt="image-20241119171848229"></p>
+<p><img src="/2024/11/25/Week6-DL/image-20241119172258588.png" alt="image-20241119172258588"></p>
+<p>D必须足够平滑，如果real和generated分布足够近，且D（x）对于real非常大，对于gennerated非常小，那么D（x）必然变化很剧烈，不够平滑</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241119172835225.png" alt="image-20241119172835225"></p>
+<p><strong>怎么做到平滑呢？</strong></p>
+<p><img src="/2024/11/25/Week6-DL/image-20241119173646318.png" alt="image-20241119173646318"></p>
+<p>但是GAN和transformer结合时，效果却不好，所以让GAN产生文字很难。因为Generator通过梯度下降有一些变化时，因为transformer中是取最大max，所以输出很可能不变，所以导致Discriminator输出不变。（这里的max和CNN中池化的max有什么区别呢？）（Scratch GAN可以做到，）</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241120103808946.png" alt="image-20241120103808946"></p>
+<p>可不可以直接从高斯分布随机选取一个向量，然后和随机和一张图片打上标签，通过监督学习的方法硬train呢？</p>
+<p>可以但是效果很差，需要用一些技巧：参考Generative Latent Optimization（GLO），Gradient Origin Networks。</p>
+<h5 id="评估GAN的效果Quality："><a href="#评估GAN的效果Quality：" class="headerlink" title="评估GAN的效果Quality："></a>评估GAN的效果Quality：</h5><p>（1）人眼观察评估：显然不客观，不合理</p>
+<p>（2）放到一个影像辨识中，如果分布集中的话，说明效果Quality不错。但是会存在一个<strong>mode collapse</strong>问题</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241120110055913.png" alt="image-20241120110055913"></p>
+<p>可以这样理解，dscriminator存在一个盲点，而generator发现了这个盲点，当它学会产生这种图片后，就永远都可以骗过。感觉有点像过拟合</p>
+<p>怎么解决？generator在训练过程中会把train point存下来，在mode collapse之前把training停下来。把之前的model拿出来用。（无法彻底解决，只能逃避这个问题）</p>
+<p>还有一个可能存在的问题<strong>Mode Dropping</strong></p>
+<p>产生出来的数据可能只是真实数据的一小部分。</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241120111338679.png" alt="image-20241120111338679"></p>
+<p>Diversity和Quality看起来是有点互斥的，越集中Quality越高，越平坦Diversity越高。但是Quality是看一张图片的分布的概率，而Diversity是看全部图片的分布，常用<strong>inception score</strong>进行判断。</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241120111740784.png" alt="image-20241120111740784"></p>
+<p>当图片直接差异不是很大时，可以用<strong>Frechet inception Distance（FID）</strong>我们不采用softmax输出的类别进行判断，而是利用他隐藏层输出的向量，即使分类类别一样，但他隐藏的输出肯定是有些许不同</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241120113110201.png" alt="image-20241120113110201"></p>
+<p>将所以图片的输出分布和真正图片的分布都看成高斯分布，算出FID。</p>
+<p>还有可能出现FID过低的情况，和原图极其相似或者直接一样，这样的效果也不好。</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241120114200965.png" alt="image-20241120114200965"></p>
+<h3 id="Conditonal-Generator"><a href="#Conditonal-Generator" class="headerlink" title="Conditonal Generator"></a>Conditonal Generator</h3><p>x可以是一段文字（通过RNN转换成一组向量丢到generator里面去），要注意generator里面需要有x，y的输入，discriminator里面也需要x，y的输入，不然generator会逐渐无视x的输入，因为他只需要生成清晰图片就行，不必管input的文字叙述，因为discriminator不看文字叙述。</p>
+<p><strong>tips：训练discriminator时负类样本的种类要足够多，才能有更好分辨能力</strong></p>
+<p><img src="/2024/11/25/Week6-DL/image-20241120164839230.png" alt="image-20241120164839230"></p>
+<p>x也可以是一个图片，产生新的图片（pix2pix），用监督学习的方式做的话，图片会很模糊（可能会出现既要又要的情况），而用GAN训练，它的想象力又过于丰富，会出现一些没要求，不相关的东西，所以可以用<strong>监督学习和GAN一起训练</strong>，generator在训练时候一方面要骗过discriminator，另一方面也要产生一张图片和标准答案越像越好。</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241120170946562.png" alt="image-20241120170946562"></p>
+<p>Learning from Unpaired Data：</p>
+<p>GAN用在无监督学习上，常用在比如影像风格的转变，文字风格的转变</p>
+<p>这里的无监督学习指的是两个分布之间的数据不对应（unpaired），比如x为真实照片，y为虚拟头像，而这些虚拟头像不是由真实照片生成的那种，所以是无监督学习。</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241120172346561.png" alt="image-20241120172346561"></p>
+<h3 id="cylcle-GAN："><a href="#cylcle-GAN：" class="headerlink" title="cylcle GAN："></a>cylcle GAN：</h3><p>为什么需要G<del>y-&gt;x</del>呢？</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241120173841116.png" alt="image-20241120173841116"></p>
+<p>为什么需要G<del>y-&gt;x</del>呢？</p>
+<p>如果没有G<del>y-&gt;x</del>，只用G<del>x-&gt;y</del>生成图片的，很显然它可能生成出和y分布很像的图片，但是不能保证他可输入有关，有可能输入一个随机的分布它也输出相似的y分布，所以需要G<del>y-&gt;x</del>去还原y分布为x分布，再比较两者的差异，，差异越小越好。但是又怎么能保证不会出现这种情况：G<del>x-&gt;y</del>将图中眼镜去掉，变为了y分布，G<del>y-&gt;x</del>又把图中眼镜加上，变为x分布呢？</p>
+<p>无法保证，但就实际效果上看，神经网络不会把输入的图片做太复杂的转换，有眼镜就直接输出眼镜这样更为简单，所以效果上面，没有什么大的问题</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241120173104795.png" alt="image-20241120173104795"></p>
+<h3 id="GAN-basic-theory"><a href="#GAN-basic-theory" class="headerlink" title="GAN basic theory"></a>GAN basic theory</h3><p>最大似然估计</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241120195755869.png" alt="image-20241120195755869"></p>
+<p>如何理解：根据已知数据P<del>data</del>（x）的分布（我们虽然不能写出对应函数，但可以举例出其中的点。而我们要做的是从一个已知函数的分布P<del>G</del>(x；θ)进行一定的变化，使他跟真实的分布越接近越好</p>
+<p><strong>最大似然估计&#x3D;最小KL散度</strong></p>
+<p><img src="/2024/11/25/Week6-DL/image-20241120200149601.png" alt="image-20241120200149601"></p>
+<p>tips：第四行减去的那项是个常数，不影响取最大值</p>
+<p>generator的作用：将一个已知的分布转换成一个复杂的分布</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241120201046244.png" alt="image-20241120201046244"></p>
+<p>前面提过<strong>maxV（G，D）等同于最小化js散度</strong>，这里给出具体证明：</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241120203011290.png" alt="image-20241120203011290"></p>
+<p><img src="/2024/11/25/Week6-DL/image-20241120203211153.png" alt="image-20241120203211153"></p>
+<p><img src="/2024/11/25/Week6-DL/image-20241120203433723.png" alt="image-20241120203433723"></p>
+<p><img src="/2024/11/25/Week6-DL/image-20241120203638060.png" alt="image-20241120203638060"></p>
+<p>所以所求的问题变为了：</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241120204435130.png" alt="image-20241120204435130"></p>
+<p>如何求G*呢？</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241120205036246.png" alt="image-20241120205036246"></p>
+<p>把他当成一个分段函数，在每一段求微分。这也是为什么要交替更新的原因，举个例子，你第一次交替时最好的D是第一条线，现在移动G（向右移）以后，可能会到第二条线，进入下一段，所以需要重新找一个最好的D</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241120210639984.png" alt="image-20241120210639984"></p>
+<p>这个就和交替训练discriminator和generator很像了，但是只能说很像，因为可能会出现这种情况：更新了G0为G1后，整个函数就变了，但是此时G0仍然是固定的，V（G1，D0）就可能不是最大的那个值了。所以这里有个假设是每次更新的G是非常小的，可以假定D0≈D1</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241120211042076.png" alt="image-20241120211042076"></p>
+<p>所以训练<strong>generator</strong>时，<strong>不能一次更新太多</strong>，但是训练<strong>discriminator</strong>时，理论上应该把它train到底，即<strong>iteration跑多点</strong></p>
+<p><img src="/2024/11/25/Week6-DL/image-20241121162146902.png" alt="image-20241121162146902"></p>
+<p>根据D（x）调整Generator输出的分布，使它和Data的分布一致</p>
+<h2 id="Transformer"><a href="#Transformer" class="headerlink" title="Transformer"></a>Transformer</h2><p>（seq2seq）</p>
+<h3 id="self-attetnion："><a href="#self-attetnion：" class="headerlink" title="self-attetnion："></a>self-attetnion：</h3><p>首先要求输入为向量，所以要将句子变为向量，可以使用one-hot编码，但这样看不出词汇之间的相关性，而word-embedding可以看出词汇的向量的相关性。</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241121164632884.png" alt="image-20241121164632884"></p>
+<p>self-attention可以处理整个sequence的咨询，从而生成一个与整个sequence有关的向量。self-attention可以堆叠使用</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241121170329284.png" alt="image-20241121170329284"></p>
+<h4 id="self-attention怎么输出的向量："><a href="#self-attention怎么输出的向量：" class="headerlink" title="self-attention怎么输出的向量："></a>self-attention怎么输出的向量：</h4><p>（1）假设输出b1，则需要根据a1找出这个seq中跟a1相关的其他向量</p>
+<p>。这个相关性怎么求呢？</p>
+<p>最常用的还是Dot-product</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241121171042836.png" alt="image-20241121171042836"></p>
+<p>具体做法：</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241121171633655.png" alt="image-20241121171633655"></p>
+<p>一定要用soft-max吗？不一定，经验之谈，最常用的是soft-max，其他激活函数也行。</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241121171739928.png" alt="image-20241121171739928"></p>
+<p><strong>α值就相当于attention，关联性</strong>，若它很大，那么所得到的b的值就越接近对应的v。</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241121173518463.png" alt="image-20241121173518463"></p>
+<p>所以我们要做的就是<strong>通过training data找出W^q^,W^k^,W^v^</strong>。</p>
+<p>相关这件事情，就是用q去找相关的k，但是相关有很多种不同的形式，所以也许不能只有一个q，应该有很多个q，不同q负责不同的相关性，所以就会有<strong>multi-head self-attention</strong> </p>
+<p><img src="/2024/11/25/Week6-DL/image-20241121174411842.png" alt="image-20241121174411842"></p>
+<p>但这个结构少了位置资讯，在例子中所有位置的操作都是一模一样的。需要用到<strong>positional encoding</strong>的技术</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241121175220308.png" alt="image-20241121175220308"></p>
+<p>直接相加就行，至于e怎么求，可以用前人算好的e，也可以从数据中学习。这不是重点，调用就完事了。</p>
+<h4 id="self-attention的理解"><a href="#self-attention的理解" class="headerlink" title="self-attention的理解"></a>self-attention的理解</h4><p>self-attention相较于RNN，RNN只能串行化，而自注意的并行性能更好。self-attention相较于CNN，CNN可以看作是简化版的自注意，只考虑感受野里面的资讯，而self-attention是一个像素考虑整张图片的资讯，像是一个全局感受野的条件卷积，CNN相当于受限制的自注意，CNN在data量很少的情况下表现比较好，自注意在data量很大的情况下表现比较好。</p>
+<p>seq2seq：</p>
+<h3 id="encoder-decoder"><a href="#encoder-decoder" class="headerlink" title="encoder-&gt;decoder"></a>encoder-&gt;decoder</h3><h4 id="encoder"><a href="#encoder" class="headerlink" title="encoder:"></a>encoder:</h4><p><img src="/2024/11/25/Week6-DL/image-20241121201734597.png" alt="image-20241121201734597"></p>
+<p>具体而言，在过transformer后，像残差网络一样，输出和原本输入做个相加，然后做layer normalization。在过全连接层时，也要过残差和layer normalization。</p>
+<p>Batch normalization是对这批样本的同一维度特征做归一化，layer normalization是针对单个样本的所有维度特征进行归一化。</p>
+<p>当然现在好像可以把残差网络和layer normalization省去。</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241121203344873.png" alt="image-20241121203344873"></p>
+<h4 id="Decoder："><a href="#Decoder：" class="headerlink" title="Decoder："></a>Decoder：</h4><h5 id="autoregressive："><a href="#autoregressive：" class="headerlink" title="autoregressive："></a>autoregressive：</h5><p>不去看具体的构造，只看输入和输出：</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241121205648077.png" alt="image-20241121205648077"></p>
+<p>Encoder和Decoder 的结构：</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241121204512693.png" alt="image-20241121204512693"></p>
+<p>什么是Masked self-attention？</p>
+<p>b1的输入只看a1，b2的输入只看a1，和a2以此类推。我们不能再看右边的部分</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241121204913555.png" alt="image-20241121204913555"></p>
+<p><img src="/2024/11/25/Week6-DL/image-20241121205142381.png" alt="image-20241121205142381"></p>
+<p>为什么要masked？</p>
+<p>对于decoder而言，输出是一个一个的输出，所以是先有a1再有a2，和原来的self-attention中a1-a4一次整个输入model中是不一样的</p>
+<h5 id="non-autoregressive（NAT）"><a href="#non-autoregressive（NAT）" class="headerlink" title="non-autoregressive（NAT）"></a>non-autoregressive（NAT）</h5><p><img src="/2024/11/25/Week6-DL/image-20241122145519843.png" alt="image-20241122145519843"></p>
+<p>NAT相对于AT，输入多少个begin就输出多少。但是我们怎么知道应该输入多少个begin呢？</p>
+<p>（1）让另外一个classifier吃encoder的输入，输出输出长度。</p>
+<p>（2）设一个非常大的长度，只取end之前的输出。</p>
+<p>NAT更像<strong>并行</strong>，AT更像<strong>串行</strong>，所以NAT一般跑得比AT的decoder更快，但NAT的表现一般都比AT差</p>
+<h4 id="cross-attention"><a href="#cross-attention" class="headerlink" title="cross attention"></a>cross attention</h4><p>其过程和self-attention一样，但是k和v来自encoder，q来自decoder</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241122150737323.png" alt="image-20241122150737323"></p>
+<h3 id="如何训练："><a href="#如何训练：" class="headerlink" title="如何训练："></a>如何训练：</h3><p>和分类问题类似，每个输出都和标签求最小交叉熵</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241122151625546.png" alt="image-20241122151625546"></p>
+<p> Teacher Forcing：在训练decoder时，输入必须要用正确答案。</p>
+<p>训练和测试的不一致叫exposure bias</p>
+<p>测试时decoder会看到一些错误的东西，但是在训练时decoder看到的是完全正确的。这样会导致测试时一步错，步步错。</p>
+<p>如何解决？给decoder 的输入加一些错误的东西（？？？）scheduled sampling</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241122160850175.png" alt="image-20241122160850175"></p>
+<h4 id="一些实际应用可能遇到的问题："><a href="#一些实际应用可能遇到的问题：" class="headerlink" title="一些实际应用可能遇到的问题："></a>一些实际应用可能遇到的问题：</h4><p><strong>copy mechanism</strong>：在做对话机器人和做摘要时，一些名词（比如人名）需要直接被复制</p>
+<p>解决方法参考Pointer Network、Copy Network </p>
+<p><strong>Guided Attention</strong>：在语言合成或者识别过程中，输入的有一些东西机器可能会没看到，Guided Attention就是强迫它一定把输入的每个东西都通通看过，要求机器做attention时有固定的方式</p>
+<p>比如语言合成时attention scores是应该从左到右的，如果机器的attention scores颠三倒四，不如直接把这个限制放进training里面要求机器学到的attention就必须由左到右</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241122153652115.png" alt="image-20241122153652115"></p>
+<p><strong>beam search</strong>：</p>
+<p>寻找最优路径</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241122155457640.png" alt="image-20241122155457640"></p>
+<h3 id="如何评价（BLEU-score）："><a href="#如何评价（BLEU-score）：" class="headerlink" title="如何评价（BLEU score）："></a>如何评价（BLEU score）：</h3><p><img src="/2024/11/25/Week6-DL/image-20241122160254964.png" alt="image-20241122160254964"></p>
+<h4 id="为什么训练用交叉熵，平均用BLEU-score呢？"><a href="#为什么训练用交叉熵，平均用BLEU-score呢？" class="headerlink" title="为什么训练用交叉熵，平均用BLEU score呢？"></a>为什么训练用交叉熵，平均用BLEU score呢？</h4><p>两个句子之间BLEU score是不能微分的，把它当作loss不知道要怎么算梯度下降。但也有解决办法：遇到optimization无法解决的问题，用强化学习硬做，loss function当作RL的reward，decoder当成agent，有可能能做</p>
+<h2 id="BERT"><a href="#BERT" class="headerlink" title="BERT"></a>BERT</h2><h3 id="bert如何做到self-supervised-learning"><a href="#bert如何做到self-supervised-learning" class="headerlink" title="bert如何做到self-supervised learning"></a>bert如何做到self-supervised learning</h3><h4 id="masking-input"><a href="#masking-input" class="headerlink" title="masking input"></a>masking input</h4><p>给定一串向量输入，随机mask一些向量，mask的方法有两个，一个是换成特定的token，一个是随机生成一个token。经过bert过后，经过一个linear层，然后做softmax，输出一个概率，和mask的值做交叉熵进行优化。相当于自己出题自己解。</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241122163320562.png" alt="image-20241122163320562"></p>
+<h4 id="next-sentence-prediction"><a href="#next-sentence-prediction" class="headerlink" title="next sentence prediction"></a>next sentence prediction</h4><p>将两个句子接在一起输入，最终只看cls的输出，经过linear层后输出yes&#x2F;no来判断句子1和句子2是否是相连的。（这个据说没有什么用）</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241122164239181.png" alt="image-20241122164239181"></p>
+<p>而next sentence prediction与masking input其实是在<strong>预训练</strong>bert，预训练过后的bert也许只能解类似的填空题，但是如果经过喂给它特定的数据微调过后，可以做各种各样的下游任务。</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241122165050686.png" alt="image-20241122165050686"></p>
+<h3 id="怎么客观评级一个bert的好坏呢？它可以分化成这么多模型"><a href="#怎么客观评级一个bert的好坏呢？它可以分化成这么多模型" class="headerlink" title="怎么客观评级一个bert的好坏呢？它可以分化成这么多模型"></a>怎么客观评级一个bert的好坏呢？它可以分化成这么多模型</h3><p>一个客观的评级标准是GLUE，把它分别微调在如下九个任务，看这九个任务上正确率的平均是多少</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241122165527742.png" alt="image-20241122165527742"></p>
+<h3 id="如何微调？"><a href="#如何微调？" class="headerlink" title="如何微调？"></a>如何微调？</h3><h4 id="（1）input：sequence-output：class"><a href="#（1）input：sequence-output：class" class="headerlink" title="（1）input：sequence output：class"></a>（1）input：sequence output：class</h4><p>输入一个句子，输出只看cls的输出，经过linear层，输出class，像监督学习一样和label做比较。微调过程中，bert的初始值是经过预训练后的值，而linear值是随机的，然后经过梯度下降后逐渐拟合。</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241122170131502.png" alt="image-20241122170131502"></p>
+<h4 id="（2）input：sequence-output：same-as-input"><a href="#（2）input：sequence-output：same-as-input" class="headerlink" title="（2）input：sequence output：same as input"></a>（2）input：sequence output：same as input</h4><p><img src="/2024/11/25/Week6-DL/image-20241122170726969.png" alt="image-20241122170726969"></p>
+<h4 id="（3）input：two-sequences-output：a-class"><a href="#（3）input：two-sequences-output：a-class" class="headerlink" title="（3）input：two sequences output：a class"></a>（3）input：two sequences output：a class</h4><p>一个前提，一个结论。机器吃两个句子，吐出句子之间的关系</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241122171250052.png" alt="image-20241122171250052"></p>
+<h4 id="（4）问答QA（答案一定在文章里面：阅读理解）"><a href="#（4）问答QA（答案一定在文章里面：阅读理解）" class="headerlink" title="（4）问答QA（答案一定在文章里面：阅读理解）"></a>（4）问答QA（答案一定在文章里面：阅读理解）</h4><p>输入文章和问题，输出是一两个数字s和e，答案就从文章截取s到e。</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241122171427879.png" alt="image-20241122171427879"></p>
+<p>将文章和答案输入，文章对应的输出与两个与他维度相同的向量做点积，然后过softmax，一个代表起始位置的可能性，一个代表结束位置的可能性。这两向量都是需要学习的。可以把这个与transformer做类别，相当于q，k做attention</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241122171817565.png" alt="image-20241122171817565"></p>
+<h3 id="Pre-training-a-seq2seq-model："><a href="#Pre-training-a-seq2seq-model：" class="headerlink" title="Pre-training a seq2seq model："></a>Pre-training a seq2seq model：</h3><p>把encoder的输入进行一定的弄坏，然后希望decoder输出的句子和弄坏前是一样的，即还原<img src="/2024/11/25/Week6-DL/image-20241122173028757.png" alt="image-20241122173028757"></p>
+<p>如何弄坏呢？</p>
+<p>mask，删除，弄乱顺序，顺序旋转，既插入mask又删除……各种各样</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241122173328780.png" alt="image-20241122173328780"></p>
+<h3 id="为什么bert有用？"><a href="#为什么bert有用？" class="headerlink" title="为什么bert有用？"></a>为什么bert有用？</h3><p>bert在预训练，即在做填空的时候，会结合上下文了解每个词向量的意思，一个强化版的word embedding，即它能明白吃苹果的果和苹果手机的果的意思不一样，就是bert会学会对应语义</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241123103620402.png" alt="image-20241123103620402"></p>
+<p>multi-lingual bert</p>
+<p>预训练时用不同语言进行训练，在微调时，bert竟然可以做到语言切换，比如用英文资料微调，但也可以在中文下进行test，正确率也和英文下进行test差不多</p>
+<p>为什么呢？</p>
+<p>可能在预训练过程中，不同语言间没有什么差异，中文和英文这些词汇的word-embedding只要意思一样，都会很近。</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241123105324331.png" alt="image-20241123105324331"></p>
+<p>但是你给英文题目，bert也不会返回中文答案，所以中文和英文对于bert来说终究还是不一样，它没有完全抹掉语言的咨询</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241123110100623.png" alt="image-20241123110100623"></p>
+<p>通过取中文和英文词向量的平均差，可以做到输入英文加上这个平均差，输出对应的中文，即翻译</p>
+<h2 id="GPT"><a href="#GPT" class="headerlink" title="GPT"></a>GPT</h2><h3 id="预训练"><a href="#预训练" class="headerlink" title="预训练"></a>预训练</h3><p>类似transformer的decoder，拿掉cross-attention部分，只做mask-attention，不会看到接下来的词汇：</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241123111139140.png" alt="image-20241123111139140"></p>
+<h3 id="微调："><a href="#微调：" class="headerlink" title="微调："></a>微调：</h3><p>都不需要梯度下降，已经类似人的思维方式了，给出任务，示例，问题，就可以得到答案</p>
+<p><img src="/2024/11/25/Week6-DL/image-20241123111944276.png" alt="image-20241123111944276"></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Zhen Xie</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://example.com/2024/11/25/Week6-DL/">http://example.com/2024/11/25/Week6-DL/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"># 深度学习</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2024/12/01/Week7-DL/">Week7 DL</a>
+            
+            
+            <a class="next" rel="next" href="/2024/11/16/Week5-DL/">Week5-DL</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Zhen Xie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
