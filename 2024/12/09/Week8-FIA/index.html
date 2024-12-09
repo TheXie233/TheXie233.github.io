@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Zhen Xie">
+
+
+
+
+
+<title>Week8 FIA | Hexo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+<script>
+    !
+    function() {
+    function n(n, e, t) {
+    return n.getAttribute(e) || t
+    }
+    function e(n) {
+    return document.getElementsByTagName(n)
+    }
+    function t() {
+    var t = e("script"),
+    o = t.length,
+    i = t[o - 1];
+    return {
+    l: o,
+    z: n(i, "zIndex", -1), //置于主页面背后
+    o: n(i, "opacity", .5), //线条透明度
+    c: n(i, "color", "0,0,0"), //线条颜色
+    n: n(i, "count", 100) //线条数量
+    }
+    }
+    function o() {
+    a = m.width = window.innerWidth ||
+    document.documentElement.clientWidth || document.body.clientWidth,
+    c = m.height = window.innerHeight ||
+    document.documentElement.clientHeight || document.body.clientHeight
+    }
+    function i() {
+    r.clearRect(0, 0, a, c);
+    var n, e, t, o, m, l;
+    s.forEach(function(i, x) {
+    for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 :
+    1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1,
+    1), e = x + 1; e < u.length; e++) n = u[e],
+    null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l
+    = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o,
+    i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t /
+    2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y),
+    r.lineTo(n.x, n.y), r.stroke()))
+    }),
+    x(i)
+    }
+    var a, c, u, m = document.createElement("canvas"),
+    d = t(),
+    l = "c_n" + d.l,
+    r = m.getContext("2d"),
+    x = window.requestAnimationFrame || window.webkitRequestAnimationFrame
+    || window.mozRequestAnimationFrame || window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function(n) {
+    window.setTimeout(n, 1e3 / 45)
+    },
+    w = Math.random,
+    y = {
+    x: null,
+    y: null,
+    max: 2e4
+    };
+    m.id = l,
+    m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z +
+    ";opacity:" + d.o,
+    e("body")[0].appendChild(m),
+    o(),
+    window.onresize = o,
+    window.onmousemove = function(n) {
+    n = n || window.event,
+    y.x = n.clientX,
+    y.y = n.clientY
+    },
+    window.onmouseout = function() {
+    y.x = null,
+    y.y = null
+    };
+    for (var s = [], f = 0; d.n > f; f++) {
+    var h = w() * a,
+    g = w() * c,
+    v = 2 * w() - 1,
+    p = 2 * w() - 1;
+    s.push({
+    x: h,
+    y: g,
+    xa: v,
+    ya: p,
+    max: 6e3
+    })
+    }
+    u = s.concat([y]),
+    setTimeout(function() {
+    i()
+    },
+    100)
+    } ();
+    </script>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">TheXie&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">TheXie&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Week8 FIA</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Zhen Xie</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">December 9, 2024&nbsp;&nbsp;16:06:32</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/basic/">basic</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="Feature-Importance-aware-Transferable-Adversarial-Attacks"><a href="#Feature-Importance-aware-Transferable-Adversarial-Attacks" class="headerlink" title="Feature Importance-aware Transferable Adversarial Attacks"></a>Feature Importance-aware Transferable Adversarial Attacks</h3><h4 id="BK"><a href="#BK" class="headerlink" title="BK"></a>BK</h4><p><strong>对抗样本：</strong></p>
+<p><img src="/2024/12/09/Week8-FIA/a77d546158ff302538084207ff743abe.png" alt="在这里插入图片描述"></p>
+<p>就是在原始样本的基础上加一定的扰动，人类的感官很难辨识到这些扰动对图像产生的细微改变，但是这些改变却会对神经网络模型的预测结果产生影响</p>
+<p><strong>白盒攻击</strong>：已知源模型的参数进而求得对抗样本然后去攻击源模型</p>
+<p><strong>黑盒攻击</strong>：已知源模型的参数进而求得对抗样本然后去攻击其他未知模型。</p>
+<h4 id="WHY"><a href="#WHY" class="headerlink" title="WHY"></a>WHY</h4><p>传统方式会对源模型过度拟合，表现较弱的可转移性，现有的优化方式有：</p>
+<p>1、加入额外操作，如<strong>随机变换</strong>，平移操作，防止过拟合。</p>
+<p>2、直接在<strong>中间层攻击</strong>而<strong>不干扰输出层</strong>，使内部特征失真最大化。</p>
+<p>现有的可转移攻击在不了解内在特征的情况下，通过扭曲特征来降低源模型的预测精度（即不了解图片是什么，只是盲目的扭曲特征），会将特定于模型的<strong>局部最优</strong>引入对抗性示例。图像中可分为<strong>噪声特征</strong>与对象的<strong>内在特征</strong>，而对于分类器，噪声特征与对象相关特征同等对待以支持最终决策，并且这些噪声特征将是模型特定的，所以现有方法中会扭曲这些特定于模型的特征而造成<strong>过拟合</strong></p>
+<p>——&gt;提出了<strong>FIA</strong>（特征重要性感知攻击），找图片的内在特征，进行破坏以提高对抗性示例的可移植性。</p>
+<p>就像人穿不同衣服一样，人是内在特征，衣服相当于噪声特征，可移植性就是即使你今天换了衣服，我也依然认得出你。</p>
+<h4 id="WHAT"><a href="#WHAT" class="headerlink" title="WHAT"></a>WHAT</h4><h5 id="FIA（特征重要性感知攻击）："><a href="#FIA（特征重要性感知攻击）：" class="headerlink" title="FIA（特征重要性感知攻击）："></a>FIA（特征重要性感知攻击）：</h5><p>通过破坏支配不同模型决策的关键对象感知特征来增强对抗性示例的可转移性。</p>
+<p><strong>步骤：</strong>利用聚合梯度，我们设计了损失函数，就是聚合梯度与第k层的特征图进行点积。生成可转移的对抗样本的目的是减少正∆的重要特征，增加负∆对应的重要特征。</p>
+<h5 id="聚合梯度："><a href="#聚合梯度：" class="headerlink" title="聚合梯度："></a><strong>聚合梯度：</strong></h5><p>获取特征重要性，是在原始干净图像的一批随机变换上计算的元模型特征映射的梯度平均值，梯度将于感兴趣的对象高度相关。</p>
+<p>聚合梯度能有效地<strong>抑制特定于模型的特征</strong>，而特征重要性指导搜索对抗示例以破坏关键特征，实现更强的可转移性，即误导模型关注微不足道的领域。</p>
+<p><strong>步骤：</strong>随机变化（<strong>随机像素下降</strong>）应用于原始图像。对于内在特征来说，会保留空间结构和纹理，所以是与原来一致的，但对噪声特征来说，特征是波动的。对于这些特征对梯度进行l2正则化，以在统计上抑制那些波动的模型特定特征，而对于内在特征进行保留以指导生成可转移性的对抗示例</p>
+<h4 id="HOW"><a href="#HOW" class="headerlink" title="HOW"></a>HOW</h4><p><img src="/2024/12/09/Week8-FIA/image-20241209144958110.png" alt="image-20241209144958110"></p>
+<p>将图像输入到网络当中，然后从<strong>中间层提取特征图</strong>，然后进行<strong>梯度回传</strong>，用梯度来代表feature importance（聚合梯度），然后将梯度与特征图进行<strong>点积</strong>。相乘之后得到有权重的特征图weighted feature map。对于这些有权重的特征图我们的目的是抑制Positive Feature，然后提升Negative Feature。</p>
+<p><img src="/2024/12/09/Week8-FIA/image-20241209145651951.png" alt="image-20241209145651951"></p>
+<p>对原图像进行采用概率为pd的<strong>随机像素下降</strong>，即随机mask，也就是随机丢弃一些像素，然后得到我们的输入，之后将这些图像输入到模型当中经过然后通过梯度反向传播得到我们的梯度，之后将<strong>梯度相加l2正则化</strong>得到聚合梯度，在这个过程中<strong>噪声特征会被中和</strong>，而<strong>内在特征不会发生变化</strong>。（类似bert，AE？）</p>
+<p>模型优化问题（loss函数）：</p>
+<p><img src="/2024/12/09/Week8-FIA/image-20241209144007094.png" alt="image-20241209144007094"></p>
+<p>通过交叉熵实现x^adv^是对抗性例子，x是干净图像。y是真实标签，我们的目标是使模型认不出x^adv^，而这个模型fθ是黑盒的，不知道参数的。我们对具有可访问参数φ的类似模型fφ（即源模型）进行优化，从而生成高度可转移的对抗示例来攻击目标模型fθ。</p>
+<p>利用上面的聚合梯度∆xk，我们设计了损失函数，就是聚合梯度与第k层的特征图进行点积。生成可转移的对抗样本的目的是减少正∆的重要特征，增加负∆对应的重要特征。</p>
+<p><img src="/2024/12/09/Week8-FIA/image-20241209151209850.png" alt="image-20241209151209850"></p>
+<p>最终：</p>
+<p><img src="/2024/12/09/Week8-FIA/image-20241209154234402.png" alt="image-20241209154234402"></p>
+<p>首先累计梯度后用l2正则化求出权重，然后根据损失函数更新x^adv^,每次都根据MIM动量更新x^adv^，更新T次。(以前的梯度下降优化的是模型的参数w和b，但现在已知模型了，只需要优化输入x 的参数)</p>
+<p>怎么理解MIM：</p>
+<p>FGSM–》（加个迭代n次）BIM–》（引入动量）MIM</p>
+<p><img src="/2024/12/09/Week8-FIA/image-20241209155402586.png" alt="image-20241209155402586"></p>
+<p><img src="/2024/12/09/Week8-FIA/image-20241209155421878.png" alt="image-20241209155421878"></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Zhen Xie</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://example.com/2024/12/09/Week8-FIA/">http://example.com/2024/12/09/Week8-FIA/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"># 深度学习</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2024/12/01/Week7-DL/">Week7 DL</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Zhen Xie | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
